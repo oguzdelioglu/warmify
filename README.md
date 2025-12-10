@@ -75,7 +75,7 @@ While the app is designed to be Vibe Coded in AI Studio, you can run it locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/warmify.git
+git clone https://github.com/oguzdelioglu/warmify.git
 
 # Install dependencies
 npm install
