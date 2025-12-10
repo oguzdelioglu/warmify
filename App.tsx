@@ -12,7 +12,7 @@ import BadgeReveal from './components/BadgeReveal';
 import DebugConsole from './components/DebugConsole';
 import RigOverlay from './components/RigOverlay';
 import LevelingSystem from './components/LevelingSystem';
-import { Play, Trophy, Settings as SettingsIcon, Zap, Timer, X, ArrowLeft, Activity, Target } from 'lucide-react';
+import { Play, Trophy, Settings as SettingsIcon, Zap, Timer, X, ArrowLeft, Activity, Target, Activity as ActivityIcon } from 'lucide-react';
 import { SoundEngine } from './services/audioService';
 
 // --- GAME CONFIG ---
@@ -37,6 +37,16 @@ const DEFAULT_SETTINGS: UserSettings = {
     characterArchetype: 'SPIRIT', // Default changed to Spirit
     characterSkin: 0 
 };
+
+// SVG Logo Component for Header
+const WarmifyLogo = () => (
+    <svg width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block mr-2">
+        <rect width="512" height="512" rx="120" fill="transparent"/>
+        <path d="M96 256 L176 256 L224 384 L288 128 L336 256 L416 256" stroke="#22d3ee" strokeWidth="60" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="224" cy="384" r="30" fill="#f472b6"/>
+        <circle cx="288" cy="128" r="30" fill="#f472b6"/>
+    </svg>
+);
 
 export default function App() {
   const [view, setView] = useState<AppView>(AppView.HOME);
@@ -373,7 +383,8 @@ export default function App() {
         {/* Header */}
         {view !== AppView.WORKOUT && view !== AppView.RESULTS && view !== AppView.BADGE_REVEAL && view !== AppView.LEVELING && (
             <header className="flex justify-between items-center py-2 flex-shrink-0 z-50">
-                <div onClick={() => setView(AppView.HOME)} className="cursor-pointer">
+                <div onClick={() => setView(AppView.HOME)} className="cursor-pointer flex items-center">
+                    <WarmifyLogo />
                     <h1 className="text-2xl font-black italic bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-lg tracking-tight">
                         Warmify
                     </h1>
@@ -462,7 +473,7 @@ export default function App() {
                     <div className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-md p-4 rounded-2xl border border-white/5 shadow-lg flex flex-col items-center justify-center relative overflow-hidden group">
                          <div className="absolute bottom-0 left-0 w-16 h-16 bg-emerald-500/10 rounded-full blur-xl group-hover:bg-emerald-500/20 transition-all"></div>
                          <div className="p-2 bg-emerald-500/10 rounded-full mb-2">
-                             <Activity size={16} className="text-emerald-400" />
+                             <ActivityIcon size={16} className="text-emerald-400" />
                          </div>
                          <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-0.5">Workouts</div>
                         <div className="text-2xl font-black text-white font-mono tracking-tighter group-hover:scale-105 transition-transform">{userStats.workoutsCompleted}</div>

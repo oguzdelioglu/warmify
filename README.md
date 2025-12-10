@@ -1,6 +1,6 @@
 # Warmify - AI-Powered Gamified Fitness Coach 🦁
 
-![Warmify Banner](https://placehold.co/1200x400/0f172a/6366f1?text=Warmify:+Vibe+Coded+with+Gemini+3+Pro)
+![Warmify Banner](./thumbnail.svg)
 
 > **Submission for Google DeepMind - Vibe Code with Gemini 3 Pro**  
 > *Turning fitness into an immersive RPG using Multimodal AI.*
@@ -94,7 +94,7 @@ While the app is hosted on AI Studio, you can run it locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/oguzdelioglu/warmify.git
+git clone https://github.com/yourusername/warmify.git
 
 # Install dependencies
 npm install

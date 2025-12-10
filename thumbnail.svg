@@ -1,0 +1,84 @@
+<svg width="560" height="280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e1b4b;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Neon Glow Filter -->
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#38bdf8" stroke-width="0.5" opacity="0.1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="560" height="280" fill="url(#bgGrad)" />
+  
+  <!-- Perspective Grid Floor -->
+  <g transform="perspective(500)">
+     <rect width="560" height="280" fill="url(#grid)" opacity="0.6" />
+  </g>
+  
+  <!-- Abstract Digital Skeleton (Left Side) -->
+  <g transform="translate(80, 140) scale(0.8)" filter="url(#neonGlow)">
+      <!-- Head -->
+      <circle cx="0" cy="-60" r="15" stroke="#22d3ee" stroke-width="3" fill="none"/>
+      <!-- Body -->
+      <line x1="0" y1="-45" x2="0" y2="40" stroke="#22d3ee" stroke-width="3"/>
+      <!-- Arms -->
+      <line x1="-40" y1="-20" x2="40" y2="-20" stroke="#22d3ee" stroke-width="3"/>
+      <line x1="-40" y1="-20" x2="-60" y2="10" stroke="#22d3ee" stroke-width="3"/>
+      <line x1="40" y1="-20" x2="60" y2="-50" stroke="#22d3ee" stroke-width="3"/>
+      <!-- Legs -->
+      <line x1="0" y1="40" x2="-30" y2="100" stroke="#22d3ee" stroke-width="3"/>
+      <line x1="0" y1="40" x2="30" y2="90" stroke="#22d3ee" stroke-width="3"/>
+      
+      <!-- Joints -->
+      <circle cx="0" cy="-60" r="4" fill="#f472b6"/>
+      <circle cx="-60" cy="10" r="4" fill="#f472b6"/>
+      <circle cx="60" cy="-50" r="4" fill="#f472b6"/>
+  </g>
+
+  <!-- Main Title Text -->
+  <text x="50%" y="130" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="64" fill="white" letter-spacing="2" filter="url(#neonGlow)" style="font-style: italic;">
+    WARMIFY
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="50%" y="170" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="#38bdf8" letter-spacing="4" opacity="0.8">
+    VIBE CODED FITNESS
+  </text>
+
+  <!-- HUD Elements (Right Side) -->
+  <g transform="translate(420, 140)">
+      <!-- Circle HUD -->
+      <circle cx="0" cy="0" r="40" stroke="#22c55e" stroke-width="2" fill="none" stroke-dasharray="60 20" opacity="0.6" />
+      <circle cx="0" cy="0" r="30" stroke="#22c55e" stroke-width="1" fill="none" opacity="0.4" />
+      <text x="0" y="5" text-anchor="middle" font-family="monospace" font-size="14" fill="#22c55e" font-weight="bold">AI</text>
+      
+      <!-- Bars -->
+      <rect x="50" y="-30" width="60" height="8" rx="2" fill="#334155" />
+      <rect x="50" y="-30" width="40" height="8" rx="2" fill="#22c55e" />
+      
+      <rect x="50" y="-15" width="60" height="8" rx="2" fill="#334155" />
+      <rect x="50" y="-15" width="20" height="8" rx="2" fill="#f59e0b" />
+      
+      <text x="50" y="20" font-family="sans-serif" font-size="10" fill="#94a3b8">TRACKING: ON</text>
+  </g>
+
+  <!-- Bottom Badge -->
+  <rect x="210" y="220" width="140" height="30" rx="15" fill="#1e293b" stroke="#6366f1" stroke-width="1"/>
+  <path d="M230 235 L240 235 L245 230 M240 235 L245 240" stroke="white" stroke-width="2" fill="none"/> 
+  <text x="280" y="240" text-anchor="middle" font-family="sans-serif" font-size="10" fill="white" font-weight="bold">GEMINI 3 PRO</text>
+
+</svg>
