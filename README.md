@@ -5,11 +5,9 @@
 > **Submission for Google DeepMind - Vibe Code with Gemini 3 Pro**  
 > *Turning fitness into an immersive RPG using Multimodal AI.*
 
-## 🚀 Overview
+## 🚀 Summary
 
 **Warmify** is a futuristic, AI-powered Progressive Web App (PWA) that transforms your daily workout into an immersive Rhythm RPG. Built entirely using **Google AI Studio's Vibe Coding** workflow with Gemini 3 Pro, it solves the two biggest problems in home fitness: boredom and lack of professional feedback.
-
-By combining **Gemini's Multimodal capabilities**, **MediaPipe** for computer vision, and **Three.js** for immersive visuals, Warmify solves the problem of boring, unsupervised home workouts.
 
 ---
 
@@ -27,11 +25,15 @@ By combining **Gemini's Multimodal capabilities**, **MediaPipe** for computer vi
 
 ## 🎥 Demo & Links
 
-- **[🔴 Live App Link (Google AI Studio)](YOUR_AI_STUDIO_LINK_HERE)** *(Replace with your published link)*
-- **[📺 Video Demo (YouTube)](YOUR_VIDEO_LINK_HERE)** *(Replace with your video link)*
-- **[📄 Kaggle Writeup](YOUR_KAGGLE_WRITEUP_LINK)** *(Replace with your Kaggle link)*
+- **[🔴 Live App Link (Google AI Studio)](YOUR_AI_STUDIO_LINK_HERE)**
+- **[📺 Video Demo (YouTube)](YOUR_VIDEO_LINK_HERE)**
+- **[📄 Kaggle Writeup](YOUR_KAGGLE_WRITEUP_LINK)**
 
 ---
+
+## 🔴 The Problem
+
+Working out at home is difficult. Without a trainer, users struggle with **form** ("Am I squatting low enough?") and **motivation** ("This is boring"). Personal trainers are expensive, and existing apps are just passive video players that don't know if you are actually doing the work.
 
 ## 💡 The Solution
 
@@ -45,9 +47,13 @@ Warmify turns your webcam into a sensor for a digital game using Multimodal AI.
 
 ## 🛠️ Tech Stack & Vibe Coding Journey
 
-This project was built by leveraging **Gemini 3 Pro** in AI Studio's Build environment. The "Vibe Coding" process allowed for rapid prototyping of complex features.
+This project demonstrates the power of Gemini 3 Pro's "Vibe Coding". Instead of writing boilerplate manually, I prompted the vibe: 
 
-> I prompted the vibe: *'Create a leveling system where users unlock new neon skins for their skeleton avatar based on XP'* and *'Design a Three.js background that reacts to workout intensity'*. Gemini generated the complex logic for the `LevelingSystem`, `RigOverlay`, and `GameLoop`, allowing for a polished, high-fidelity prototype in record time.
+> *'Create a leveling system where users unlock new neon skins for their skeleton avatar based on XP'* 
+>
+> *'Design a Three.js background that reacts to workout intensity'*
+
+Gemini generated the complex logic for the `LevelingSystem`, `RigOverlay`, and `GameLoop`, allowing for a polished, high-fidelity prototype in record time.
 
 *   **Frontend:** React 19, TailwindCSS, Lucide React.
 *   **AI & Logic:** 
@@ -69,6 +75,12 @@ This project was built by leveraging **Gemini 3 Pro** in AI Studio's Build envir
 
 ---
 
+## 🏆 Impact
+
+Warmify makes elite personal training free, fun, and accessible to anyone with a camera, lowering the barrier to a healthy lifestyle through the power of AI.
+
+---
+
 ## 📦 Installation (Local Dev)
 
 While the app is designed to be Vibe Coded in AI Studio, you can run it locally:
@@ -86,11 +98,5 @@ export API_KEY="your_gemini_api_key"
 # Run the development server
 npm run dev
 ```
-
----
-
-## 🏆 Impact
-
-Warmify makes elite personal training free, fun, and accessible to anyone with a camera, lowering the barrier to a healthy lifestyle through the power of AI.
 
 *Built with ❤️ and ☕ using Google AI Studio.*
