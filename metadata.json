@@ -1,0 +1,8 @@
+{
+  "name": "Warmify",
+  "description": "A gamified AI-powered workout assistant that uses your camera to analyze movements and provide real-time coaching using Gemini and Three.js visualization.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
