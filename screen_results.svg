@@ -1,0 +1,64 @@
+<svg width="375" height="812" viewBox="0 0 375 812" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgResults" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#312e81"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="100%" height="100%" fill="url(#bgResults)"/>
+  
+  <!-- Particles -->
+  <circle cx="50" cy="100" r="4" fill="yellow" opacity="0.6"/>
+  <circle cx="300" cy="200" r="6" fill="cyan" opacity="0.6"/>
+  <circle cx="100" cy="700" r="3" fill="magenta" opacity="0.6"/>
+
+  <!-- Main Content -->
+  <g transform="translate(187.5, 200)">
+      <!-- Trophy Icon -->
+      <circle r="60" fill="url(#gradTrophy)"/>
+      <linearGradient id="gradTrophy" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#facc15"/>
+          <stop offset="1" stop-color="#d97706"/>
+      </linearGradient>
+      <text x="0" y="20" text-anchor="middle" font-size="64">🏆</text>
+      
+      <text y="100" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="42" fill="white" style="font-style:italic">COMPLETE</text>
+      <text y="130" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#c7d2fe">Excellent work, Agent.</text>
+  </g>
+
+  <!-- Score Card -->
+  <g transform="translate(20, 380)">
+      <rect width="335" height="250" rx="24" fill="#1e293b" stroke="#4f46e5" stroke-opacity="0.5"/>
+      
+      <text x="167.5" y="40" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="10" fill="#94a3b8" letter-spacing="2">TOTAL SCORE</text>
+      <text x="167.5" y="90" text-anchor="middle" font-family="monospace" font-weight="900" font-size="56" fill="white">15,400</text>
+      
+      <line x1="40" y1="120" x2="295" y2="120" stroke="#334155"/>
+
+      <!-- Grid Stats -->
+      <g transform="translate(20, 140)">
+          <rect width="140" height="90" rx="12" fill="#312e81" fill-opacity="0.3" stroke="#4f46e5" stroke-opacity="0.3"/>
+          <text x="70" y="30" text-anchor="middle" font-size="10" fill="#a5b4fc" font-weight="bold">XP GAINED</text>
+          <text x="70" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">+1,200</text>
+          
+          <g transform="translate(155, 0)">
+            <rect width="140" height="90" rx="12" fill="#064e3b" fill-opacity="0.3" stroke="#10b981" stroke-opacity="0.3"/>
+            <text x="70" y="30" text-anchor="middle" font-size="10" fill="#6ee7b7" font-weight="bold">LEVEL UP</text>
+            <text x="70" y="60" text-anchor="middle" font-size="18" fill="#34d399" font-weight="bold" class="animate-pulse">LVL 13!</text>
+          </g>
+      </g>
+  </g>
+
+  <!-- Buttons -->
+  <g transform="translate(20, 660)">
+      <rect width="160" height="60" rx="16" fill="#334155"/>
+      <text x="80" y="35" text-anchor="middle" font-family="sans-serif" font-weight="bold" fill="#cbd5e1">RETRY</text>
+      
+      <g transform="translate(175, 0)">
+          <rect width="160" height="60" rx="16" fill="white"/>
+          <text x="80" y="35" text-anchor="middle" font-family="sans-serif" font-weight="900" fill="#0f172a">CLAIM REWARDS</text>
+      </g>
+  </g>
+
+</svg>

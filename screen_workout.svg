@@ -1,0 +1,67 @@
+<svg width="375" height="812" viewBox="0 0 375 812" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mock Video Feed Background -->
+  <image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNzUiIGhlaWdodD0iODEyIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWUxYjRiIi8+PGNpcmNsZSBjeD0iMTg3IiBjeT0iMzAwIiByPSI4MCIgZmlsbD0iIzMzMyIgZmlsbC1vcGFjaXR5PSIwLjUiLz48L3N2Zz4=" width="375" height="812" preserveAspectRatio="none"/>
+  
+  <!-- Vignette -->
+  <rect width="100%" height="100%" fill="url(#vignette)"/>
+  <defs>
+      <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.8">
+          <stop offset="0.7" stop-color="transparent"/>
+          <stop offset="1" stop-color="black" stop-opacity="0.8"/>
+      </radialGradient>
+  </defs>
+
+  <!-- Digital Skeleton Overlay (Green for GOOD) -->
+  <g transform="translate(187, 400)" stroke="#4ade80" stroke-width="4" stroke-linecap="round">
+      <circle cx="0" cy="-120" r="20" fill="none"/> <!-- Head -->
+      <line x1="0" y1="-100" x2="0" y2="50"/> <!-- Spine -->
+      <line x1="-40" y1="-80" x2="40" y2="-80"/> <!-- Shoulders -->
+      <line x1="-40" y1="-80" x2="-60" y2="0"/> <!-- L Arm -->
+      <line x1="-60" y1="0" x2="-80" y2="-30"/> <!-- L Forearm -->
+      <line x1="40" y1="-80" x2="60" y2="0"/> <!-- R Arm -->
+      <line x1="60" y1="0" x2="80" y2="-30"/> <!-- R Forearm -->
+      <line x1="0" y1="50" x2="-30" y2="150"/> <!-- L Leg -->
+      <line x1="0" y1="50" x2="30" y2="150"/> <!-- R Leg -->
+      
+      <!-- Glow Effect -->
+      <circle cx="0" cy="-120" r="20" stroke="#4ade80" stroke-width="8" opacity="0.3" filter="blur(5px)"/>
+  </g>
+
+  <!-- UI HUD Top -->
+  <g transform="translate(20, 60)">
+      <rect width="40" height="40" rx="20" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444"/>
+      <path d="M15 15 L25 25 M25 15 L15 25" stroke="#ef4444" stroke-width="2" transform="translate(5,5)"/>
+      
+      <!-- Health Bar -->
+      <rect x="50" y="10" width="200" height="8" rx="4" fill="#1e293b"/>
+      <rect x="50" y="10" width="160" height="8" rx="4" fill="#4ade80"/>
+      <path d="M55 25 L65 35 L75 25" fill="#ef4444" transform="translate(0, -35) scale(0.5)"/>
+
+      <!-- Score -->
+      <rect x="270" y="0" width="85" height="40" rx="10" fill="#0f172a" fill-opacity="0.8" stroke="#22d3ee"/>
+      <text x="312" y="12" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#22d3ee" font-weight="bold">SCORE</text>
+      <text x="312" y="32" text-anchor="middle" font-family="monospace" font-size="18" fill="white" font-weight="bold">4,250</text>
+  </g>
+
+  <!-- Feedback Text (Center) -->
+  <text x="187" y="250" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="48" fill="#4ade80" stroke="black" stroke-width="2" style="font-style:italic">PERFECT!</text>
+
+  <!-- Combo Counter (Left) -->
+  <g transform="translate(20, 350) rotate(-5)">
+      <text font-family="sans-serif" font-weight="900" font-size="64" fill="#facc15" stroke="black" stroke-width="2">4x</text>
+      <text x="10" y="20" font-family="sans-serif" font-weight="bold" font-size="12" fill="white">COMBO</text>
+  </g>
+
+  <!-- Bottom Instruction Card -->
+  <g transform="translate(20, 680)">
+      <rect width="180" height="90" rx="16" fill="#0f172a" fill-opacity="0.9" stroke="#334155"/>
+      <text x="15" y="25" font-family="sans-serif" font-weight="900" font-size="14" fill="#facc15">HIGH KNEES</text>
+      <text x="15" y="45" font-family="sans-serif" font-size="12" fill="#94a3b8">Knees to chest, fast!</text>
+      
+      <!-- Timer -->
+      <rect x="15" y="60" width="150" height="4" rx="2" fill="#334155"/>
+      <rect x="15" y="60" width="100" height="4" rx="2" fill="#22d3ee"/>
+      <text x="140" y="25" font-family="monospace" font-size="14" fill="white">0:15</text>
+  </g>
+
+</svg>

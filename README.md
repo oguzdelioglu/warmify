@@ -7,39 +7,47 @@
 
 ## 🚀 Overview
 
-**Warmify** is a Progressive Web App (PWA) that transforms your daily workout into an interactive game. Built entirely using **Google AI Studio's Vibe Coding** capabilities, Warmify utilizes your device's camera to analyze movement in real-time, providing instant feedback, counting reps, and awarding XP for good form.
+**Warmify** is a futuristic, AI-powered Progressive Web App (PWA) that transforms your daily workout into an immersive Rhythm RPG. Built entirely using **Google AI Studio's Vibe Coding** workflow with Gemini 3 Pro, it solves the two biggest problems in home fitness: boredom and lack of professional feedback.
 
 By combining **Gemini's Multimodal capabilities**, **MediaPipe** for computer vision, and **Three.js** for immersive visuals, Warmify solves the problem of boring, unsupervised home workouts.
 
 ---
 
-## 🎥 Demo & Links
+## 📸 Gallery
 
-- **[🔴 Live App Link (Google AI Studio)](YOUR_AI_STUDIO_LINK_HERE)** *(Paste your published link here)*
-- **[📺 Video Demo (YouTube)](YOUR_VIDEO_LINK_HERE)** *(Paste your video link here)*
-- **[📄 Kaggle Writeup](YOUR_KAGGLE_WRITEUP_LINK)**
+| Dashboard | Workout Mode |
+|-----------|--------------|
+| ![Home](./screen_home.svg) | ![Workout](./screen_workout.svg) |
+
+| Results & Rewards | Customization |
+|-------------------|---------------|
+| ![Results](./screen_results.svg) | ![Settings](./screen_settings.svg) |
 
 ---
 
-## 💡 The Problem & Solution
+## 🎥 Demo & Links
 
-### The Friction
-Home workouts suffer from two main issues:
-1.  **Lack of Feedback:** Am I doing this squat correctly? Am I going to hurt myself?
-2.  **Boredom:** Counting reps is tedious, and motivation fades quickly without a gym environment.
+- **[🔴 Live App Link (Google AI Studio)](YOUR_AI_STUDIO_LINK_HERE)** *(Replace with your published link)*
+- **[📺 Video Demo (YouTube)](YOUR_VIDEO_LINK_HERE)** *(Replace with your video link)*
+- **[📄 Kaggle Writeup](YOUR_KAGGLE_WRITEUP_LINK)** *(Replace with your Kaggle link)*
 
-### The Warmify Solution
-Warmify acts as a **Digital Personal Trainer**:
-*   **See:** It tracks 33 body landmarks in real-time to analyze posture.
-*   **Think:** It uses Gemini logic to determine if a rep is "Perfect", "Good", or a "Miss".
-*   **Speak:** It provides encouraging audio feedback and sound effects.
-*   **Reward:** It gamifies the experience with RPG elements (Leveling, Skins, Archetypes).
+---
+
+## 💡 The Solution
+
+Warmify turns your webcam into a sensor for a digital game using Multimodal AI.
+
+1.  **See:** Using **MediaPipe**, it tracks 33 skeletal landmarks in real-time directly on your device (Privacy First).
+2.  **Think:** **Gemini 3 Pro** acts as the Game Engine and Referee. It analyzes your movement quality, speed, and rhythm in real-time.
+3.  **React:** Perform a "Perfect" rep, and your digital avatar glows neon green while you earn XP and Combos. Slouch or stop, and the system alerts you visually and audibly to correct your form.
 
 ---
 
 ## 🛠️ Tech Stack & Vibe Coding Journey
 
-This project was built by leveraging **Gemini 3 Pro** in AI Studio's Build environment. The "Vibe Coding" process allowed for rapid prototyping of complex features:
+This project was built by leveraging **Gemini 3 Pro** in AI Studio's Build environment. The "Vibe Coding" process allowed for rapid prototyping of complex features.
+
+> I prompted the vibe: *'Create a leveling system where users unlock new neon skins for their skeleton avatar based on XP'* and *'Design a Three.js background that reacts to workout intensity'*. Gemini generated the complex logic for the `LevelingSystem`, `RigOverlay`, and `GameLoop`, allowing for a polished, high-fidelity prototype in record time.
 
 *   **Frontend:** React 19, TailwindCSS, Lucide React.
 *   **AI & Logic:** 
@@ -50,47 +58,20 @@ This project was built by leveraging **Gemini 3 Pro** in AI Studio's Build envir
     *   **Canvas API:** Drawing the "Rig Overlay" (Cyber, Mech, Spirit avatars) over the user's video feed.
 *   **Deployment:** PWA (Progressive Web App) standards for native-like installation on iOS and Android.
 
-### How Gemini 3 Pro Helped
-> "I simply prompted: *'Create a leveling system where users unlock new neon skins for their skeleton avatar based on XP,'* and Gemini generated the entire `LevelingSystem.tsx` and `RigOverlay.tsx` logic, including the canvas drawing mathematics."
-
 ---
 
 ## 🎮 Key Features
 
-### 1. Real-Time Form Correction (The "Eyes")
-Using MediaPipe and custom logic, Warmify overlays a digital skeleton onto the user.
-*   **Visual Feedback:** The skeleton glows **Green** on perfect hits and shakes **Red** on misses.
-*   **Archetypes:** Users can switch between different visual styles (Cyber, Stickman, Mech, Alien, Spirit).
-
-### 2. Immersive Audio-Visuals
-*   **Three.js Core:** A 3D background reacts to the user's movement intensity.
-*   **Sound Engine:** A custom synthesizer (Web Audio API) generates dynamic SFX for hits, combos, and level-ups without needing external MP3 assets.
-
-### 3. Gamification Loop
-*   **XP & Leveling:** Earn XP for every perfect rep.
-*   **Streak System:** Daily login bonuses.
-*   **Unlockables:** Unlock new badges (e.g., "Ninja", "Tank") and skins (Colorways) as you progress.
-*   **Leaderboard:** Compare your "Agent Level" with the global elite.
-
-### 4. Native Mobile Experience
-Designed as a PWA with `manifest.json` and iOS meta tags. It features:
-*   Portrait orientation lock.
-*   Haptic feedback (visual/audio).
-*   No-install instant play.
-
----
-
-## 🔮 Future Roadmap
-
-*   **Gemini Live Voice Coaching:** Fully integrating the audio-in/audio-out capabilities to allow users to ask, *"How was my form?"* and get a verbal response.
-*   **Multiplayer Battles:** Real-time 1v1 pose matching battles.
-*   **Dietary Integration:** Snapping a photo of a meal for Gemini to analyze calories and adjust the workout difficulty.
+*   **Multimodal Coaching:** Real-time form correction using computer vision + GenAI logic.
+*   **Gamification:** Level up from "Rookie" to "Legend", unlock badges, and customize your skeletal avatar (Cyber, Mech, Spirit).
+*   **Immersive Tech:** Three.js reactive backgrounds and a custom Web Audio API synthesizer for dynamic SFX.
+*   **Accessible:** Runs entirely in the browser (iOS/Android/Desktop) with no installation required.
 
 ---
 
 ## 📦 Installation (Local Dev)
 
-While the app is hosted on AI Studio, you can run it locally:
+While the app is designed to be Vibe Coded in AI Studio, you can run it locally:
 
 ```bash
 # Clone the repository
@@ -110,7 +91,6 @@ npm run dev
 
 ## 🏆 Impact
 
-**Health:** Warmify lowers the barrier to entry for fitness by making it free, accessible, and genuinely fun.
-**Accessibility:** It works on any device with a webcam, bringing advanced PT coaching to anyone, anywhere.
+Warmify makes elite personal training free, fun, and accessible to anyone with a camera, lowering the barrier to a healthy lifestyle through the power of AI.
 
 *Built with ❤️ and ☕ using Google AI Studio.*
