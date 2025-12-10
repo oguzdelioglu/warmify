@@ -25,9 +25,9 @@
 
 ## 🎥 Demo & Links
 
-- **[🔴 Live App Link (Google AI Studio)](YOUR_AI_STUDIO_LINK_HERE)**
-- **[📺 Video Demo (YouTube)](YOUR_VIDEO_LINK_HERE)**
-- **[📄 Kaggle Writeup](YOUR_KAGGLE_WRITEUP_LINK)**
+- **[🔴 Live App Link (Google AI Studio)](https://ai.studio/apps/drive/1T7PuVGZq9Kz2yh-5b1dVVc8H2t-wHmKR)**
+- **[📺 Video Demo (YouTube)](https://www.youtube.com/watch?v=TfxhVNkPQmY)**
+- **[📄 Kaggle Writeup](https://www.kaggle.com/competitions/gemini-3/writeups/warmify)**
 
 ---
 
