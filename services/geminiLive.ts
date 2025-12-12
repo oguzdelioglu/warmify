@@ -71,17 +71,22 @@ export class GeminiWorkoutCoach {
 
   async startSession() {
     this.callbacks.onStatusChange("Initializing System...");
-    
+
     // Initialize Audio
     try {
-        if (!audioContext) audioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
-        if (!inputAudioContext) inputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
+      if (!audioContext) audioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+      if (!inputAudioContext) inputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
     } catch (e) {
-        this.log(`Audio Init Failed: ${e}`, 'error');
-        return;
+      this.log(`Audio Init Failed: ${e}`, 'error');
+      return;
     }
 
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = import.meta.env.VITE_API_KEY || (process.env.API_KEY as string);
+    if (!apiKey) {
+      this.log("Missing API Key", 'error');
+      // Do not throw here to allow video to start, but logic will fail
+    }
+    const ai = new GoogleGenAI({ apiKey: apiKey || 'dummy_key_to_prevent_crash_until_connect' });
 
     const sessionPromise = ai.live.connect({
       model: 'gemini-2.5-flash-native-audio-preview-09-2025',
@@ -99,13 +104,13 @@ export class GeminiWorkoutCoach {
                 const args = fc.args as any;
                 this.callbacks.onHit(args.quality, args.feedback);
                 sessionPromise.then(s => s.sendToolResponse({
-                    functionResponses: { id: fc.id, name: fc.name, response: { result: "ack" } }
+                  functionResponses: { id: fc.id, name: fc.name, response: { result: "ack" } }
                 }));
               } else if (fc.name === 'registerMiss') {
                 const args = fc.args as any;
                 this.callbacks.onMiss(args.issue);
                 sessionPromise.then(s => s.sendToolResponse({
-                    functionResponses: { id: fc.id, name: fc.name, response: { result: "ack" } }
+                  functionResponses: { id: fc.id, name: fc.name, response: { result: "ack" } }
                 }));
               }
             }
@@ -147,40 +152,40 @@ export class GeminiWorkoutCoach {
 
   private async startAudioStream(sessionPromise: Promise<LiveSession>) {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        if (!inputAudioContext) return;
-        sourceNode = inputAudioContext.createMediaStreamSource(stream);
-        scriptProcessor = inputAudioContext.createScriptProcessor(4096, 1, 1);
-        scriptProcessor.onaudioprocess = (e) => {
-            const inputData = e.inputBuffer.getChannelData(0);
-            const visualData = new Uint8Array(inputData.length);
-            for(let i=0; i<inputData.length; i++) visualData[i] = Math.abs(inputData[i]) * 255; 
-            this.callbacks.onAudioData(visualData.slice(0, 64));
-            const pcmBlob = this.createBlob(inputData);
-            sessionPromise.then(s => s.sendRealtimeInput({ media: pcmBlob }));
-        };
-        sourceNode.connect(scriptProcessor);
-        scriptProcessor.connect(inputAudioContext.destination);
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (!inputAudioContext) return;
+      sourceNode = inputAudioContext.createMediaStreamSource(stream);
+      scriptProcessor = inputAudioContext.createScriptProcessor(4096, 1, 1);
+      scriptProcessor.onaudioprocess = (e) => {
+        const inputData = e.inputBuffer.getChannelData(0);
+        const visualData = new Uint8Array(inputData.length);
+        for (let i = 0; i < inputData.length; i++) visualData[i] = Math.abs(inputData[i]) * 255;
+        this.callbacks.onAudioData(visualData.slice(0, 64));
+        const pcmBlob = this.createBlob(inputData);
+        sessionPromise.then(s => s.sendRealtimeInput({ media: pcmBlob }));
+      };
+      sourceNode.connect(scriptProcessor);
+      scriptProcessor.connect(inputAudioContext.destination);
     } catch (e) { console.error(e); }
   }
 
   private startVideoStream(sessionPromise: Promise<LiveSession>) {
     const FPS = 2; // Keep low latency
     this.frameInterval = window.setInterval(() => {
-        if (!this.video || this.video.paused) return;
-        const ctx = this.canvas.getContext('2d');
-        if (!ctx) return;
-        this.canvas.width = this.video.videoWidth / 4;
-        this.canvas.height = this.video.videoHeight / 4;
-        ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
-        
-        // Add overlay text for Gemini context (It reads text in images well)
-        ctx.fillStyle = "white";
-        ctx.font = "20px sans-serif";
-        ctx.fillText(`CURRENT MOVE: ${this.currentExerciseName}`, 10, 30);
+      if (!this.video || this.video.paused) return;
+      const ctx = this.canvas.getContext('2d');
+      if (!ctx) return;
+      this.canvas.width = this.video.videoWidth / 4;
+      this.canvas.height = this.video.videoHeight / 4;
+      ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
 
-        const base64 = this.canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
-        sessionPromise.then(s => s.sendRealtimeInput({ media: { mimeType: 'image/jpeg', data: base64 } }));
+      // Add overlay text for Gemini context (It reads text in images well)
+      ctx.fillStyle = "white";
+      ctx.font = "20px sans-serif";
+      ctx.fillText(`CURRENT MOVE: ${this.currentExerciseName}`, 10, 30);
+
+      const base64 = this.canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
+      sessionPromise.then(s => s.sendRealtimeInput({ media: { mimeType: 'image/jpeg', data: base64 } }));
     }, 1000 / FPS);
   }
 
@@ -219,8 +224,8 @@ export class GeminiWorkoutCoach {
     this.session = null;
     if (this.frameInterval) clearInterval(this.frameInterval);
     if (scriptProcessor && inputAudioContext) {
-        scriptProcessor.disconnect();
-        sourceNode?.disconnect();
+      scriptProcessor.disconnect();
+      sourceNode?.disconnect();
     }
     sources.forEach(s => s.stop());
     sources.clear();
