@@ -100,6 +100,11 @@ export default function App() {
     const gameLoopRef = useRef<number | null>(null);
     const accumulatedErrorRef = useRef<number>(0); // Track consecutive bad frames
     const prevLandmarksRef = useRef<any[] | null>(null); // For velocity tracking
+    const movementStateRef = useRef<{ phase: 'READY' | 'HOLD' | 'COOLDOWN'; lastTriggerTime: number; triggerCount: number; }>({
+        phase: 'READY',
+        lastTriggerTime: 0,
+        triggerCount: 0
+    });
 
     useEffect(() => { localStorage.setItem('warmify_user_stats', JSON.stringify(userStats)); }, [userStats]);
     useEffect(() => { localStorage.setItem('warmify_settings', JSON.stringify(settings)); }, [settings]);
@@ -282,30 +287,32 @@ export default function App() {
                         const currentGameState = gameStateRef.current; // Use Ref to get latest state
                         if (currentGameState.isSessionActive && currentGameState.phase === 'ACTIVE') {
                             const currentExName = EXERCISES[currentGameState.currentExerciseIndex].name;
-                            const evalResult = MoveEvaluator.evaluate(currentExName, results.poseLandmarks, prevLandmarksRef.current);
+                            const evalResult = MoveEvaluator.evaluate(currentExName, results.poseLandmarks, prevLandmarksRef.current, movementStateRef.current);
 
-                            // Update previous landmarks for next frame
+                            // Update state
                             prevLandmarksRef.current = results.poseLandmarks;
+                            movementStateRef.current = evalResult.nextState;
 
-                            // Update Incorrect Joints for RigOverlay
-                            if (evalResult.isMatch) {
-                                // Debounce hits slightly
-                                const now = Date.now();
-                                if (now - currentGameState.lastHitTime > 800) {
-                                    handleHit("PERFECT", evalResult.feedback);
-                                    accumulatedErrorRef.current = 0; // Reset error on hit
-                                }
+                            // LOGIC UPDATE: Only hit if Rep Triggered (State Machine Transition)
+                            if (evalResult.didTriggerRep) {
+                                handleHit("PERFECT", evalResult.feedback);
+                                accumulatedErrorRef.current = 0;
                             } else {
-                                // Accumulate error frames
-                                accumulatedErrorRef.current += 1;
-
-                                // approx 45 frames = 1.5 seconds of bad form
-                                if (accumulatedErrorRef.current > 45) {
-                                    handleMiss("Wrong Move!");
-                                    accumulatedErrorRef.current = 0; // Reset after penalty
+                                // Provide live feedback via overlay if needed, or handle errors
+                                if (!evalResult.isMatch) {
+                                    // Only count errors if NOT in a valid holding state? 
+                                    // Actually strictly accumulating misses might be too harsh with state machine now.
+                                    // Let's keep miss logic for "MoveEvaluator said unmatched".
+                                    // But MoveEvaluator might return Match=true for "Guard" but trigger=False.
+                                    // So we rely on isMatch for Misses.
+                                    accumulatedErrorRef.current += 1;
+                                    if (accumulatedErrorRef.current > 60) { // Slower miss
+                                        handleMiss(evalResult.feedback); // Use evaluator feedback
+                                    }
+                                } else {
+                                    accumulatedErrorRef.current = 0;
                                 }
                             }
-
                             // Update incorrect joints state (debounced)
                             setGameState(prev => {
                                 if (JSON.stringify(prev.incorrectJoints) === JSON.stringify(evalResult.incorrectJoints)) return prev;

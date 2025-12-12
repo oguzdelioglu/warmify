@@ -4,11 +4,20 @@
 // MediaPipe Body 33 Keypoints
 // 11=L_Shoulder, 12=R_Shoulder, 13=L_Elbow, 14=R_Elbow, 15=L_Wrist, 16=R_Wrist
 
+// State Definition
+export interface MovementState {
+    phase: 'READY' | 'HOLD' | 'COOLDOWN';
+    lastTriggerTime: number;
+    triggerCount: number;
+}
+
 export interface EvaluationResult {
     score: number; // 0-100
     feedback: string;
     incorrectJoints: string[]; // List of joint names to color RED
     isMatch: boolean;
+    didTriggerRep: boolean; // TRUE only when a full rep completes
+    nextState: MovementState;
 }
 
 // Helper to calculate angle between three points (A, B, C)
@@ -21,132 +30,192 @@ function calculateAngle(a: any, b: any, c: any): number {
 }
 
 // Evaluators for specific moves
-const Evaluators: Record<string, (landmarks: any[], prevLandmarks?: any[] | null) => EvaluationResult> = {
+const Evaluators: Record<string, (lm: any[], prevLm: any[] | null, state: MovementState) => EvaluationResult> = {
 
-    'Overhead Reach': (lm) => {
+    'Overhead Reach': (lm, prevLm, state) => {
+        // State Machine:
+        // READY: Hands below shoulders.
+        // TRIGGER: Hands above head AND arms straight.
+        // Action: Must go READY -> TRIGGER to count.
+
+        const now = Date.now();
+        const handsAboveHead = lm[15].y < lm[0].y && lm[16].y < lm[0].y;
+        const handsBelowShoulders = lm[15].y > lm[11].y && lm[16].y > lm[12].y;
+
+        let nextState = { ...state };
+        let isMatch = false;
+        let didTriggerRep = false;
+        let feedback = "Get Ready: Lower Arms";
+        let incorrect: string[] = [];
+
+        // Check geometry for scoring regardless of state (for coloring)
         const leftArmAngle = calculateAngle(lm[11], lm[13], lm[15]);
         const rightArmAngle = calculateAngle(lm[12], lm[14], lm[16]);
-        const leftShoulderAngle = calculateAngle(lm[23], lm[11], lm[13]); // Hip-Shoulder-Elbow
-        const rightShoulderAngle = calculateAngle(lm[24], lm[12], lm[14]);
+        const armsStraight = leftArmAngle > 140 && rightArmAngle > 140;
 
-        const handsAboveHead = lm[15].y < lm[0].y && lm[16].y < lm[0].y; // Wrists above nose
-        const armsStraight = leftArmAngle > 150 && rightArmAngle > 150;
+        if (handsAboveHead && armsStraight) isMatch = true;
+        if (!processArmsCheck(leftArmAngle, 140)) incorrect.push('left_elbow');
+        if (!processArmsCheck(rightArmAngle, 140)) incorrect.push('right_elbow');
 
-        const incorrect: string[] = [];
-        if (!processArmsCheck(leftArmAngle, 150)) incorrect.push('left_elbow');
-        if (!processArmsCheck(rightArmAngle, 150)) incorrect.push('right_elbow');
-        if (!handsAboveHead) incorrect.push('wrists');
+        if (state.phase === 'READY') {
+            if (handsAboveHead && armsStraight) {
+                // Triggered!
+                nextState.phase = 'HOLD';
+                nextState.lastTriggerTime = now;
+                didTriggerRep = true;
+                feedback = "PERFECT REACH!";
+            } else {
+                feedback = "Reach Up!";
+            }
+        } else if (state.phase === 'HOLD') {
+            // User is holding the pose.
+            feedback = "Good Hold! Return Down.";
+            if (handsBelowShoulders) {
+                nextState.phase = 'READY'; // Reset
+                feedback = "Ready for next rep";
+            }
+        } else if (state.phase === 'COOLDOWN') {
+            // Not used yet for this move, but standardizing
+            nextState.phase = 'READY';
+        }
 
-        const score = (handsAboveHead ? 50 : 0) + (armsStraight ? 50 : 20);
+        return { score: isMatch ? 100 : 0, feedback, incorrectJoints: incorrect, isMatch, didTriggerRep, nextState };
+    },
+
+    'T-Pose Pulses': (lm, prevLm, state) => {
+        const now = Date.now();
+        const isTPose = Math.abs(lm[11].y - lm[13].y) < 0.2 && Math.abs(lm[12].y - lm[14].y) < 0.2;
+        let nextState = { ...state };
+        let didTriggerRep = false;
+
+        // Velocity trigger
+        if (now - state.lastTriggerTime > 600) {
+            if (isTPose && checkVelocity(lm, prevLm, [11, 12, 13, 14], 0.8)) {
+                didTriggerRep = true;
+                nextState.lastTriggerTime = now;
+            }
+        }
 
         return {
-            score,
-            isMatch: score > 80,
-            feedback: !handsAboveHead ? "Reach Higher!" : !armsStraight ? "Straighten Arms!" : "PERFECT!",
-            incorrectJoints: incorrect
+            score: isTPose ? 100 : 30,
+            isMatch: isTPose,
+            didTriggerRep,
+            feedback: isTPose ? "PULSE!" : "Arms Out!",
+            incorrectJoints: isTPose ? [] : ['shoulders'],
+            nextState
         };
     },
 
-    'T-Pose Pulses': (lm) => {
+    'Hooks': (lm, prevLm, state) => {
+        const now = Date.now();
+        const handsNearFace = Math.abs(lm[15].x - lm[0].x) < 0.2 || Math.abs(lm[16].x - lm[0].x) < 0.2;
+
         const leftArmAng = calculateAngle(lm[11], lm[13], lm[15]);
         const rightArmAng = calculateAngle(lm[12], lm[14], lm[16]);
-        const leftShoulderHeight = Math.abs(lm[11].y - lm[13].y); // Elbow should be close to shoulder Y
-        const rightShoulderHeight = Math.abs(lm[12].y - lm[14].y);
+        const isHook = (leftArmAng > 70 && leftArmAng < 120) || (rightArmAng > 70 && rightArmAng < 120);
+        const fast = checkVelocity(lm, prevLm, [15, 16], 2.0);
 
-        const armsStraight = leftArmAng > 160 && rightArmAng > 160;
-        const armsHorizontal = leftShoulderHeight < 0.15 && rightShoulderHeight < 0.15; // Tolerance
+        let nextState = { ...state };
+        let didTriggerRep = false;
 
-        const incorrect: string[] = [];
-        if (!armsStraight) incorrect.push('elbows');
-        if (!armsHorizontal) incorrect.push('shoulders');
-
-        const score = (armsStraight ? 50 : 10) + (armsHorizontal ? 50 : 10);
-        return {
-            score,
-            isMatch: score > 80,
-            feedback: !armsStraight ? "Extend Arms!" : !armsHorizontal ? "Level Your Arms!" : "HOLD IT!",
-            incorrectJoints: incorrect
-        };
-    },
-
-    'Hooks': (lm) => {
-        // Boxing Hook: Elbow is bent ~90 deg, arm is horizontal
-        const leftArmAng = calculateAngle(lm[11], lm[13], lm[15]);
-        const rightArmAng = calculateAngle(lm[12], lm[14], lm[16]);
-
-        // Detect if EITHER arm is in a hook position
-        const isLeftHook = leftArmAng > 70 && leftArmAng < 110 && Math.abs(lm[11].y - lm[13].y) < 0.2;
-        const isRightHook = rightArmAng > 70 && rightArmAng < 110 && Math.abs(lm[12].y - lm[14].y) < 0.2;
-
-        if (isLeftHook || isRightHook) {
-            return { score: 100, isMatch: true, feedback: "NICE HOOK!", incorrectJoints: [] };
-        }
-        return { score: 30, isMatch: false, feedback: "Keep Elbows High!", incorrectJoints: ['elbows'] };
-    },
-
-    'Uppercuts': (lm) => {
-        // Uppercut: Wrist is close to shoulder X, below shoulder Y, elbow bent < 90
-        // Simplified: Detect fast upward motion usually, but here checking static pose snapshot availability
-        // Static pose: Elbow tucket, wrist high.
-        const leftArmAng = calculateAngle(lm[11], lm[13], lm[15]);
-        const rightArmAng = calculateAngle(lm[12], lm[14], lm[16]);
-
-        const isLeftCut = leftArmAng < 60 && lm[15].y < lm[11].y; // Hand above shoulder
-        const isRightCut = rightArmAng < 60 && lm[16].y < lm[12].y;
-
-        if (isLeftCut || isRightCut) {
-            return { score: 100, isMatch: true, feedback: "POWER!", incorrectJoints: [] };
-        }
-        return { score: 20, isMatch: false, feedback: "Punch Up!", incorrectJoints: ['wrists'] };
-    },
-
-    'Shoulder Press': (lm) => {
-        // Goal post position -> Up
-        // Check for "Goal Post" (start) OR "Up" (end)
-        const leftArmAng = calculateAngle(lm[11], lm[13], lm[15]);
-        const rightArmAng = calculateAngle(lm[12], lm[14], lm[16]);
-
-        // Check if hands are above shoulders
-        const handsUp = lm[15].y < lm[11].y && lm[16].y < lm[12].y;
-
-        if (handsUp) {
-            if (leftArmAng > 150 && rightArmAng > 150) return { score: 100, isMatch: true, feedback: "FULL EXTENSION!", incorrectJoints: [] };
-            if (leftArmAng > 80 && rightArmAng > 80) return { score: 80, isMatch: true, feedback: "PUSH UP!", incorrectJoints: [] };
+        if (state.phase === 'READY') {
+            if (isHook && fast) {
+                nextState.phase = 'COOLDOWN';
+                nextState.lastTriggerTime = now;
+                didTriggerRep = true;
+            }
+        } else {
+            if (now - state.lastTriggerTime > 400 && handsNearFace) {
+                nextState.phase = 'READY';
+            }
         }
 
-        return { score: 30, isMatch: false, feedback: "Hands Up!", incorrectJoints: ['shoulders'] };
+        return { score: 100, isMatch: isHook, feedback: didTriggerRep ? "NICE HOOK!" : "Guard Up & Hook!", incorrectJoints: [], didTriggerRep, nextState };
     },
 
-    'Shadow Box': (lm, prevLm) => {
-        if (!prevLm) return { score: 50, isMatch: true, feedback: "Move Fast!", incorrectJoints: [] };
+    'Uppercuts': (lm, prevLm, state) => {
+        const now = Date.now();
+        const isCut = (lm[15].y < lm[11].y) || (lm[16].y < lm[12].y);
+        const fast = checkVelocity(lm, prevLm, [15, 16], 2.0);
+        const handsLow = lm[15].y > lm[11].y && lm[16].y > lm[12].y; // Reset position
 
-        // Calculate average velocity of wrists
-        const leftWristV = Math.abs(lm[15].x - prevLm[15].x) + Math.abs(lm[15].y - prevLm[15].y);
-        const rightWristV = Math.abs(lm[16].x - prevLm[16].x) + Math.abs(lm[16].y - prevLm[16].y);
+        let nextState = { ...state };
+        let didTriggerRep = false;
 
-        const movement = (leftWristV + rightWristV) * 100; // Scale up
-
-        if (movement > 2) {
-            return { score: 100, isMatch: true, feedback: "Keep it up!", incorrectJoints: [] };
+        if (state.phase === 'READY') {
+            if (isCut && fast) {
+                nextState.phase = 'COOLDOWN';
+                nextState.lastTriggerTime = now;
+                didTriggerRep = true;
+            }
+        } else {
+            if (now - state.lastTriggerTime > 400 && handsLow) {
+                nextState.phase = 'READY';
+            }
         }
-        return { score: 20, isMatch: false, feedback: "Faster!", incorrectJoints: ['wrists'] };
+        return { score: 100, isMatch: isCut, feedback: didTriggerRep ? "POWER!" : "Hands Low & Punch Up!", incorrectJoints: [], didTriggerRep, nextState };
     },
 
-    // Default fallback
-    'Freestyle': () => ({ score: 100, isMatch: true, feedback: "Keep Moving!", incorrectJoints: [] })
+    'Shoulder Press': (lm, prevLm, state) => {
+        const handsUp = lm[15].y < lm[0].y && lm[16].y < lm[0].y;
+        const handsDown = lm[15].y > lm[0].y && lm[16].y > lm[0].y;
+
+        let nextState = { ...state };
+        let didTriggerRep = false;
+
+        if (state.phase === 'READY') {
+            if (handsUp) {
+                nextState.phase = 'HOLD';
+                didTriggerRep = true;
+            }
+        } else if (state.phase === 'HOLD') {
+            if (handsDown) {
+                nextState.phase = 'READY';
+            }
+        }
+
+        return { score: handsUp ? 100 : 50, isMatch: handsUp, feedback: didTriggerRep ? "PRESSED!" : "Push Up... Then Down", incorrectJoints: [], didTriggerRep, nextState };
+    },
+
+    'Shadow Box': (lm, prevLm, state) => {
+        const now = Date.now();
+        const fast = checkVelocity(lm, prevLm, [15, 16], 2.5);
+        let nextState = { ...state };
+        let didTriggerRep = false;
+
+        if (now - state.lastTriggerTime > 300 && fast) {
+            didTriggerRep = true;
+            nextState.lastTriggerTime = now;
+        }
+
+        return { score: 100, isMatch: true, feedback: "Keep Moving!", incorrectJoints: [], didTriggerRep, nextState };
+    },
+
+    'Freestyle': (lm, prevLm, state) => ({ score: 100, isMatch: true, feedback: "Keep Moving!", incorrectJoints: [], didTriggerRep: false, nextState: state })
 };
 
 function processArmsCheck(angle: number, target: number): boolean {
     return angle > target;
 }
 
+// Check average movement of specified joints (velocity thresholding)
+function checkVelocity(cur: any[], prev: any[] | null | undefined, indices: number[], threshold: number): boolean {
+    if (!prev) return true; // optimistic start for first frame
+    let totalVel = 0;
+    indices.forEach(idx => {
+        totalVel += Math.abs(cur[idx].x - prev[idx].x) + Math.abs(cur[idx].y - prev[idx].y);
+    });
+    const avgVel = (totalVel / indices.length) * 100; // scale
+    return avgVel > threshold;
+}
+
 export class MoveEvaluator {
-    static evaluate(exerciseName: string, landmarks: any[], prevLandmarks: any[] | null = null): EvaluationResult {
+    static evaluate(exerciseName: string, landmarks: any[], prevLandmarks: any[] | null, currentState: MovementState): EvaluationResult {
         if (!landmarks || landmarks.length < 33) {
-            return { score: 0, feedback: "No Pose Detected", incorrectJoints: [], isMatch: false };
+            return { score: 0, feedback: "No Pose Detected", incorrectJoints: [], isMatch: false, didTriggerRep: false, nextState: currentState };
         }
 
         const evaluator = Evaluators[exerciseName] || Evaluators['Freestyle'];
-        return evaluator(landmarks, prevLandmarks);
+        return evaluator(landmarks, prevLandmarks, currentState);
     }
 }
