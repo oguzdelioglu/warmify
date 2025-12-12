@@ -31,6 +31,20 @@
 
 ---
 
+## 📱 App Store & Play Store Configuration
+
+### Bundle ID
+- **ID:** `com.odel.warmify`
+
+### Subscription Plan
+The app uses a single annual subscription model.
+
+- **Product ID:** `warmify_annually`
+- **Price:** $59.99 / year
+- **Billing Period:** 1 Year
+
+---
+
 ## 🔴 The Problem
 
 Working out at home is difficult. Without a trainer, users struggle with **form** ("Am I squatting low enough?") and **motivation** ("This is boring"). Personal trainers are expensive, and existing apps are just passive video players that don't know if you are actually doing the work.
@@ -62,7 +76,7 @@ Gemini generated the complex logic for the `LevelingSystem`, `RigOverlay`, and `
 *   **Visuals:** 
     *   **Three.js:** Procedurally generated background environments that react to workout intensity.
     *   **Canvas API:** Drawing the "Rig Overlay" (Cyber, Mech, Spirit avatars) over the user's video feed.
-*   **Deployment:** PWA (Progressive Web App) standards for native-like installation on iOS and Android.
+*   **Deployment:** Capacitor (iOS/Android) & PWA.
 
 ---
 

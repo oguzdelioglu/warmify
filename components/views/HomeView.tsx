@@ -14,12 +14,7 @@ interface HomeViewProps {
 
 // SVG Logo Component
 export const WarmifyLogo = () => (
-    <svg width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block mr-2">
-        <rect width="512" height="512" rx="120" fill="transparent" />
-        <path d="M96 256 L176 256 L224 384 L288 128 L336 256 L416 256" stroke="#22d3ee" strokeWidth="60" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="224" cy="384" r="30" fill="#f472b6" />
-        <circle cx="288" cy="128" r="30" fill="#f472b6" />
-    </svg>
+    <img src="/logo.png" alt="Warmify" className="w-10 h-10 inline-block mr-2 rounded-xl shadow-lg" />
 );
 
 export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView, startWorkout, newUnlockedBadge }) => {

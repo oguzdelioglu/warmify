@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:ios": "vite build && cap sync && cap open ios",
+    "build:android": "vite build && cap sync && cap open android",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -22,6 +24,7 @@
     "three": "^0.181.2"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",

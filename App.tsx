@@ -42,9 +42,14 @@ const DEFAULT_SETTINGS: UserSettings = {
 };
 
 // Header and other views extracted to components
+import { SplashScreen } from './components/SplashScreen';
 
 export default function App() {
     const [view, setView] = useState<AppView>(AppView.HOME);
+    const [showSplash, setShowSplash] = useState(true);
+
+
+
 
     // --- STATE ---
     const [userStats, setUserStats] = useState<UserStats>(() => {
@@ -357,6 +362,11 @@ export default function App() {
     };
 
     // --- RENDER ---
+    if (showSplash) {
+        return <SplashScreen onComplete={() => setShowSplash(false)} />;
+    }
+
+
     if (view === AppView.ONBOARDING) return <Onboarding onComplete={() => { localStorage.setItem('warmify_onboarding_complete', 'true'); setHasCompletedOnboarding(true); setView(AppView.PAYWALL); }} />;
     if (view === AppView.PAYWALL) return <Paywall onClose={() => setView(AppView.HOME)} onPurchaseSuccess={() => { setUserStats(prev => ({ ...prev, isPremium: true })); setView(AppView.HOME); }} />;
 
