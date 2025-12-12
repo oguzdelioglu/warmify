@@ -21,7 +21,7 @@ function calculateAngle(a: any, b: any, c: any): number {
 }
 
 // Evaluators for specific moves
-const Evaluators: Record<string, (landmarks: any[]) => EvaluationResult> = {
+const Evaluators: Record<string, (landmarks: any[], prevLandmarks?: any[] | null) => EvaluationResult> = {
 
     'Overhead Reach': (lm) => {
         const leftArmAngle = calculateAngle(lm[11], lm[13], lm[15]);
@@ -117,6 +117,21 @@ const Evaluators: Record<string, (landmarks: any[]) => EvaluationResult> = {
         return { score: 30, isMatch: false, feedback: "Hands Up!", incorrectJoints: ['shoulders'] };
     },
 
+    'Shadow Box': (lm, prevLm) => {
+        if (!prevLm) return { score: 50, isMatch: true, feedback: "Move Fast!", incorrectJoints: [] };
+
+        // Calculate average velocity of wrists
+        const leftWristV = Math.abs(lm[15].x - prevLm[15].x) + Math.abs(lm[15].y - prevLm[15].y);
+        const rightWristV = Math.abs(lm[16].x - prevLm[16].x) + Math.abs(lm[16].y - prevLm[16].y);
+
+        const movement = (leftWristV + rightWristV) * 100; // Scale up
+
+        if (movement > 2) {
+            return { score: 100, isMatch: true, feedback: "Keep it up!", incorrectJoints: [] };
+        }
+        return { score: 20, isMatch: false, feedback: "Faster!", incorrectJoints: ['wrists'] };
+    },
+
     // Default fallback
     'Freestyle': () => ({ score: 100, isMatch: true, feedback: "Keep Moving!", incorrectJoints: [] })
 };
@@ -126,12 +141,12 @@ function processArmsCheck(angle: number, target: number): boolean {
 }
 
 export class MoveEvaluator {
-    static evaluate(exerciseName: string, landmarks: any[]): EvaluationResult {
+    static evaluate(exerciseName: string, landmarks: any[], prevLandmarks: any[] | null = null): EvaluationResult {
         if (!landmarks || landmarks.length < 33) {
             return { score: 0, feedback: "No Pose Detected", incorrectJoints: [], isMatch: false };
         }
 
         const evaluator = Evaluators[exerciseName] || Evaluators['Freestyle'];
-        return evaluator(landmarks);
+        return evaluator(landmarks, prevLandmarks);
     }
 }

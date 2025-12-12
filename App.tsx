@@ -99,6 +99,7 @@ export default function App() {
 
     const gameLoopRef = useRef<number | null>(null);
     const accumulatedErrorRef = useRef<number>(0); // Track consecutive bad frames
+    const prevLandmarksRef = useRef<any[] | null>(null); // For velocity tracking
 
     useEffect(() => { localStorage.setItem('warmify_user_stats', JSON.stringify(userStats)); }, [userStats]);
     useEffect(() => { localStorage.setItem('warmify_settings', JSON.stringify(settings)); }, [settings]);
@@ -281,7 +282,10 @@ export default function App() {
                         const currentGameState = gameStateRef.current; // Use Ref to get latest state
                         if (currentGameState.isSessionActive && currentGameState.phase === 'ACTIVE') {
                             const currentExName = EXERCISES[currentGameState.currentExerciseIndex].name;
-                            const evalResult = MoveEvaluator.evaluate(currentExName, results.poseLandmarks);
+                            const evalResult = MoveEvaluator.evaluate(currentExName, results.poseLandmarks, prevLandmarksRef.current);
+
+                            // Update previous landmarks for next frame
+                            prevLandmarksRef.current = results.poseLandmarks;
 
                             // Update Incorrect Joints for RigOverlay
                             if (evalResult.isMatch) {
@@ -489,6 +493,14 @@ export default function App() {
                                 onMissTest={() => handleMiss("DEBUG MISS")}
                                 onToggleAutoSim={() => setSimAutoPlay(!simAutoPlay)}
                                 isAutoSim={simAutoPlay}
+                                onForceNextExercise={() => setGameState(prev => ({ ...prev, currentExerciseIndex: (prev.currentExerciseIndex + 1) % EXERCISES.length }))}
+                                onForcePrevExercise={() => setGameState(prev => ({ ...prev, currentExerciseIndex: (prev.currentExerciseIndex - 1 + EXERCISES.length) % EXERCISES.length }))}
+                                onAddXP={() => setUserStats(prev => ({ ...prev, xp: prev.xp + 100 }))}
+                                currentExerciseIndex={gameState.currentExerciseIndex}
+                                accumulatedError={accumulatedErrorRef.current}
+                                toggleSeatedMode={() => setSettings(prev => ({ ...prev, seatedMode: !prev.seatedMode }))}
+                                isSeated={settings.seatedMode}
+                                exerciseName={currentExercise.name}
                             />
                         )}
                         <div className="absolute inset-0 z-0">

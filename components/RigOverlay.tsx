@@ -247,6 +247,8 @@ const RigOverlay: React.FC<RigOverlayProps> = ({
             let bodyY = cy;
             let lArmA = Math.PI / 2 + 0.3; // Default
             let rArmA = Math.PI / 2 - 0.3; // Default
+            let lForearmA: number | null = null;
+            let rForearmA: number | null = null;
 
             const animEx = mode === 'PREVIEW' ? 'Jumping Jacks' : exercise;
 
@@ -262,32 +264,63 @@ const RigOverlay: React.FC<RigOverlayProps> = ({
             } else if (animEx === 'High Knees') {
                 if (!seatedMode) legAngle = Math.sin(tickVal * speed * 1.5);
             } else if (animEx === 'Shadow Boxing') {
-                armAngle = Math.sin(tickVal * speed * 1.5);
+                const phase = Math.sin(tickVal * speed * 2);
+                // Alternating jabs
+                if (phase > 0) {
+                    lArmA = 1.5; // Horizontal Left
+                    lForearmA = 1.5;
+                    rArmA = 1.2; // Guard Up-Right
+                    rForearmA = 1.2;
+                } else {
+                    rArmA = 1.8; // Horizontal Right (via Mirror PI-1.8 = 1.3.. wait Check logic)
+                    // If rArmA = PI - 1.5 = 1.6 (Horizontal).
+                    rArmA = Math.PI - 1.5;
+                    rForearmA = Math.PI - 1.5;
+                    lArmA = 2.0; // Guard Up-Left
+                    lForearmA = 2.0;
+                }
             } else if (animEx === 'Overhead Reach') {
                 const phase = Math.sin(tickVal * speed * 0.8);
-                // Arms go from T-pose (0) to Up (PI/2)
-                const reach = (phase + 1) / 2; // 0 to 1
+                const reach = (phase + 1) / 2;
                 armAngle = (Math.PI / 2) * reach;
-                // Side bend?
             } else if (animEx === 'T-Pose Pulses') {
-                const phase = Math.sin(tickVal * speed * 2); // Fast pulses
-                armAngle = 0.1 * phase; // Small movement around horizontal
+                const phase = Math.sin(tickVal * speed * 2);
+                armAngle = 0.1 * phase;
             } else if (animEx === 'Shoulder Press') {
                 const phase = Math.sin(tickVal * speed);
-                // Hands from shoulder height to full extension
                 const press = (phase + 1) / 2;
-                // Complex to keyframe joints perfectly, simplifying angle
                 armAngle = (Math.PI / 2.2) * press;
+                // Keep forarms vertical
+                lForearmA = 0;
+                rForearmA = 0;
             } else if (animEx === 'Hooks') {
-                // Alternating hooks
                 const punch = Math.sin(tickVal * speed * 1.5);
-                if (punch > 0) lArmA = Math.PI / 2 + 1.5; // Hook shape
-                else rArmA = Math.PI / 2 - 1.5;
+                if (punch > 0) {
+                    lArmA = Math.PI / 2 + 1.5;
+                    lForearmA = Math.PI / 2 + 2.5; // Hook inward
+                } else {
+                    rArmA = Math.PI / 2 - 1.5;
+                    rForearmA = Math.PI / 2 - 2.5;
+                }
             } else if (animEx === 'Uppercuts') {
                 const punch = Math.sin(tickVal * speed * 2);
-                // Vertical motion simulation
-                if (punch > 0) lArmA = Math.PI / 2 + 0.5;
-                else rArmA = Math.PI / 2 - 0.5;
+                if (punch > 0) {
+                    // Left Uppercut: Elbow Down, Fist Up
+                    lArmA = 0.5; // Down Left
+                    lForearmA = 2.5; // Up Inward
+
+                    // Right Guard
+                    rArmA = 1.2;
+                    rForearmA = 1.2;
+                } else {
+                    // Right Uppercut: Elbow Down, Fist Up
+                    rArmA = 2.5; // Down Right (PI - 2.5 = 0.6 => Cos + => Down)
+                    rForearmA = 1.0; // Up Inward (PI - 1.0 = 2.1 => Cos - => Up)
+
+                    // Left Guard
+                    lArmA = 2.0;
+                    lForearmA = 2.0;
+                }
             }
 
             const neckY = bodyY - scale * 0.8;
@@ -297,8 +330,8 @@ const RigOverlay: React.FC<RigOverlayProps> = ({
             const armLen = scale * 0.45;
             const legLen = scale * 0.5;
 
-            // Adjust arm angles based on calculation
-            if (animEx !== 'Hooks' && animEx !== 'Uppercuts' && animEx !== 'Shadow Boxing') {
+            // Adjust arm angles based on calculation for basic moves
+            if (!['Hooks', 'Uppercuts', 'Shadow Boxing'].includes(animEx)) {
                 lArmA = Math.PI / 2 + 0.3 - armAngle;
                 rArmA = Math.PI / 2 - 0.3 + armAngle;
             }
@@ -317,13 +350,40 @@ const RigOverlay: React.FC<RigOverlayProps> = ({
                 };
             };
 
+            const lForearmAngleFinal = lForearmA !== null ? lForearmA : lArmA;
+            const rForearmAngleFinal = rForearmA !== null ? rForearmA : rArmA;
+
             const cxVal = 0.5;
             const lShoulder = { x: cxVal - shoulderWidth, y: shoulderY };
             const rShoulder = { x: cxVal + shoulderWidth, y: shoulderY };
             const lElbow = polar(lShoulder.x, lShoulder.y, lArmA, armLen);
-            const lWrist = polar(lElbow.x, lElbow.y, lArmA, armLen);
+            const lWrist = polar(lElbow.x, lElbow.y, lForearmAngleFinal, armLen);
             const rElbow = { x: rShoulder.x + Math.sin(Math.PI - rArmA) * armLen * (h / w), y: shoulderY + Math.cos(Math.PI - rArmA) * armLen };
-            const rWrist = { x: rElbow.x + Math.sin(Math.PI - rArmA) * armLen * (h / w), y: rElbow.y + Math.cos(Math.PI - rArmA) * armLen };
+            // Recalculate Right Wrist with generic polar if needed or custom
+            // Actually reusing custom logic for right side is messy, better to make polar generic but `rArmA` is usually mirrored. 
+            // Let's use polar for Right side too but careful with angle direction. 
+            // My polar function: x = ox - sin(angle)...
+            // For Right side: angle is often relative to vertical down?
+            // Existing `rElbow` logic: 
+            // x: rShoulder.x + sin(PI - rArmA) ... which is sin(rArmA) if rArmA is from vertical?
+
+            // Let's simplify and assume angles are standard 0=down, PI/2=Right?
+            // Current lArmA default: PI/2 + 0.3 ~ 2.0 rad (approx 115 deg - down left)
+            // polar() uses `oy + cos(angle)`. cos(2.0) is negative (up). 
+            // Wait: cos(0) = 1 (down). sin(0) = 0.
+            // lArmA = PI/2 + 0.3. cos(PI/2+0.3) = -sin(0.3) ~ -0.3 (UP).
+            // So 0 is DOWN. PI is UP.
+            // Screen coords: y increases downwards. 
+            // So cos(0)=1 => y + len. Correct. 0 is Down.
+
+            // Re-eval Uppercuts:
+            // lArmA = PI (UP). lForearmA = PI/4 (Down Right?). 
+            // Logic seems inverted based on assumption.
+
+            // Let's stick to existing drawing logic for `rElbow` and adapt wrist:
+            const rWristX = rElbow.x + Math.sin(Math.PI - rForearmAngleFinal) * armLen * (h / w);
+            const rWristY = rElbow.y + Math.cos(Math.PI - rForearmAngleFinal) * armLen;
+            const rWrist = { x: rWristX, y: rWristY };
 
             const hips = { x: cxVal, y: hipY };
             const lHip = { x: cxVal - shoulderWidth * 0.5, y: hipY };
