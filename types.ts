@@ -17,7 +17,7 @@ export type CharacterSkinId = number; // 0 to 4
 export interface UserSettings {
   isDebugMode: boolean;
   soundEnabled: boolean;
-  seatedMode: boolean; 
+  seatedMode: boolean;
   characterArchetype: CharacterArchetype;
   characterSkin: CharacterSkinId;
 }
@@ -42,11 +42,12 @@ export enum AppView {
   PAYWALL = 'PAYWALL',
   HOME = 'HOME',
   WORKOUT = 'WORKOUT',
-  RESULTS = 'RESULTS', 
+  RESULTS = 'RESULTS',
   BADGE_REVEAL = 'BADGE_REVEAL', // New separate view for unlocking badges
   LEADERBOARD = 'LEADERBOARD',
   SETTINGS = 'SETTINGS',
   LEVELING = 'LEVELING', // New View
+  RATE_US = 'RATE_US',
 }
 
 export interface WorkoutResultData {
@@ -59,7 +60,7 @@ export interface WorkoutResultData {
   newLevel: number;
 }
 
-export type ExerciseType = 'Jumping Jacks' | 'Squats' | 'High Knees' | 'Shadow Boxing' | 'Rest';
+export type ExerciseType = 'Jumping Jacks' | 'Squats' | 'High Knees' | 'Shadow Boxing' | 'Overhead Reach' | 'T-Pose Pulses' | 'Hooks' | 'Uppercuts' | 'Shoulder Press' | 'Rest';
 
 export interface ExerciseDef {
   id: ExerciseType;
@@ -79,7 +80,8 @@ export interface GameState {
   currentExerciseIndex: number;
   timeRemaining: number;
   phase: 'WARMUP' | 'COUNTDOWN' | 'ACTIVE' | 'COOLDOWN';
-  lastHitTime: number; 
+  lastHitTime: number;
+  incorrectJoints?: string[];
 }
 
 export interface OnboardingAnswers {

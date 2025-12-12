@@ -12,10 +12,7 @@ interface HomeViewProps {
     newUnlockedBadge: string | null;
 }
 
-// SVG Logo Component
-export const WarmifyLogo = () => (
-    <img src="/logo.png" alt="Warmify" className="w-10 h-10 inline-block mr-2 rounded-xl shadow-lg" />
-);
+
 
 export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView, startWorkout, newUnlockedBadge }) => {
     return (

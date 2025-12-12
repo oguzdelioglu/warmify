@@ -2,7 +2,7 @@ import React from 'react';
 import { AppView, UserStats } from '../types';
 import { Settings as SettingsIcon } from 'lucide-react';
 import { SoundEngine } from '../services/audioService';
-import { WarmifyLogo } from './views/HomeView';
+import { WarmifyLogo } from './Branding';
 
 interface HeaderProps {
     view: AppView;

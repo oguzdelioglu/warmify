@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ThreeScene from './components/ThreeScene';
 import { AppView, UserStats, GameState, LeaderboardEntry, UserSettings, LogMessage, ExerciseDef, WorkoutResultData } from './types';
-import { GeminiWorkoutCoach } from './services/geminiLive';
 import { PoseService } from './services/poseService'; // New Service
+import { MoveEvaluator } from './services/MoveEvaluator'; // New Geometry Engine
 import { XPBar, TrophyCase, HealthBar } from './components/Gamification';
 import Onboarding from './components/Onboarding';
 import Settings from './components/Settings';
@@ -12,6 +12,7 @@ import BadgeReveal from './components/BadgeReveal';
 import DebugConsole from './components/DebugConsole';
 import RigOverlay from './components/RigOverlay';
 import LevelingSystem from './components/LevelingSystem';
+import { RateUs } from './components/RateUs';
 import { Timer, X } from 'lucide-react';
 import { SoundEngine } from './services/audioService';
 import { HomeView } from './components/views/HomeView';
@@ -20,10 +21,12 @@ import { LeaderboardView } from './components/views/LeaderboardView';
 
 // --- GAME CONFIG ---
 const EXERCISES: ExerciseDef[] = [
-    { id: 'Jumping Jacks', name: 'Jumping Jacks', duration: 30, instruction: 'Jump wide, clap hands!', color: 'text-blue-400' },
-    { id: 'High Knees', name: 'High Knees', duration: 25, instruction: 'Knees to chest, fast!', color: 'text-yellow-400' },
-    { id: 'Squats', name: 'Power Squats', duration: 30, instruction: 'Keep back straight, go low!', color: 'text-emerald-400' },
-    { id: 'Shadow Boxing', name: 'Shadow Box', duration: 20, instruction: 'Punch the air, keep moving!', color: 'text-red-400' },
+    { id: 'Overhead Reach', name: 'Overhead Reach', duration: 30, instruction: 'Reach hands high above head!', color: 'text-blue-400' },
+    { id: 'T-Pose Pulses', name: 'T-Pose Pulses', duration: 30, instruction: 'Hold arms out and pulse!', color: 'text-purple-400' },
+    { id: 'Hooks', name: 'Hooks', duration: 30, instruction: 'Throw hooks with bent elbows!', color: 'text-red-400' },
+    { id: 'Uppercuts', name: 'Uppercuts', duration: 30, instruction: 'Punch upwards powerfully!', color: 'text-yellow-400' },
+    { id: 'Shoulder Press', name: 'Shoulder Press', duration: 30, instruction: 'Push from shoulders to sky!', color: 'text-emerald-400' },
+    { id: 'Shadow Boxing', name: 'Shadow Box', duration: 30, instruction: 'Freestyle punches!', color: 'text-orange-400' },
 ];
 
 const MOCK_LEADERBOARD: LeaderboardEntry[] = [
@@ -47,6 +50,7 @@ import { SplashScreen } from './components/SplashScreen';
 export default function App() {
     const [view, setView] = useState<AppView>(AppView.HOME);
     const [showSplash, setShowSplash] = useState(true);
+    const [rateUsNextView, setRateUsNextView] = useState<AppView>(AppView.HOME);
 
 
 
@@ -74,7 +78,8 @@ export default function App() {
         feedback: "Stand By...", feedbackType: 'neutral',
         isSessionActive: false, currentExerciseIndex: 0, timeRemaining: 0,
         phase: 'WARMUP',
-        lastHitTime: 0
+        lastHitTime: 0,
+        incorrectJoints: []
     });
 
     const [workoutResult, setWorkoutResult] = useState<WorkoutResultData | null>(null);
@@ -89,12 +94,15 @@ export default function App() {
     const [poseLandmarks, setPoseLandmarks] = useState<any>(null);
 
     const videoRef = useRef<HTMLVideoElement>(null);
-    const coachRef = useRef<GeminiWorkoutCoach | null>(null);
+    const gameStateRef = useRef(gameState); // Ref to access latest state in callbacks
     const poseServiceRef = useRef<PoseService | null>(null);
+
     const gameLoopRef = useRef<number | null>(null);
+    const accumulatedErrorRef = useRef<number>(0); // Track consecutive bad frames
 
     useEffect(() => { localStorage.setItem('warmify_user_stats', JSON.stringify(userStats)); }, [userStats]);
     useEffect(() => { localStorage.setItem('warmify_settings', JSON.stringify(settings)); }, [settings]);
+    useEffect(() => { gameStateRef.current = gameState; }, [gameState]); // Sync ref
 
     useEffect(() => {
         if (!hasCompletedOnboarding) {
@@ -112,7 +120,14 @@ export default function App() {
     };
 
     const startCountdown = () => {
-        setGameState(prev => ({ ...prev, phase: 'COUNTDOWN', feedback: "PREPARE", feedbackType: 'neutral' }));
+        // Reset to first exercise for the preview
+        setGameState(prev => ({
+            ...prev,
+            phase: 'COUNTDOWN',
+            feedback: "PREPARE",
+            feedbackType: 'neutral',
+            currentExerciseIndex: 0 // FIX: Ensure preview shows the first exercise, not the last one
+        }));
         setCountdown(3);
 
         let count = 3;
@@ -140,7 +155,9 @@ export default function App() {
             lastHitTime: 0
         }));
 
-        coachRef.current?.setExercise(EXERCISES[0].name);
+
+
+        // coachRef.current?.setExercise(EXERCISES[0].name); // AI removed
 
         gameLoopRef.current = window.setInterval(() => {
             setGameState(prev => {
@@ -162,7 +179,8 @@ export default function App() {
                         return prev;
                     }
                     newTime = EXERCISES[newIndex].duration;
-                    coachRef.current?.setExercise(EXERCISES[newIndex].name);
+
+                    // coachRef.current?.setExercise(EXERCISES[newIndex].name); // AI removed
                     SoundEngine.playLevelUp(); // Phase change sound
                     return {
                         ...prev,
@@ -183,7 +201,7 @@ export default function App() {
         SoundEngine.playHit(quality as 'PERFECT' | 'GOOD');
         setGameState(prev => {
             if (prev.phase !== 'ACTIVE') return prev;
-            const combo = Math.min(8, prev.combo + 0.5);
+            const combo = Math.min(50, prev.combo + 0.5); // Increased max combo to 50x
             const basePoints = quality === 'PERFECT' ? 50 : 20;
             const points = Math.floor(basePoints * Math.floor(combo));
 
@@ -236,11 +254,14 @@ export default function App() {
     }, [simAutoPlay, gameState.isSessionActive]);
 
 
-    const startWorkout = async () => {
-        SoundEngine.playUI('click');
-        setView(AppView.WORKOUT);
+    // Separate session initialization from view switching to ensure videoRef is ready
+    const initSession = async () => {
+        // Prevent double init
+        if (poseServiceRef.current) return;
+
         setLogs([]);
         addLog("System initializing...");
+        addLog("Checking video ref: " + (videoRef.current ? "OK" : "NULL"));
 
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
@@ -251,44 +272,79 @@ export default function App() {
                 await videoRef.current.play();
                 addLog("Video stream active", 'success');
 
-                // 1. Initialize Gemini for Logic
-                coachRef.current = new GeminiWorkoutCoach(videoRef.current, {
-                    onHit: handleHit,
-                    onMiss: handleMiss,
-                    onStatusChange: (status) => setGameState(p => ({ ...p, feedback: status, feedbackType: 'neutral' })),
-                    onAudioData: (data) => {
-                        const avg = data.reduce((a, b) => a + b, 0) / data.length;
-                        setIntensity(Math.min(avg / 100, 1));
-                    },
-                    onLog: addLog
-                });
-
-                // 2. Initialize PoseService for Visualization
+                // 2. Initialize PoseService for Visualization & Logic
                 poseServiceRef.current = new PoseService((results) => {
                     if (results && results.poseLandmarks) {
                         setPoseLandmarks(results.poseLandmarks);
+
+                        // NEW: Run Geometry Evaluation
+                        const currentGameState = gameStateRef.current; // Use Ref to get latest state
+                        if (currentGameState.isSessionActive && currentGameState.phase === 'ACTIVE') {
+                            const currentExName = EXERCISES[currentGameState.currentExerciseIndex].name;
+                            const evalResult = MoveEvaluator.evaluate(currentExName, results.poseLandmarks);
+
+                            // Update Incorrect Joints for RigOverlay
+                            if (evalResult.isMatch) {
+                                // Debounce hits slightly
+                                const now = Date.now();
+                                if (now - currentGameState.lastHitTime > 800) {
+                                    handleHit("PERFECT", evalResult.feedback);
+                                    accumulatedErrorRef.current = 0; // Reset error on hit
+                                }
+                            } else {
+                                // Accumulate error frames
+                                accumulatedErrorRef.current += 1;
+
+                                // approx 45 frames = 1.5 seconds of bad form
+                                if (accumulatedErrorRef.current > 45) {
+                                    handleMiss("Wrong Move!");
+                                    accumulatedErrorRef.current = 0; // Reset after penalty
+                                }
+                            }
+
+                            // Update incorrect joints state (debounced)
+                            setGameState(prev => {
+                                if (JSON.stringify(prev.incorrectJoints) === JSON.stringify(evalResult.incorrectJoints)) return prev;
+                                return { ...prev, incorrectJoints: evalResult.incorrectJoints };
+                            });
+                        }
                     }
                 });
                 await poseServiceRef.current.initialize(videoRef.current);
+                addLog("PoseService initialized", 'success');
 
-                await coachRef.current.startSession();
+                // Start game loop immediately
                 startCountdown();
+            } else {
+                addLog("Video ref missing after stream fetch", 'error');
             }
         } catch (e: any) {
             console.error("Startup Error:", e);
-            if (settings.isDebugMode) {
-                addLog(`Startup failed: ${e.message || e}`, 'error');
-                startCountdown();
-            } else {
-                alert(`Camera/System Error: ${e.message || "Unknown error"}. Check permissions.`);
-                setView(AppView.HOME);
-            }
+            addLog(`Startup failed: ${e.message}`, 'error');
+            alert(`Camera Error: ${e.message}`);
+            setView(AppView.HOME);
         }
+    };
+
+    // Effect to trigger init when view changes to WORKOUT
+    useEffect(() => {
+        if (view === AppView.WORKOUT) {
+            // Short timeout to ensure DOM is absolutely ready
+            const t = setTimeout(initSession, 100);
+            return () => clearTimeout(t);
+        }
+    }, [view]);
+
+    const startWorkout = () => {
+        SoundEngine.playUI('click');
+        // Clear previous state just in case
+        poseServiceRef.current = null;
+        setView(AppView.WORKOUT);
     };
 
     const endWorkout = (failed: boolean = false) => {
         if (gameLoopRef.current) window.clearInterval(gameLoopRef.current);
-        coachRef.current?.stop();
+        // coachRef.current?.stop(); // AI Removed
         poseServiceRef.current?.stop(); // Stop pose detection
         if (videoRef.current?.srcObject) (videoRef.current.srcObject as MediaStream).getTracks().forEach(t => t.stop());
         setSimAutoPlay(false);
@@ -346,9 +402,22 @@ export default function App() {
     };
 
     const handleClaimResults = () => {
+        // Go to RateUs first, then decide logic in handleRateUsComplete
+        setRateUsNextView(AppView.HOME); // Default backup
+        setView(AppView.RATE_US);
+    };
+
+    const handleRateUsComplete = () => {
+        // If coming from Onboarding (special case check or just trust state)
+        if (rateUsNextView === AppView.PAYWALL) {
+            setView(AppView.PAYWALL);
+            return;
+        }
+
+        // If coming from Workout Results
         if (workoutResult && workoutResult.newBadges.length > 0) {
             setView(AppView.BADGE_REVEAL);
-            setNewUnlockedBadge(workoutResult.newBadges[0]); // Show the first one on Home
+            setNewUnlockedBadge(workoutResult.newBadges[0]);
         } else {
             setView(AppView.HOME);
             setNewUnlockedBadge(null);
@@ -367,7 +436,12 @@ export default function App() {
     }
 
 
-    if (view === AppView.ONBOARDING) return <Onboarding onComplete={() => { localStorage.setItem('warmify_onboarding_complete', 'true'); setHasCompletedOnboarding(true); setView(AppView.PAYWALL); }} />;
+    if (view === AppView.ONBOARDING) return <Onboarding onComplete={() => {
+        localStorage.setItem('warmify_onboarding_complete', 'true');
+        setHasCompletedOnboarding(true);
+        setRateUsNextView(AppView.PAYWALL);
+        setView(AppView.RATE_US);
+    }} />;
     if (view === AppView.PAYWALL) return <Paywall onClose={() => setView(AppView.HOME)} onPurchaseSuccess={() => { setUserStats(prev => ({ ...prev, isPremium: true })); setView(AppView.HOME); }} />;
 
     if (view === AppView.RESULTS && workoutResult) {
@@ -380,26 +454,11 @@ export default function App() {
 
     const currentExercise = EXERCISES[gameState.currentExerciseIndex];
 
-    // ... (imports will be updated via multi-replace if possible or I'll do it here)
-    // I will reuse the existing imports and logic, just replacing the return statement roughly.
-    // Wait, replace_file_content is for contiguous blocks.
-    // App.tsx is large.
-    // I can replace the imports first.
-    // Then Replace the JSX return. 
 
-    // Actually I will use multi_replace to do both at once if possible, or sequential replaces.
-    // Let's do imports first.
-    // Then the Render.
-
-    // BUT wait, I need to remove the components that were moved out (Internal components like WarmifyLogo in App.tsx).
-    // WarmifyLogo is defined in App.tsx lines 42-49. I should remove it.
-
-    // Let's use `view_file` again on App.tsx to make sure I have the latest lines numbers since I last viewed it (step 5).
-    // Nothing changed in App.tsx yet.
 
     return (
         <div className="relative h-screen max-h-screen text-white font-sans selection:bg-blue-500 overflow-hidden bg-slate-900 flex flex-col pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
-            <ThreeScene intensity={intensity} />
+            {view !== AppView.WORKOUT && <ThreeScene intensity={intensity} />}
 
             <div className="relative z-10 w-full max-w-md mx-auto h-full flex flex-col p-4 transition-all duration-500">
 
@@ -408,6 +467,8 @@ export default function App() {
                 {view === AppView.SETTINGS && <Settings settings={settings} updateSettings={setSettings} onBack={() => setView(AppView.HOME)} onReset={() => { localStorage.clear(); window.location.reload(); }} />}
 
                 {view === AppView.LEVELING && <LevelingSystem stats={userStats} onBack={() => setView(AppView.HOME)} />}
+
+                {view === AppView.RATE_US && <RateUs onComplete={handleRateUsComplete} />}
 
                 {view === AppView.HOME && (
                     <HomeView
@@ -443,6 +504,7 @@ export default function App() {
                                     skinId={settings.characterSkin}
                                     feedbackType={gameState.feedbackType}
                                     poseLandmarks={poseLandmarks} // Pass real data
+                                    incorrectJoints={gameState.incorrectJoints}
                                 />
                             )}
                         </div>
