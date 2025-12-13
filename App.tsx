@@ -29,12 +29,7 @@ const EXERCISES: ExerciseDef[] = [
     { id: 'Shadow Boxing', name: 'Shadow Box', duration: 30, instruction: 'Freestyle punches!', color: 'text-orange-400' },
 ];
 
-const MOCK_LEADERBOARD: LeaderboardEntry[] = [
-    { id: '1', name: 'FitMaster99', points: 15400, level: 12, avatar: '🦁' },
-    { id: '2', name: 'YogaQueen', points: 12350, level: 10, avatar: '🧘‍♀️' },
-    { id: '3', name: 'RunnerBoy', points: 9800, level: 8, avatar: '🏃' },
-    { id: '4', name: 'You', points: 0, level: 1, avatar: '🦸' },
-];
+
 
 const DEFAULT_SETTINGS: UserSettings = {
     isDebugMode: false,
@@ -500,7 +495,9 @@ export default function App() {
     }
 
 
-    if (view === AppView.ONBOARDING) return <Onboarding onComplete={() => {
+    if (view === AppView.ONBOARDING) return <Onboarding onComplete={(username) => {
+        const newStats = { ...userStats, username: username || userStats.username };
+        setUserStats(newStats);
         localStorage.setItem('warmify_onboarding_complete', 'true');
         setHasCompletedOnboarding(true);
         setRateUsNextView(AppView.PAYWALL);
@@ -637,7 +634,7 @@ export default function App() {
                 )}
 
                 {view === AppView.LEADERBOARD && (
-                    <LeaderboardView entries={leaderboardData.length > 0 ? leaderboardData : MOCK_LEADERBOARD} userStats={userStats} setView={setView} />
+                    <LeaderboardView entries={leaderboardData} userStats={userStats} setView={setView} />
                 )}
             </div>
         </div>
