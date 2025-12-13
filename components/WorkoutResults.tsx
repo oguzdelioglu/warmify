@@ -45,7 +45,7 @@ const WorkoutResults: React.FC<WorkoutResultsProps> = ({ data, onClaim, onRestar
         <div className="absolute inset-0 z-50 bg-[#0f172a] flex flex-col items-center justify-center p-6 overflow-hidden pt-[env(safe-area-inset-top)] pb-[calc(env(safe-area-inset-bottom)+2rem)]">
             {/* Background Effects */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/40 via-slate-900 to-slate-900"></div>
-            <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100"></div>
+            <div className="absolute inset-0 opacity-20 bg-[url('/assets/noise.svg')] brightness-100"></div>
 
             <div className="relative z-10 w-full max-w-sm animate-[slideUp_0.5s_ease-out] flex flex-col h-full">
 

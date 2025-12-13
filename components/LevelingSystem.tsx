@@ -43,7 +43,7 @@ const LevelingSystem: React.FC<LevelingSystemProps> = ({ stats, onBack }) => {
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                 <div className="absolute top-[-20%] left-[-10%] w-[150%] h-[60%] bg-indigo-900/20 rounded-full blur-[120px] animate-pulse"></div>
                 <div className="absolute bottom-[-10%] right-[-10%] w-[100%] h-[50%] bg-blue-900/10 rounded-full blur-[100px]"></div>
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
+                <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-[0.03]"></div>
             </div>
 
             {/* HEADER - Fixed at top with safe area handling */}

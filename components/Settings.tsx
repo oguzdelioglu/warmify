@@ -132,7 +132,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
 
           {/* PREVIEW BOX */}
           <div className="w-full h-48 bg-slate-900 rounded-xl relative overflow-hidden mb-4 border border-slate-700 shadow-inner">
-            <div className="absolute inset-0 opacity-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+            <div className="absolute inset-0 opacity-50 bg-[url('/assets/noise.svg')]"></div>
             <RigOverlay
               exercise="Jumping Jacks"
               mode="PREVIEW"

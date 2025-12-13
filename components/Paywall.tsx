@@ -74,7 +74,7 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[80%] bg-[radial-gradient(circle_at_center,_#4f46e5_0%,_transparent_60%)] opacity-40 animate-pulse duration-[4000ms]"></div>
                 <div className="absolute bottom-[-10%] right-[-10%] w-[100%] h-[60%] bg-[radial-gradient(circle_at_center,_#db2777_0%,_transparent_60%)] opacity-20"></div>
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-20"></div>
             </div>
 
             {/* CLOSE BTN */}
