@@ -3,6 +3,7 @@ import { LeaderboardList } from '../Gamification';
 import { AppView, LeaderboardEntry, UserStats } from '../../types';
 import { ArrowLeft } from 'lucide-react';
 import { SoundEngine } from '../../services/audioService';
+import { useLocalization } from '../../services/localization/LocalizationContext';
 
 interface LeaderboardViewProps {
     entries: LeaderboardEntry[];
@@ -12,7 +13,7 @@ interface LeaderboardViewProps {
 }
 
 export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ entries, userStats, userRank, setView }) => {
-
+    const { t } = useLocalization();
     const isUserInTop = entries.some(e => e.id === userStats.userId);
 
     return (
@@ -23,8 +24,8 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ entries, userS
                     <ArrowLeft size={20} />
                 </button>
                 <div>
-                    <h2 className="text-2xl font-bold">Global Rankings</h2>
-                    <p className="text-xs text-slate-400">Top Agents</p>
+                    <h2 className="text-2xl font-bold">{t('leaderboard.title')}</h2>
+                    <p className="text-xs text-slate-400">{t('leaderboard.subtitle')}</p>
                 </div>
             </div>
 
@@ -34,7 +35,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ entries, userS
 
                 {entries.length === 0 && (
                     <div className="text-center py-10 text-slate-500">
-                        No agents found. Be the first!
+                        {t('leaderboard.empty')}
                     </div>
                 )}
             </div>
@@ -60,9 +61,9 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ entries, userS
                         <div className="flex-grow flex flex-col justify-center overflow-hidden">
                             <div className="flex items-center gap-2">
                                 <h3 className="text-sm font-bold truncate text-indigo-300">
-                                    {userStats.username || 'You'}
+                                    {userStats.username || t('leaderboard.you')}
                                 </h3>
-                                <span className="text-[8px] bg-indigo-600 text-white px-1.5 py-0.5 rounded font-bold tracking-wider">YOU</span>
+                                <span className="text-[8px] bg-indigo-600 text-white px-1.5 py-0.5 rounded font-bold tracking-wider">{t('leaderboard.you')}</span>
                             </div>
                             <div className="flex items-center gap-1 mt-0.5">
                                 <span className="text-[9px] bg-slate-900/50 px-1.5 py-0.5 rounded text-slate-400 font-mono">Lvl {userStats.level}</span>
@@ -74,7 +75,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ entries, userS
                             <div className="text-base font-black font-mono tracking-tight text-white leading-none">
                                 {userStats.totalPoints.toLocaleString()}
                             </div>
-                            <div className="text-[8px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">PTS</div>
+                            <div className="text-[8px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">{t('header.points')}</div>
                         </div>
                     </div>
                 </div>

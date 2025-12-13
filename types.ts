@@ -67,8 +67,10 @@ export type ExerciseType = 'Jumping Jacks' | 'Squats' | 'High Knees' | 'Shadow B
 export interface ExerciseDef {
   id: ExerciseType;
   name: string;
+  nameKey?: string;
   duration: number;
   instruction: string;
+  instructionKey?: string;
   color: string;
 }
 

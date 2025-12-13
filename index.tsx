@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { LocalizationProvider } from './services/localization/LocalizationContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -10,10 +11,13 @@ if (!rootElement) {
 }
 
 const root = ReactDOM.createRoot(rootElement);
+
 root.render(
   <React.StrictMode>
     <ErrorBoundary>
-      <App />
+      <LocalizationProvider>
+        <App />
+      </LocalizationProvider>
     </ErrorBoundary>
   </React.StrictMode>
 );

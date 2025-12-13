@@ -18,15 +18,16 @@ import { SoundEngine } from './services/audioService';
 import { HomeView } from './components/views/HomeView';
 import { Header } from './components/Header';
 import { LeaderboardView } from './components/views/LeaderboardView';
+import { useLocalization } from './services/localization/LocalizationContext';
 
 // --- GAME CONFIG ---
 const EXERCISES: ExerciseDef[] = [
-    { id: 'Overhead Reach', name: 'Overhead Reach', duration: 30, instruction: 'Reach hands high above head!', color: 'text-blue-400' },
-    { id: 'T-Pose Pulses', name: 'T-Pose Pulses', duration: 30, instruction: 'Hold arms out and pulse!', color: 'text-purple-400' },
-    { id: 'Hooks', name: 'Hooks', duration: 30, instruction: 'Throw hooks with bent elbows!', color: 'text-red-400' },
-    { id: 'Uppercuts', name: 'Uppercuts', duration: 30, instruction: 'Punch upwards powerfully!', color: 'text-yellow-400' },
-    { id: 'Shoulder Press', name: 'Shoulder Press', duration: 30, instruction: 'Push from shoulders to sky!', color: 'text-emerald-400' },
-    { id: 'Shadow Boxing', name: 'Shadow Box', duration: 30, instruction: 'Freestyle punches!', color: 'text-orange-400' },
+    { id: 'Overhead Reach', name: 'Overhead Reach', nameKey: 'exercise.overhead_reach.name', duration: 30, instruction: 'Reach hands high above head!', instructionKey: 'exercise.overhead_reach.instruction', color: 'text-blue-400' },
+    { id: 'T-Pose Pulses', name: 'T-Pose Pulses', nameKey: 'exercise.t_pose_pulses.name', duration: 30, instruction: 'Hold arms out and pulse!', instructionKey: 'exercise.t_pose_pulses.instruction', color: 'text-purple-400' },
+    { id: 'Hooks', name: 'Hooks', nameKey: 'exercise.hooks.name', duration: 30, instruction: 'Throw hooks with bent elbows!', instructionKey: 'exercise.hooks.instruction', color: 'text-red-400' },
+    { id: 'Uppercuts', name: 'Uppercuts', nameKey: 'exercise.uppercuts.name', duration: 30, instruction: 'Punch upwards powerfully!', instructionKey: 'exercise.uppercuts.instruction', color: 'text-yellow-400' },
+    { id: 'Shoulder Press', name: 'Shoulder Press', nameKey: 'exercise.shoulder_press.name', duration: 30, instruction: 'Push from shoulders to sky!', instructionKey: 'exercise.shoulder_press.instruction', color: 'text-emerald-400' },
+    { id: 'Shadow Boxing', name: 'Shadow Box', nameKey: 'exercise.shadow_boxing.name', duration: 30, instruction: 'Freestyle punches!', instructionKey: 'exercise.shadow_boxing.instruction', color: 'text-orange-400' },
 ];
 
 
@@ -43,10 +44,12 @@ const DEFAULT_SETTINGS: UserSettings = {
 import { SplashScreen } from './components/SplashScreen';
 
 import { LeaderboardService } from './services/leaderboardService';
+import { getAvatarForLevel } from './utils/levelUtils';
 
 // ... existing imports ...
 
 export default function App() {
+    const { t } = useLocalization();
     const [view, setView] = useState<AppView>(AppView.HOME);
     const [showSplash, setShowSplash] = useState(true);
     const [rateUsNextView, setRateUsNextView] = useState<AppView>(AppView.HOME);
@@ -365,7 +368,7 @@ export default function App() {
     const startWorkout = () => {
         const today = new Date().toISOString().split('T')[0];
         if (!userStats.isPremium && userStats.lastWorkoutDate === today) {
-            alert("Daily Mission Limit Reached! 🛑\n\nRecruits can only complete one mission per day.\nUpgrade to Captain for UNLIMITED missions!");
+            alert(t('game.alert.daily_limit_desc'));
             setView(AppView.PAYWALL);
             return;
         }
@@ -384,7 +387,7 @@ export default function App() {
         setSimAutoPlay(false);
 
         if (failed && gameState.score < 50) {
-            alert("Workout Failed! Run out of health.");
+            alert(t('game.alert.failed'));
             setGameState(prev => ({ ...prev, isSessionActive: false, phase: 'WARMUP' }));
             setView(AppView.HOME);
             return;
@@ -437,7 +440,7 @@ export default function App() {
             newStats.username,
             newStats.totalPoints,
             newStats.level,
-            settings.characterSkin.toString() // Or use archetype logic if preferred
+            getAvatarForLevel(newStats.level)
         ).catch(err => console.error("Cloud sync failed", err));
 
         setGameState(prev => ({ ...prev, isSessionActive: false, phase: 'WARMUP' }));
@@ -527,7 +530,7 @@ export default function App() {
 
                 <Header view={view} setView={setView} userStats={userStats} />
 
-                {view === AppView.SETTINGS && <Settings settings={settings} updateSettings={setSettings} onBack={() => setView(AppView.HOME)} onReset={() => { localStorage.clear(); window.location.reload(); }} />}
+                {view === AppView.SETTINGS && <Settings settings={settings} userStats={userStats} updateSettings={setSettings} updateUserStats={setUserStats} onBack={() => setView(AppView.HOME)} onReset={() => { localStorage.clear(); window.location.reload(); }} />}
 
                 {view === AppView.LEVELING && <LevelingSystem stats={userStats} onBack={() => setView(AppView.HOME)} />}
 
@@ -590,13 +593,13 @@ export default function App() {
 
                         {gameState.phase === 'COUNTDOWN' && (
                             <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-900/40 backdrop-blur-sm animate-[fadeIn_0.3s_ease-out]">
-                                <h2 className={`text-4xl font-black italic ${currentExercise.color} mb-4 text-center drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]`}>{currentExercise.name}</h2>
+                                <h2 className={`text-4xl font-black italic ${currentExercise.color} mb-4 text-center drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]`}>{t(currentExercise.nameKey || currentExercise.name)}</h2>
                                 <div className="w-full h-1/2 relative mb-4">
                                     {/* HUD still uses procedural preview */}
                                     <RigOverlay exercise={currentExercise.id} mode="INSTRUCTION" isActive={true} seatedMode={settings.seatedMode} archetype={settings.characterArchetype} skinId={settings.characterSkin} />
                                 </div>
                                 <div className="text-9xl font-black text-white animate-bounce drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]">{countdown}</div>
-                                <p className="text-slate-300 font-bold mt-4 text-lg bg-black/50 px-4 py-1 rounded-full">{currentExercise.instruction}</p>
+                                <p className="text-slate-300 font-bold mt-4 text-lg bg-black/50 px-4 py-1 rounded-full">{t(currentExercise.instructionKey || currentExercise.instruction)}</p>
                             </div>
                         )}
 
@@ -609,7 +612,7 @@ export default function App() {
                                     <div className="flex flex-col gap-1 items-center w-1/3"><HealthBar health={gameState.health} /></div>
                                     <div className="flex flex-col items-end">
                                         <div className="bg-slate-900/80 backdrop-blur border-l-4 border-cyan-400 px-3 py-1 rounded-r-none rounded-l-xl shadow-lg flex flex-col items-end">
-                                            <span className="text-[9px] text-cyan-200 font-bold uppercase tracking-widest">Score</span>
+                                            <span className="text-[9px] text-cyan-200 font-bold uppercase tracking-widest">{t('game.score') || 'SCORE'}</span>
                                             <span className="text-2xl font-mono font-bold text-white leading-none">{gameState.score}</span>
                                         </div>
                                     </div>
@@ -625,7 +628,7 @@ export default function App() {
                                             <RigOverlay exercise={currentExercise.id} mode="INSTRUCTION" isActive={gameState.isSessionActive} seatedMode={settings.seatedMode} archetype={settings.characterArchetype} skinId={settings.characterSkin} />
                                         </div>
                                         <div className="p-2 border-t border-slate-700 bg-black/20">
-                                            <h2 className={`text-[10px] font-black italic ${currentExercise.color} leading-tight truncate`}>{currentExercise.name}</h2>
+                                            <h2 className={`text-[10px] font-black italic ${currentExercise.color} leading-tight truncate`}>{t(currentExercise.nameKey || currentExercise.name)}</h2>
                                             <div className="flex items-center gap-1 mt-1 text-slate-400"><Timer size={10} /><span className="text-sm font-mono font-bold text-white">{gameState.timeRemaining}</span></div>
                                         </div>
                                     </div>

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Bug, Trash2, Info, Volume2, VolumeX, Armchair, User, Palette, PenSquare, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Bug, Trash2, Info, Volume2, VolumeX, Armchair, User, Palette, PenSquare, CheckCircle2, Globe } from 'lucide-react';
 import { UserStats, UserSettings, CharacterArchetype, CharacterSkinId } from '../types';
 import RigOverlay from './RigOverlay';
 import { SoundEngine } from '../services/audioService';
 import { LeaderboardService } from '../services/leaderboardService';
+import { getAvatarForLevel } from '../utils/levelUtils';
+import { useLocalization } from '../services/localization/LocalizationContext';
+import { Language } from '../services/localization/translations';
 
 interface SettingsProps {
   settings: UserSettings;
@@ -23,8 +26,22 @@ const ARCHETYPES: { id: CharacterArchetype; name: string }[] = [
 ];
 
 const SKINS = [0, 1, 2, 3, 4];
+const LANGUAGES: { code: Language; label: string; flag: string }[] = [
+  { code: 'en', label: 'English', flag: '🇺🇸' },
+  { code: 'tr', label: 'Türkçe', flag: '🇹🇷' },
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
+  { code: 'it', label: 'Italiano', flag: '🇮🇹' },
+  { code: 'pt', label: 'Português', flag: '🇧🇷' },
+  { code: 'ru', label: 'Русский', flag: '🇷🇺' },
+  { code: 'jp', label: '日本語', flag: '🇯🇵' },
+  { code: 'kr', label: '한국어', flag: '🇰🇷' },
+  { code: 'cn', label: '中文', flag: '🇨🇳' },
+];
 
 const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings, updateUserStats, onBack, onReset }) => {
+  const { t, language, setLanguage } = useLocalization();
   const [activeTab, setActiveTab] = useState<'TYPE' | 'SKIN'>('TYPE');
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState(userStats.username || 'Anonymous');
@@ -52,7 +69,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
       newStats.username,
       newStats.totalPoints,
       newStats.level,
-      settings.characterSkin.toString()
+      getAvatarForLevel(newStats.level)
     );
   };
 
@@ -63,7 +80,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
         <button onClick={handleBack} className="p-2 bg-slate-800 rounded-full mr-4 hover:bg-slate-700 transition-colors">
           <ArrowLeft size={20} />
         </button>
-        <h2 className="text-2xl font-bold text-white">Settings</h2>
+        <h2 className="text-2xl font-bold text-white">{t('settings.title')}</h2>
       </div>
 
       {/* SCROLLABLE CONTENT */}
@@ -72,12 +89,12 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
         {/* IDENTITY */}
         <div className="bg-slate-800/60 p-4 rounded-2xl border border-slate-700">
           <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-            <User size={14} /> Agent Identity
+            <User size={14} /> {t('settings.identity')}
           </h3>
 
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center text-xl shadow-lg">
-              🦸
+              {getAvatarForLevel(userStats.level)}
             </div>
             <div className="flex-1">
               {editingName ? (
@@ -110,7 +127,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
         {/* AVATAR EDITOR */}
         <div className="bg-slate-800/60 p-4 rounded-2xl border border-slate-700">
           <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <User size={14} /> Avatar Configuration
+            <Palette size={14} /> {t('settings.avatar')}
           </h3>
 
           {/* PREVIEW BOX */}
@@ -132,13 +149,13 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
               onClick={() => { SoundEngine.playUI('click'); setActiveTab('TYPE'); }}
               className={`flex-1 py-2 text-xs font-bold rounded-md transition-colors ${activeTab === 'TYPE' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
             >
-              ARCHETYPE
+              {t('settings.archetype')}
             </button>
             <button
               onClick={() => { SoundEngine.playUI('click'); setActiveTab('SKIN'); }}
               className={`flex-1 py-2 text-xs font-bold rounded-md transition-colors ${activeTab === 'SKIN' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
             >
-              COLORWAY
+              {t('settings.colorway')}
             </button>
           </div>
 
@@ -167,12 +184,34 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
 
         {/* PREFERENCES */}
         <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Preferences</h3>
+          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">{t('settings.preferences')}</h3>
+
+          {/* Language Selector */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <Globe className="text-indigo-400" />
+              <span>{t('settings.language')}</span>
+            </div>
+            <div className="relative">
+              <select
+                value={language}
+                onChange={(e) => {
+                  setLanguage(e.target.value as Language);
+                  SoundEngine.playUI('click');
+                }}
+                className="bg-slate-900 border border-slate-700 text-white text-sm rounded-lg px-2 py-1 outline-none focus:border-indigo-500"
+              >
+                {LANGUAGES.map(l => (
+                  <option key={l.code} value={l.code}>{l.flag} {l.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
 
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               {settings.soundEnabled ? <Volume2 className="text-blue-400" /> : <VolumeX className="text-slate-500" />}
-              <span>Sound Effects</span>
+              <span>{t('settings.sound')}</span>
             </div>
             <button
               onClick={() => { SoundEngine.setMuted(settings.soundEnabled); update({ ...settings, soundEnabled: !settings.soundEnabled }); }}
@@ -186,8 +225,8 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
             <div className="flex items-center gap-3">
               <Armchair className={settings.seatedMode ? "text-orange-400" : "text-slate-500"} />
               <div className="flex flex-col">
-                <span>Seated Mode</span>
-                <span className="text-xs text-slate-500">Upper body tracking only</span>
+                <span>{t('settings.seated')}</span>
+                <span className="text-xs text-slate-500">{t('settings.seated.desc')}</span>
               </div>
             </div>
             <button
@@ -202,13 +241,13 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
         {/* DEVELOPER - Only Visible in Dev Builds */}
         {import.meta.env.DEV && (
           <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
-            <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Developer</h3>
+            <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">{t('settings.developer')}</h3>
 
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <Bug className={settings.isDebugMode ? "text-emerald-400" : "text-slate-500"} />
                 <div className="flex flex-col">
-                  <span>Debug Mode</span>
+                  <span>{t('settings.debug')}</span>
                 </div>
               </div>
               <button
@@ -221,7 +260,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
 
             <button
               onClick={() => {
-                if (confirm("Are you sure? This will reset your streak and points.")) {
+                if (confirm(t('settings.resetConfirm'))) {
                   onReset();
                 }
               }}
@@ -229,7 +268,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
             >
               <div className="flex items-center gap-3">
                 <Trash2 size={20} />
-                <span>Reset App Data</span>
+                <span>{t('settings.reset')}</span>
               </div>
             </button>
           </div>
