@@ -62,7 +62,7 @@ export const AdaptyService = {
             isInitialized = true;
             console.log("ADAPTY: Native SDK Activation Successful.");
           } catch (e) {
-            console.error("ADAPTY: Activation failed completely. Real SDK features will not work.", e);
+            console.warn("ADAPTY: Activation warning - (This is expected in Web/Sim)", e);
             // We allow it to fail. specific calls will fail subsequently.
           } finally {
             initializationPromise = null;
