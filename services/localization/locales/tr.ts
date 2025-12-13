@@ -16,7 +16,14 @@ export const tr: TranslationKeys = {
     "onboarding.q1.title": "Ana Görevin Nedir?",
     "onboarding.q2.title": "Mevcut Ajan Seviyen?",
     "onboarding.q3.title": "Haftalık Sıklık?",
-    "onboarding.syncing": "Merkezle Eşleşiyor...",
+    "onboarding.syncing": "Merkezle senkronize ediliyor...",
+    "onboarding.step_counter": "Protokol Adımı",
+    "onboarding.goal.q": "Ana görevin nedir?",
+    "onboarding.goal.opt1": "Kilo Ver", "onboarding.goal.opt2": "Kas Yap", "onboarding.goal.opt3": "Duruşu Düzelt", "onboarding.goal.opt4": "Hareket Et",
+    "onboarding.level.q": "Mevcut Ajan Seviyesi?",
+    "onboarding.level.opt1": "Çaylak (Başlangıç)", "onboarding.level.opt2": "Ajan (Orta)", "onboarding.level.opt3": "Efsane (İleri)",
+    "onboarding.freq.q": "Haftalık Sıklık?",
+    "onboarding.freq.opt1": "1-2 Gün", "onboarding.freq.opt2": "3-4 Gün", "onboarding.freq.opt3": "Her Gün",
 
     // HOME
     "home.daily_mission": "Günlük Görev",
@@ -27,6 +34,8 @@ export const tr: TranslationKeys = {
 
     // HEADER
     "header.points": "PUAN",
+    "header.pro_badge": "PRO",
+    "header.level_prefix": "Svy",
 
     // SETTINGS
     "settings.title": "Ayarlar",
@@ -57,7 +66,14 @@ export const tr: TranslationKeys = {
     "results.new_badge": "Yeni Rozet Açıldı!",
     "results.streak_kept": "Seri Korundu!",
     "results.level_up": "Seviye Atladın!",
-    "results.claim": "Ödülleri Topla",
+    "results.claim": "Ödülleri Al",
+    "results.complete_title": "Tamamlandı",
+    "results.complete_desc": "Mükemmel iş, Ajan.",
+    "results.total_score": "Toplam Skor",
+    "results.xp_gained": "Kazanılan XP",
+    "results.level_progress": "Seviye İlerlemesi",
+    "results.level_up_anim": "SEVİYE ATLADIN!",
+    "results.retry": "Tekrar Dene",
 
     // LEADERBOARD
     "leaderboard.title": "Küresel Sıralama",
@@ -76,12 +92,31 @@ export const tr: TranslationKeys = {
     "paywall.terms": "Kullanım Şartları",
     "paywall.privacy": "Gizlilik Politikası",
     "paywall.processing": "İşleniyor...",
+    "paywall.subtitle": "En üst düzey yapay zeka koçluk deneyimine yüksel.",
+    "paywall.badge": "Premium Erişim",
+    "paywall.hero_start": "DURDURULAMAZ",
+    "paywall.hero_end": "OL",
+    "paywall.benefit1.title": "Sınırsız YZ Antrenmanı", "paywall.benefit1.sub": "İstediğin kadar antrenman yap",
+    "paywall.benefit2.title": "Gerçek Zamanlı Form Düzeltme", "paywall.benefit2.sub": "YZ vizyonu ile sakatlıkları önle",
+    "paywall.benefit3.title": "Elit Liderlik Tablosu", "paywall.benefit3.sub": "En iyi ajanlarla yarış",
+    "paywall.benefit4.title": "Tüm Arketipleri Aç", "paywall.benefit4.sub": "Siber, Mekanik, Ruh ve daha fazlası",
+    "paywall.cta_loading": "İŞLENİYOR...",
+    "paywall.cta_default": "SONSUZA DEK AÇ",
+    "paywall.save_percent": "%33 TASARRUF",
 
     // RATE US
     "rate.title": "Deneyimini Puanla",
     "rate.desc": "Görev nasıldı Ajan?",
-    "rate.submit": "Puanı Gönder",
+    "rate.submit": "Puanla",
     "rate.later": "Belki Sonra",
+    "rate.thank_you_title": "TEŞEKKÜRLER!",
+    "rate.thank_you_desc": "Desteğin ateşi harlamamızı sağlıyor!",
+    "rate.continue": "DEVAM ET",
+    "rate.question_title": "WARMIFY'I SEVDİN Mİ?",
+    "rate.question_desc": "Geri bildirimin deneyimi geliştirmemize yardımcı olur.",
+    "rate.feedback_placeholder": "Neyi geliştirebiliriz...",
+    "rate.send_feedback": "GERİ BİLDİRİM GÖNDER",
+    "rate.no_thanks": "Hayır, belki sonra",
 
     // LEVELING
     "leveling.title": "Ajan Kariyeri",
@@ -122,4 +157,15 @@ export const tr: TranslationKeys = {
     "exercise.shoulder_press.instruction": "Omuzlardan gökyüzüne it!",
     "exercise.shadow_boxing.name": "Gölge Boksu",
     "exercise.shadow_boxing.instruction": "Serbest stil yumruklar!",
+
+    // BADGE REVEAL
+    "badge.new_accolade": "Yeni Başarı",
+    "badge.continue": "DEVAM ET",
+    "badge.first_step.name": "Çaylak", "badge.first_step.desc": "İlk antrenman tamamlandı!",
+    "badge.on_fire.name": "Alev Aldı", "badge.on_fire.desc": "3 Günlük Seri başarıldı!",
+    "badge.champion.name": "Efsane", "badge.champion.desc": "Tek seferde 1000 Puan!",
+    "badge.combo_king.name": "Volt", "badge.combo_king.desc": "Maksimum komboya ulaşıldı!",
+    "badge.survivor.name": "Tank", "badge.survivor.desc": "Düşük canla hayatta kalındı",
+    "badge.ninja.name": "Ninja", "badge.ninja.desc": "Mükemmel isabet",
+    "badge.unknown.name": "Bilinmeyen", "badge.unknown.desc": "Gizemli Rozet",
 };

@@ -10,7 +10,10 @@ interface HeaderProps {
     userStats: UserStats;
 }
 
+import { useLocalization } from '../services/localization/LocalizationContext';
+
 export const Header: React.FC<HeaderProps> = ({ view, setView, userStats }) => {
+    const { t } = useLocalization();
     // Hide header on certain views
     if (view === AppView.WORKOUT || view === AppView.RESULTS || view === AppView.BADGE_REVEAL || view === AppView.LEVELING) {
         return null;
@@ -30,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({ view, setView, userStats }) => {
                 </button>
                 {!userStats.isPremium && (
                     <button onClick={() => { SoundEngine.playUI('click'); setView(AppView.PAYWALL); }} className="h-8 px-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 border border-amber-400/50 flex items-center justify-center text-[10px] font-black text-white shadow-lg animate-pulse">
-                        PRO
+                        {t('header.pro_badge')}
                     </button>
                 )}
                 {/* LEVEL BADGE - CLICK TO OPEN LEVELING PAGE */}
@@ -38,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({ view, setView, userStats }) => {
                     onClick={() => { SoundEngine.playUI('click'); setView(AppView.LEVELING); }}
                     className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 hover:scale-105 transition-all px-2 h-8 rounded-full border border-slate-700 shadow-md group"
                 >
-                    <span className="text-[10px] font-bold text-emerald-400 group-hover:text-emerald-300">Lvl {userStats.level}</span>
+                    <span className="text-[10px] font-bold text-emerald-400 group-hover:text-emerald-300">{t('header.level_prefix')} {userStats.level}</span>
                     <div className="w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center text-[10px]">🦁</div>
                 </button>
             </div>

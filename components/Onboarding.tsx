@@ -8,7 +8,10 @@ interface OnboardingProps {
   onComplete: (username?: string) => void;
 }
 
+import { useLocalization } from '../services/localization/LocalizationContext';
+
 const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
+  const { t } = useLocalization();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<OnboardingAnswers>({ goal: '', level: '', frequency: '' });
   const [username, setUsername] = useState('');
@@ -19,51 +22,51 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const introSlides = [
     {
       icon: <Sparkles size={56} className="text-blue-400" />,
-      title: "Welcome to Warmify",
-      desc: "The world's first AI-powered fitness game that corrects your form in real-time.",
+      title: t('onboarding.welcome.title'),
+      desc: t('onboarding.welcome.desc'),
       color: "from-blue-600 to-indigo-600"
     },
     {
       icon: <Trophy size={56} className="text-yellow-400" />,
-      title: "Gamify Your Fitness",
-      desc: "Earn XP, unlock skins, and compete on the global leaderboard.",
+      title: t('onboarding.gamify.title'),
+      desc: t('onboarding.gamify.desc'),
       color: "from-yellow-600 to-orange-600"
     }
   ];
 
   // Store guidelines require explicit context before requesting camera
   const permissionSlide = {
-    title: "Sensor Access",
-    desc: "To analyze your movement and provide coaching, we need access to your camera and microphone. Data is processed locally and never stored.",
+    title: t('onboarding.permission.title'),
+    desc: t('onboarding.permission.desc'),
   };
 
   const questions = [
     {
       id: 'goal',
-      title: "What is your main mission?",
+      title: t('onboarding.goal.q'),
       options: [
-        { label: "Lose Weight", icon: "🔥" },
-        { label: "Build Muscle", icon: "💪" },
-        { label: "Improve Posture", icon: "🧘" },
-        { label: "Just Moving", icon: "🏃" }
+        { label: t('onboarding.goal.opt1'), icon: "🔥" },
+        { label: t('onboarding.goal.opt2'), icon: "💪" },
+        { label: t('onboarding.goal.opt3'), icon: "🧘" },
+        { label: t('onboarding.goal.opt4'), icon: "🏃" }
       ]
     },
     {
       id: 'level',
-      title: "Current Agent Level?",
+      title: t('onboarding.level.q'),
       options: [
-        { label: "Rookie (Beginner)", icon: "🌱" },
-        { label: "Agent (Intermediate)", icon: "⚔️" },
-        { label: "Legend (Advanced)", icon: "🏆" }
+        { label: t('onboarding.level.opt1'), icon: "🌱" },
+        { label: t('onboarding.level.opt2'), icon: "⚔️" },
+        { label: t('onboarding.level.opt3'), icon: "🏆" }
       ]
     },
     {
       id: 'frequency',
-      title: "Weekly Frequency?",
+      title: t('onboarding.freq.q'),
       options: [
-        { label: "1-2 Days", icon: "📅" },
-        { label: "3-4 Days", icon: "⚡" },
-        { label: "Everyday", icon: "🔥" }
+        { label: t('onboarding.freq.opt1'), icon: "📅" },
+        { label: t('onboarding.freq.opt2'), icon: "⚡" },
+        { label: t('onboarding.freq.opt3'), icon: "🔥" }
       ]
     }
   ];
@@ -143,7 +146,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
               onClick={handleNext}
               className={`w-full py-4 rounded-2xl font-black text-lg text-white shadow-2xl bg-gradient-to-r ${currentSlide.color} hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 group`}
             >
-              Next Step <ChevronRight className="group-hover:translate-x-1 transition-transform" />
+              {t('onboarding.next')} <ChevronRight className="group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         )}
@@ -171,13 +174,13 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
               disabled={permissionStatus === 'granted'}
               className={`w-full py-4 rounded-2xl font-black text-lg text-white shadow-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 group`}
             >
-              {permissionStatus === 'idle' && <>Grant Access <Shield size={18} /></>}
-              {permissionStatus === 'granted' && <>Access Granted <Zap size={18} /></>}
-              {permissionStatus === 'denied' && <>Access Denied (Tap to Retry)</>}
+              {permissionStatus === 'idle' && <>{t('onboarding.permission.grant')} <Shield size={18} /></>}
+              {permissionStatus === 'granted' && <>{t('onboarding.permission.granted')} <Zap size={18} /></>}
+              {permissionStatus === 'denied' && <>{t('onboarding.permission.denied')}</>}
             </button>
             {permissionStatus === 'denied' && (
               <button onClick={() => setStep(step + 1)} className="mt-4 text-slate-500 text-xs underline">
-                Continue without sensors (Limited Mode)
+                {t('onboarding.permission.skip')}
               </button>
             )}
           </div>
@@ -186,7 +189,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
         {isQuestion && currentQuestion && (
           <div className="animate-[slideUp_0.4s_ease-out]">
             <div className="mb-8">
-              <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2 block">Protocol Step {step - (introSlides.length + 1)}/{questions.length}</span>
+              <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2 block">{t('onboarding.step_counter')} {step - (introSlides.length + 1)}/{questions.length}</span>
               <h2 className="text-3xl font-black text-white">{currentQuestion.title}</h2>
             </div>
 
@@ -203,7 +206,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
                 </button>
               ))}
             </div>
-            {isLoading && <div className="mt-4 text-slate-500 text-sm animate-pulse">Syncing with HQ...</div>}
+            {isLoading && <div className="mt-4 text-slate-500 text-sm animate-pulse">{t('onboarding.syncing')}</div>}
           </div>
         )}
 

@@ -17,7 +17,15 @@ export type TranslationKeys = {
     "onboarding.q1.title": string;
     "onboarding.q2.title": string;
     "onboarding.q3.title": string;
+
     "onboarding.syncing": string;
+    "onboarding.step_counter": string;
+    "onboarding.goal.q": string;
+    "onboarding.goal.opt1": string; "onboarding.goal.opt2": string; "onboarding.goal.opt3": string; "onboarding.goal.opt4": string;
+    "onboarding.level.q": string;
+    "onboarding.level.opt1": string; "onboarding.level.opt2": string; "onboarding.level.opt3": string;
+    "onboarding.freq.q": string;
+    "onboarding.freq.opt1": string; "onboarding.freq.opt2": string; "onboarding.freq.opt3": string;
 
     // HOME
     "home.daily_mission": string;
@@ -28,6 +36,8 @@ export type TranslationKeys = {
 
     // HEADER
     "header.points": string;
+    "header.pro_badge": string;
+    "header.level_prefix": string;
 
     // SETTINGS / MENU
     "settings.title": string;
@@ -59,6 +69,13 @@ export type TranslationKeys = {
     "results.streak_kept": string;
     "results.level_up": string;
     "results.claim": string;
+    "results.complete_title": string;
+    "results.complete_desc": string;
+    "results.total_score": string;
+    "results.xp_gained": string;
+    "results.level_progress": string;
+    "results.level_up_anim": string; // "LEVEL UP!"
+    "results.retry": string;
 
     // LEADERBOARD
     "leaderboard.title": string;
@@ -77,12 +94,31 @@ export type TranslationKeys = {
     "paywall.terms": string;
     "paywall.privacy": string;
     "paywall.processing": string;
+    "paywall.subtitle": string;
+    "paywall.badge": string;
+    "paywall.hero_start": string;
+    "paywall.hero_end": string;
+    "paywall.benefit1.title": string; "paywall.benefit1.sub": string;
+    "paywall.benefit2.title": string; "paywall.benefit2.sub": string;
+    "paywall.benefit3.title": string; "paywall.benefit3.sub": string;
+    "paywall.benefit4.title": string; "paywall.benefit4.sub": string;
+    "paywall.cta_loading": string;
+    "paywall.cta_default": string;
+    "paywall.save_percent": string;
 
     // RATE US
     "rate.title": string;
     "rate.desc": string;
     "rate.submit": string;
     "rate.later": string;
+    "rate.thank_you_title": string;
+    "rate.thank_you_desc": string;
+    "rate.continue": string;
+    "rate.question_title": string;
+    "rate.question_desc": string;
+    "rate.feedback_placeholder": string;
+    "rate.send_feedback": string;
+    "rate.no_thanks": string;
 
     // LEVELING
     "leveling.title": string;
@@ -124,4 +160,15 @@ export type TranslationKeys = {
     "exercise.shoulder_press.instruction": string;
     "exercise.shadow_boxing.name": string;
     "exercise.shadow_boxing.instruction": string;
+
+    // BADGE REVEAL
+    "badge.new_accolade": string;
+    "badge.continue": string;
+    "badge.first_step.name": string; "badge.first_step.desc": string;
+    "badge.on_fire.name": string; "badge.on_fire.desc": string;
+    "badge.champion.name": string; "badge.champion.desc": string;
+    "badge.combo_king.name": string; "badge.combo_king.desc": string;
+    "badge.survivor.name": string; "badge.survivor.desc": string;
+    "badge.ninja.name": string; "badge.ninja.desc": string;
+    "badge.unknown.name": string; "badge.unknown.desc": string;
 };

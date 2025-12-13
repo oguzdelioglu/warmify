@@ -7,7 +7,10 @@ interface RateUsProps {
     onComplete: (didRate: boolean) => void;
 }
 
+import { useLocalization } from '../services/localization/LocalizationContext';
+
 export const RateUs: React.FC<RateUsProps> = ({ onComplete }) => {
+    const { t } = useLocalization();
     const [rating, setRating] = useState(0);
     const [feedbackSent, setFeedbackSent] = useState(false);
 
@@ -36,13 +39,13 @@ export const RateUs: React.FC<RateUsProps> = ({ onComplete }) => {
                     <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(34,197,94,0.6)] animate-bounce">
                         <ThumbsUp size={40} className="text-white" />
                     </div>
-                    <h2 className="text-3xl font-black italic text-white">THANK YOU!</h2>
-                    <p className="text-slate-300">Your support helps us keep the fire burning!</p>
+                    <h2 className="text-3xl font-black italic text-white">{t('rate.thank_you_title')}</h2>
+                    <p className="text-slate-300">{t('rate.thank_you_desc')}</p>
                     <button
                         onClick={() => onComplete(true)}
                         className="mt-8 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-xl transition-all border border-slate-700"
                     >
-                        CONTINUE
+                        {t('rate.continue')}
                     </button>
                 </div>
             </div>
@@ -58,10 +61,10 @@ export const RateUs: React.FC<RateUsProps> = ({ onComplete }) => {
                 <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl"></div>
 
                 <h2 className="text-2xl font-black italic text-white mb-2 relative z-10">
-                    ENJOYING WARMIFY?
+                    {t('rate.question_title')}
                 </h2>
                 <p className="text-slate-400 text-sm mb-8 relative z-10">
-                    Your feedback helps us make the workout experience even better.
+                    {t('rate.question_desc')}
                 </p>
 
                 <div className="flex justify-center gap-2 mb-8 relative z-10">
@@ -80,14 +83,14 @@ export const RateUs: React.FC<RateUsProps> = ({ onComplete }) => {
                     <div className="animate-fadeIn">
                         <textarea
                             className="w-full bg-slate-900/80 border border-slate-600 rounded-xl p-3 text-white text-sm mb-4 focus:outline-none focus:border-cyan-500 transition-colors resize-none"
-                            placeholder="Tell us what we can improve..."
+                            placeholder={t('rate.feedback_placeholder')}
                             rows={3}
                         />
                         <button
                             onClick={() => setFeedbackSent(true)}
                             className="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-black py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2"
                         >
-                            <MessageSquare size={18} /> SEND FEEDBACK
+                            <MessageSquare size={18} /> {t('rate.send_feedback')}
                         </button>
                     </div>
                 )}
@@ -96,7 +99,7 @@ export const RateUs: React.FC<RateUsProps> = ({ onComplete }) => {
                     onClick={() => onComplete(false)}
                     className="mt-6 text-slate-500 text-xs font-bold hover:text-white transition-colors uppercase tracking-widest"
                 >
-                    No thanks, maybe later
+                    {t('rate.no_thanks')}
                 </button>
             </div>
         </div>

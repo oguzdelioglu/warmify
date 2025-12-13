@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { X, Check, Zap, Crown, Star, ShieldCheck, Activity } from 'lucide-react';
 import { AdaptyService, AdaptyProduct } from '../services/adaptyService';
@@ -8,7 +9,10 @@ interface PaywallProps {
     onPurchaseSuccess: () => void;
 }
 
+import { useLocalization } from '../services/localization/LocalizationContext';
+
 const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
+    const { t } = useLocalization();
     const [isLoading, setIsLoading] = useState(false);
     const [product, setProduct] = useState<AdaptyProduct | null>(null);
     const [isFetching, setIsFetching] = useState(true);
@@ -52,16 +56,16 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
     };
 
     const benefits = [
-        { icon: Activity, text: "Unlimited AI Workouts", sub: "Train as much as you want" },
-        { icon: ShieldCheck, text: "Real-time Form Correction", sub: "Prevent injury with AI vision" },
-        { icon: Crown, text: "Elite Leaderboard Access", sub: "Compete with the best agents" },
-        { icon: Star, text: "Unlock All Archetypes", sub: "Cyber, Mech, Spirit & more" },
+        { icon: Activity, text: t('paywall.benefit1.title'), sub: t('paywall.benefit1.sub') },
+        { icon: ShieldCheck, text: t('paywall.benefit2.title'), sub: t('paywall.benefit2.sub') },
+        { icon: Crown, text: t('paywall.benefit3.title'), sub: t('paywall.benefit3.sub') },
+        { icon: Star, text: t('paywall.benefit4.title'), sub: t('paywall.benefit4.sub') },
     ];
 
     // Defaults if fetch fails (fallback UI)
     const priceDisplay = product?.localizedPrice || "$59.99";
     const periodDisplay = product?.subscriptionPeriod === 'year' ? '/year' : '/month';
-    const offerText = product?.introductoryOffer || "SAVE 33%";
+    const offerText = product?.introductoryOffer || t('paywall.save_percent');
 
     return (
         <div className="absolute inset-0 z-[60] bg-[#0f172a] text-white flex flex-col items-center justify-center overflow-hidden">
@@ -91,25 +95,25 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
                     <div className="flex flex-col items-center text-center animate-[fadeIn_0.5s_ease-out]">
                         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 mb-4 backdrop-blur-md shadow-[0_0_15px_rgba(245,158,11,0.2)]">
                             <Crown size={12} className="text-amber-400" fill="currentColor" />
-                            <span className="text-[10px] font-black text-amber-300 uppercase tracking-widest">Premium Access</span>
+                            <span className="text-[10px] font-black text-amber-300 uppercase tracking-widest">{t('paywall.badge')}</span>
                         </div>
 
                         <h1 className="text-4xl font-black leading-[0.9] tracking-tighter mb-2">
-                            <span className="block text-white">BECOME</span>
+                            <span className="block text-white">{t('paywall.hero_start')}</span>
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-cyan-400">
-                                UNSTOPPABLE
+                                {t('paywall.hero_end')}
                             </span>
                         </h1>
 
                         <p className="text-slate-400 font-medium text-xs leading-relaxed max-w-[250px]">
-                            Upgrade to the ultimate AI coaching experience.
+                            {t('paywall.subtitle')}
                         </p>
                     </div>
 
                     {/* 2. BENEFITS LIST (Compacted) */}
                     <div className="flex flex-col justify-center gap-2 mt-6">
                         {benefits.map((b, i) => (
-                            <div key={i} className="flex items-center gap-3 bg-white/5 p-2.5 rounded-xl border border-white/5 backdrop-blur-sm animate-[slideUp_0.5s_ease-out]" style={{ animationDelay: `${i * 100}ms`, opacity: 0, animationFillMode: 'forwards' }}>
+                            <div key={i} className="flex items-center gap-3 bg-white/5 p-2.5 rounded-xl border border-white/5 backdrop-blur-sm animate-[slideUp_0.5s_ease-out]" style={{ animationDelay: `${i * 100} ms`, opacity: 0, animationFillMode: 'forwards' }}>
                                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center shrink-0 shadow-lg">
                                     <b.icon size={16} className="text-white" />
                                 </div>
@@ -152,17 +156,17 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
 
                         <span className="relative z-10 text-black font-black text-base tracking-wide flex items-center justify-center gap-2">
                             {isLoading ? (
-                                <span className="animate-pulse">PROCESSING...</span>
+                                <span className="animate-pulse">{t('paywall.cta_loading')}</span>
                             ) : (
-                                <>UNLOCK FOREVER <Zap size={18} fill="black" /></>
+                                <>{t('paywall.cta_default')} <Zap size={18} fill="black" /></>
                             )}
                         </span>
                     </button>
 
                     <div className="flex justify-center gap-6 text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-3">
-                        <button onClick={() => AdaptyService.restorePurchases().then(s => s && onPurchaseSuccess())} className="hover:text-white transition-colors">Restore</button>
-                        <button className="hover:text-white transition-colors">Terms</button>
-                        <button className="hover:text-white transition-colors">Privacy</button>
+                        <button onClick={() => AdaptyService.restorePurchases().then(s => s && onPurchaseSuccess())} className="hover:text-white transition-colors">{t('paywall.restore')}</button>
+                        <button className="hover:text-white transition-colors">{t('paywall.terms')}</button>
+                        <button className="hover:text-white transition-colors">{t('paywall.privacy')}</button>
                     </div>
                 </div>
 

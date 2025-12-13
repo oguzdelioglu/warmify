@@ -17,6 +17,13 @@ export const en: TranslationKeys = {
     "onboarding.q2.title": "Current Agent Level?",
     "onboarding.q3.title": "Weekly Frequency?",
     "onboarding.syncing": "Syncing with HQ...",
+    "onboarding.step_counter": "Protocol Step",
+    "onboarding.goal.q": "What is your main mission?",
+    "onboarding.goal.opt1": "Lose Weight", "onboarding.goal.opt2": "Build Muscle", "onboarding.goal.opt3": "Improve Posture", "onboarding.goal.opt4": "Just Moving",
+    "onboarding.level.q": "Current Agent Level?",
+    "onboarding.level.opt1": "Rookie (Beginner)", "onboarding.level.opt2": "Agent (Intermediate)", "onboarding.level.opt3": "Legend (Advanced)",
+    "onboarding.freq.q": "Weekly Frequency?",
+    "onboarding.freq.opt1": "1-2 Days", "onboarding.freq.opt2": "3-4 Days", "onboarding.freq.opt3": "Everyday",
 
     // HOME
     "home.daily_mission": "Daily Mission",
@@ -27,6 +34,8 @@ export const en: TranslationKeys = {
 
     // HEADER
     "header.points": "PTS",
+    "header.pro_badge": "PRO",
+    "header.level_prefix": "Lvl",
 
     // SETTINGS
     "settings.title": "Settings",
@@ -58,6 +67,13 @@ export const en: TranslationKeys = {
     "results.streak_kept": "Streak Preserved!",
     "results.level_up": "Level Up!",
     "results.claim": "Claim Rewards",
+    "results.complete_title": "Complete",
+    "results.complete_desc": "Excellent work, Agent.",
+    "results.total_score": "Total Score",
+    "results.xp_gained": "XP Gained",
+    "results.level_progress": "Level Progress",
+    "results.level_up_anim": "LEVEL UP!", // "LEVEL UP!"
+    "results.retry": "Retry",
 
     // LEADERBOARD
     "leaderboard.title": "Global Rankings",
@@ -76,12 +92,31 @@ export const en: TranslationKeys = {
     "paywall.terms": "Terms of Service",
     "paywall.privacy": "Privacy Policy",
     "paywall.processing": "Processing...",
+    "paywall.subtitle": "Upgrade to the ultimate AI coaching experience.",
+    "paywall.badge": "Premium Access",
+    "paywall.hero_start": "BECOME",
+    "paywall.hero_end": "UNSTOPPABLE",
+    "paywall.benefit1.title": "Unlimited AI Workouts", "paywall.benefit1.sub": "Train as much as you want",
+    "paywall.benefit2.title": "Real-time Form Correction", "paywall.benefit2.sub": "Prevent injury with AI vision",
+    "paywall.benefit3.title": "Elite Leaderboard Access", "paywall.benefit3.sub": "Compete with the best agents",
+    "paywall.benefit4.title": "Unlock All Archetypes", "paywall.benefit4.sub": "Cyber, Mech, Spirit & more",
+    "paywall.cta_loading": "PROCESSING...",
+    "paywall.cta_default": "UNLOCK FOREVER",
+    "paywall.save_percent": "SAVE 33%",
 
     // RATE US
     "rate.title": "Rate Your Experience",
     "rate.desc": "How was your mission, Agent?",
     "rate.submit": "Submit Rating",
     "rate.later": "Maybe Later",
+    "rate.thank_you_title": "THANK YOU!",
+    "rate.thank_you_desc": "Your support helps us keep the fire burning!",
+    "rate.continue": "CONTINUE",
+    "rate.question_title": "ENJOYING WARMIFY?",
+    "rate.question_desc": "Your feedback helps us make the workout experience even better.",
+    "rate.feedback_placeholder": "Tell us what we can improve...",
+    "rate.send_feedback": "SEND FEEDBACK",
+    "rate.no_thanks": "No thanks, maybe later",
 
     // LEVELING
     "leveling.title": "Agent Career",
@@ -122,4 +157,15 @@ export const en: TranslationKeys = {
     "exercise.shoulder_press.instruction": "Push from shoulders to sky!",
     "exercise.shadow_boxing.name": "Shadow Box",
     "exercise.shadow_boxing.instruction": "Freestyle punches!",
+
+    // BADGE REVEAL
+    "badge.new_accolade": "New Accolade",
+    "badge.continue": "CONTINUE",
+    "badge.first_step.name": "Rookie", "badge.first_step.desc": "First workout complete!",
+    "badge.on_fire.name": "Ignited", "badge.on_fire.desc": "3 Day Streak achieved!",
+    "badge.champion.name": "Legend", "badge.champion.desc": "1000 Points in one go!",
+    "badge.combo_king.name": "Volt", "badge.combo_king.desc": "Max combo reached!",
+    "badge.survivor.name": "Tank", "badge.survivor.desc": "Survived with low health",
+    "badge.ninja.name": "Ninja", "badge.ninja.desc": "Perfect precision",
+    "badge.unknown.name": "Unknown", "badge.unknown.desc": "Mystery Badge",
 };

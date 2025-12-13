@@ -84,7 +84,12 @@ export default function App() {
 
     const [settings, setSettings] = useState<UserSettings>(() => {
         const saved = localStorage.getItem('warmify_settings');
-        return saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
+        const parsed = saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
+        // Enforce: Debug Mode must be OFF in Production (Store Builds)
+        if (import.meta.env.PROD) {
+            parsed.isDebugMode = false;
+        }
+        return parsed;
     });
 
     const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState<boolean>(() => {

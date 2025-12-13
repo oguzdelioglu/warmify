@@ -14,7 +14,10 @@ interface HomeViewProps {
 
 
 
+import { useLocalization } from '../../services/localization/LocalizationContext';
+
 export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView, startWorkout, newUnlockedBadge }) => {
+    const { t } = useLocalization();
     return (
         <div className="flex-1 flex flex-col justify-evenly gap-4 animate-[fadeIn_0.5s_ease-out] overflow-y-auto no-scrollbar pb-8 relative">
 
@@ -29,7 +32,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
                     <div>
                         <div className="flex justify-between items-start">
                             <div>
-                                <h2 className="text-3xl font-black italic text-white leading-none tracking-tight">DAILY OP</h2>
+                                <h2 className="text-3xl font-black italic text-white leading-none tracking-tight">{t('home.daily_mission')}</h2>
                                 <p className="text-indigo-200 text-xs font-medium mt-1">
                                     {settings.seatedMode ? "Upper body sequence (Seated)." : "Full body sequence."}
                                 </p>
@@ -49,7 +52,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
                         </div>
                         <button onClick={startWorkout} className="w-full py-4 bg-white text-indigo-950 rounded-2xl font-black text-lg shadow-[0_0_25px_rgba(255,255,255,0.2)] active:scale-95 transition-all flex items-center justify-center gap-2 hover:bg-indigo-50 hover:shadow-[0_0_35px_rgba(255,255,255,0.4)] relative overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-[-20deg] animate-[shine_3s_infinite] opacity-50"></div>
-                            <Play fill="currentColor" size={20} /> INITIATE MISSION
+                            <Play fill="currentColor" size={20} /> {t('home.start')}
                         </button>
                     </div>
                 </div>
@@ -83,7 +86,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
 
             {/* Global Leaderboard Button */}
             <button onClick={() => { SoundEngine.playUI('click'); setView(AppView.LEADERBOARD); }} className="flex-shrink-0 w-full py-3 bg-slate-800/40 border border-slate-700/50 rounded-xl font-bold text-slate-400 hover:bg-slate-700 hover:text-white transition-colors tracking-wide text-xs flex items-center justify-center gap-2 z-10">
-                <Trophy size={14} /> GLOBAL RANKINGS
+                <Trophy size={14} /> {t('leaderboard.title')}
             </button>
         </div>
     );
