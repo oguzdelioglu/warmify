@@ -61,8 +61,18 @@ export const AdaptyService = {
             await adapty.activate(key);
             isInitialized = true;
             console.log("ADAPTY: Native SDK Activation Successful.");
-          } catch (e) {
-            console.warn("ADAPTY: Activation warning - (This is expected in Web/Sim)", e);
+          } catch (e: any) {
+            console.error("ADAPTY: Activation Failed!", e);
+            if (e && typeof e === 'object') {
+              try {
+                console.error("ADAPTY Error Details:", JSON.stringify(e));
+                // Some native errors have non-enumerable properties or custom fields
+                console.error("ADAPTY Error Message:", e.message);
+                console.error("ADAPTY Error Code:", e.code);
+              } catch (jsonErr) {
+                console.error("ADAPTY: Could not stringify error", jsonErr);
+              }
+            }
             // We allow it to fail. specific calls will fail subsequently.
           } finally {
             initializationPromise = null;
