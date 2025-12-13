@@ -73,17 +73,6 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     setStep(step + 1);
   };
 
-  const handleUsernameSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (username.trim().length < 3) {
-      alert("Username must be at least 3 characters.");
-      return;
-    }
-    SoundEngine.playUI('click');
-    SoundEngine.playLevelUp();
-    setStep(step + 1);
-  };
-
   const requestPermissions = async () => {
     SoundEngine.playUI('click');
     try {
@@ -101,7 +90,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   const handleOptionSelect = async (option: string) => {
     SoundEngine.playUI('click');
-    const questionIndex = step - (introSlides.length + 2); // +2 for permission & username
+    const questionIndex = step - (introSlides.length + 1); // +1 for permission slide
     const currentQ = questions[questionIndex];
 
     const newAnswers = { ...answers, [currentQ.id]: option };
@@ -114,17 +103,16 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
       setIsLoading(true);
       await AdaptyService.saveUserAttributes(newAnswers);
       setIsLoading(false);
-      onComplete(username); // Pass username back
+      onComplete(); // Pass username back
     }
   };
 
   const isIntro = step < introSlides.length;
   const isPermission = step === introSlides.length;
-  const isUsername = step === introSlides.length + 1;
-  const isQuestion = step > introSlides.length + 1;
+  const isQuestion = step > introSlides.length;
 
   const currentSlide = isIntro ? introSlides[step] : null;
-  const currentQuestion = isQuestion ? questions[step - (introSlides.length + 2)] : null;
+  const currentQuestion = isQuestion ? questions[step - (introSlides.length + 1)] : null;
 
   return (
     <div className="absolute inset-0 z-50 bg-slate-900 flex flex-col items-center justify-center p-6 text-center overflow-hidden">
@@ -192,47 +180,6 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
                 Continue without sensors (Limited Mode)
               </button>
             )}
-          </div>
-        )}
-
-        {isUsername && (
-          <div className="animate-[fadeIn_0.5s_ease-out]">
-            <div className="mb-10 flex justify-center">
-              <div className="p-8 bg-slate-800/80 backdrop-blur-xl rounded-[2rem] shadow-2xl border border-indigo-500/30">
-                <Target size={56} className="text-indigo-400" />
-              </div>
-            </div>
-
-            <h2 className="text-3xl font-black mb-2 text-white">
-              Identify Yourself
-            </h2>
-            <p className="text-slate-400 text-sm mb-8">
-              Choose a codename for the Global Leaderboard.
-            </p>
-
-            <form onSubmit={handleUsernameSubmit} className="flex flex-col gap-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Agent Name..."
-                  className="w-full bg-slate-800/50 border-2 border-slate-700 focus:border-indigo-500 rounded-2xl px-6 py-4 text-xl font-bold text-center text-white placeholder-slate-600 outline-none transition-all focus:bg-slate-800"
-                  autoFocus
-                />
-                <div className="absolute top-1/2 right-4 transform -translate-y-1/2 text-slate-500">
-                  {username.length > 2 && <Zap size={20} className="text-emerald-400 animate-bounce" />}
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={username.trim().length < 3}
-                className={`w-full py-4 rounded-2xl font-black text-lg text-white shadow-2xl transition-all flex items-center justify-center gap-2 ${username.trim().length >= 3 ? 'bg-indigo-600 hover:bg-indigo-500 scale-100' : 'bg-slate-700 opacity-50 scale-95'}`}
-              >
-                Confirm Identity
-              </button>
-            </form>
           </div>
         )}
 

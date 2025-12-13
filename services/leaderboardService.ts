@@ -41,5 +41,31 @@ export const LeaderboardService = {
         if (error) {
             console.error('Error updating score:', error);
         }
+    },
+
+    async getUserRank(userId: string): Promise<number> {
+        // 1. Get User Points
+        const { data: userEntry, error: userError } = await supabase
+            .from('leaderboard')
+            .select('points')
+            .eq('id', userId)
+            .single();
+
+        if (userError || !userEntry) {
+            return 0; // User not found on leaderboard
+        }
+
+        // 2. Count users with more points
+        const { count, error: countError } = await supabase
+            .from('leaderboard')
+            .select('*', { count: 'exact', head: true })
+            .gt('points', userEntry.points);
+
+        if (countError) {
+            console.error('Error fetching rank:', countError);
+            return 0;
+        }
+
+        return (count || 0) + 1;
     }
 };

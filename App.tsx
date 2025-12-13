@@ -62,18 +62,22 @@ export default function App() {
         // Migration: Add ID if missing
         if (!stats.userId) {
             stats.userId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36);
-            stats.username = `Agent-${stats.userId.substring(0, 4).toUpperCase()}`;
+            stats.username = `Anonymous #${Math.floor(1000 + Math.random() * 9000)}`;
         }
         return stats;
     });
 
     const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+    const [userRank, setUserRank] = useState<number>(0);
 
     useEffect(() => {
         if (view === AppView.LEADERBOARD) {
             LeaderboardService.getTopGlobal().then(setLeaderboardData);
+            if (userStats.userId) {
+                LeaderboardService.getUserRank(userStats.userId).then(setUserRank);
+            }
         }
-    }, [view]);
+    }, [view, userStats.userId]);
 
     const [settings, setSettings] = useState<UserSettings>(() => {
         const saved = localStorage.getItem('warmify_settings');
@@ -495,9 +499,7 @@ export default function App() {
     }
 
 
-    if (view === AppView.ONBOARDING) return <Onboarding onComplete={(username) => {
-        const newStats = { ...userStats, username: username || userStats.username };
-        setUserStats(newStats);
+    if (view === AppView.ONBOARDING) return <Onboarding onComplete={() => {
         localStorage.setItem('warmify_onboarding_complete', 'true');
         setHasCompletedOnboarding(true);
         setRateUsNextView(AppView.PAYWALL);
@@ -634,7 +636,7 @@ export default function App() {
                 )}
 
                 {view === AppView.LEADERBOARD && (
-                    <LeaderboardView entries={leaderboardData} userStats={userStats} setView={setView} />
+                    <LeaderboardView entries={leaderboardData} userStats={userStats} userRank={userRank} setView={setView} />
                 )}
             </div>
         </div>

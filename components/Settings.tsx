@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Bug, Trash2, Info, Volume2, VolumeX, Armchair, User, Palette } from 'lucide-react';
-import { UserSettings, CharacterArchetype, CharacterSkinId } from '../types';
+import { ArrowLeft, Bug, Trash2, Info, Volume2, VolumeX, Armchair, User, Palette, PenSquare, CheckCircle2 } from 'lucide-react';
+import { UserStats, UserSettings, CharacterArchetype, CharacterSkinId } from '../types';
 import RigOverlay from './RigOverlay';
 import { SoundEngine } from '../services/audioService';
+import { LeaderboardService } from '../services/leaderboardService';
 
 interface SettingsProps {
   settings: UserSettings;
+  userStats: UserStats;
   updateSettings: (newSettings: UserSettings) => void;
+  updateUserStats: (newStats: UserStats) => void;
   onBack: () => void;
   onReset: () => void;
 }
@@ -21,8 +24,10 @@ const ARCHETYPES: { id: CharacterArchetype; name: string }[] = [
 
 const SKINS = [0, 1, 2, 3, 4];
 
-const Settings: React.FC<SettingsProps> = ({ settings, updateSettings, onBack, onReset }) => {
+const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings, updateUserStats, onBack, onReset }) => {
   const [activeTab, setActiveTab] = useState<'TYPE' | 'SKIN'>('TYPE');
+  const [editingName, setEditingName] = useState(false);
+  const [tempName, setTempName] = useState(userStats.username || 'Anonymous');
 
   const handleBack = () => {
     SoundEngine.playUI('back');
@@ -32,6 +37,23 @@ const Settings: React.FC<SettingsProps> = ({ settings, updateSettings, onBack, o
   const update = (s: UserSettings) => {
     SoundEngine.playUI('toggle');
     updateSettings(s);
+  };
+
+  const saveName = () => {
+    if (tempName.trim().length < 3) return;
+
+    const newStats = { ...userStats, username: tempName };
+    updateUserStats(newStats);
+    setEditingName(false);
+
+    // Update cloud entry immediately
+    LeaderboardService.updateUserScore(
+      newStats.userId,
+      newStats.username,
+      newStats.totalPoints,
+      newStats.level,
+      settings.characterSkin.toString()
+    );
   };
 
   return (
@@ -46,6 +68,44 @@ const Settings: React.FC<SettingsProps> = ({ settings, updateSettings, onBack, o
 
       {/* SCROLLABLE CONTENT */}
       <div className="flex-1 overflow-y-auto px-4 pb-20 space-y-6">
+
+        {/* IDENTITY */}
+        <div className="bg-slate-800/60 p-4 rounded-2xl border border-slate-700">
+          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+            <User size={14} /> Agent Identity
+          </h3>
+
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center text-xl shadow-lg">
+              🦸
+            </div>
+            <div className="flex-1">
+              {editingName ? (
+                <div className="flex items-center gap-2">
+                  <input
+                    value={tempName}
+                    onChange={e => setTempName(e.target.value)}
+                    className="bg-slate-900 border border-indigo-500 rounded px-2 py-1 text-white text-sm w-full outline-none"
+                    autoFocus
+                  />
+                  <button onClick={saveName} className="bg-emerald-600 text-white p-1 rounded hover:bg-emerald-500">
+                    <CheckCircle2 size={16} />
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <div className="font-bold text-white text-lg flex items-center gap-2">
+                    {userStats.username}
+                    <button onClick={() => { setTempName(userStats.username); setEditingName(true); }} className="text-slate-500 hover:text-white transition-colors">
+                      <PenSquare size={14} />
+                    </button>
+                  </div>
+                  <div className="text-xs text-slate-500 font-mono">ID: {userStats.userId.substring(0, 8)}...</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
         {/* AVATAR EDITOR */}
         <div className="bg-slate-800/60 p-4 rounded-2xl border border-slate-700">
