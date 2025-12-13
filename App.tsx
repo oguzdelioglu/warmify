@@ -47,22 +47,38 @@ const DEFAULT_SETTINGS: UserSettings = {
 // Header and other views extracted to components
 import { SplashScreen } from './components/SplashScreen';
 
+import { LeaderboardService } from './services/leaderboardService';
+
+// ... existing imports ...
+
 export default function App() {
     const [view, setView] = useState<AppView>(AppView.HOME);
     const [showSplash, setShowSplash] = useState(true);
     const [rateUsNextView, setRateUsNextView] = useState<AppView>(AppView.HOME);
 
-
-
-
     // --- STATE ---
     const [userStats, setUserStats] = useState<UserStats>(() => {
         const saved = localStorage.getItem('warmify_user_stats');
-        return saved ? JSON.parse(saved) : {
+        let stats = saved ? JSON.parse(saved) : {
             streak: 0, totalPoints: 0, xp: 0, level: 1,
             workoutsCompleted: 0, lastWorkoutDate: null, badges: [], isPremium: false
         };
+
+        // Migration: Add ID if missing
+        if (!stats.userId) {
+            stats.userId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36);
+            stats.username = `Agent-${stats.userId.substring(0, 4).toUpperCase()}`;
+        }
+        return stats;
     });
+
+    const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+
+    useEffect(() => {
+        if (view === AppView.LEADERBOARD) {
+            LeaderboardService.getTopGlobal().then(setLeaderboardData);
+        }
+    }, [view]);
 
     const [settings, setSettings] = useState<UserSettings>(() => {
         const saved = localStorage.getItem('warmify_settings');
@@ -416,6 +432,15 @@ export default function App() {
         };
         setUserStats(newStats);
 
+        // Sync to Cloud
+        LeaderboardService.updateUserScore(
+            newStats.userId,
+            newStats.username,
+            newStats.totalPoints,
+            newStats.level,
+            settings.characterSkin.toString() // Or use archetype logic if preferred
+        ).catch(err => console.error("Cloud sync failed", err));
+
         setGameState(prev => ({ ...prev, isSessionActive: false, phase: 'WARMUP' }));
         setView(AppView.RESULTS);
     };
@@ -612,7 +637,7 @@ export default function App() {
                 )}
 
                 {view === AppView.LEADERBOARD && (
-                    <LeaderboardView entries={MOCK_LEADERBOARD} userStats={userStats} setView={setView} />
+                    <LeaderboardView entries={leaderboardData.length > 0 ? leaderboardData : MOCK_LEADERBOARD} userStats={userStats} setView={setView} />
                 )}
             </div>
         </div>

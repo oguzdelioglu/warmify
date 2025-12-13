@@ -113,4 +113,34 @@ export API_KEY="your_gemini_api_key"
 npm run dev
 ```
 
+## ☁️ Supabase Configuration (Leaderboard)
+
+To enable the global leaderboard feature, you need to set up a free Supabase project:
+
+1.  **Create Project:** Go to [Supabase](https://supabase.com) and create a new project.
+2.  **Get Keys:** In Project Settings -> API, copy the `Project URL` and `anon public key`.
+3.  **Env Setup:** Add them to your `.env` file:
+    ```env
+    VITE_SUPABASE_URL=your_project_url
+    VITE_SUPABASE_ANON_KEY=your_anon_key
+    ```
+4.  **Create Setup:** Run the following SQL in the Supabase SQL Editor to create the leaderboard table and policies:
+
+    ```sql
+    create table leaderboard (
+      id text primary key,
+      username text,
+      points bigint,
+      level int,
+      avatar text,
+      updated_at timestamp default now()
+    );
+
+    -- Enable security policies
+    alter table leaderboard enable row level security;
+    create policy "Public read" on leaderboard for select using (true);
+    create policy "Public insert/update" on leaderboard for insert with check (true);
+    create policy "Public update" on leaderboard for update using (true);
+    ```
+
 *Built with ❤️ and ☕ using Google AI Studio.*

@@ -8,6 +8,8 @@ export interface UserStats {
   lastWorkoutDate: string | null;
   badges: string[];
   isPremium: boolean;
+  userId: string;
+  username: string;
 }
 
 // 5 Archetypes x 5 Skins
