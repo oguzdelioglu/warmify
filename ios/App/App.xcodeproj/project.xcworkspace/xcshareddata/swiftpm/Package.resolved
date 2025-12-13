@@ -2,6 +2,15 @@
   "originHash" : "7221d2aea562230d86408e7f66edbaa770249b8b2908b63788bdfe81eb06cd9a",
   "pins" : [
     {
+      "identity" : "adaptysdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/adaptyteam/AdaptySDK-iOS.git",
+      "state" : {
+        "revision" : "32835d5fe186f3355d844241a5f74dd0cdacbb5c",
+        "version" : "3.12.1"
+      }
+    },
+    {
       "identity" : "capacitor-swift-pm",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ionic-team/capacitor-swift-pm.git",

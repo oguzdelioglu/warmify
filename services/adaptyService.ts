@@ -54,11 +54,11 @@ export const AdaptyService = {
             // Try to enable verbose logging for better debugging of native errors
             try {
               // @ts-ignore
-              if (adapty.setLogLevel) { await adapty.setLogLevel('verbose'); }
+              if (adapty.setLogLevel) { await adapty.setLogLevel({ logLevel: 'verbose' }); }
             } catch { /* ignore */ }
 
             console.log("ADAPTY: Activating Native SDK...");
-            await adapty.activate(key);
+            await adapty.activate({ apiKey: key });
             isInitialized = true;
             console.log("ADAPTY: Native SDK Activation Successful.");
           } catch (e: any) {
@@ -160,22 +160,30 @@ export const AdaptyService = {
       }
 
       const products = paywall?.products || [];
+      console.log(`ADAPTY: Paywall fetched. Found ${products.length} products:`, products.map((p: any) => p.vendorProductId));
+
       const product = products.find((p: any) => p.vendorProductId === productId);
 
       if (!product) {
-        throw new Error(`Product '${productId}' not found in placement '${placementId}'`);
+        throw new Error(`Product '${productId}' not found in placement '${placementId}'. Available: ${products.map((p: any) => p.vendorProductId).join(', ')}`);
       }
 
       // Step 2: Make Purchase
       console.log("ADAPTY: invoking makePurchase(product)...");
-      await adapty.makePurchase(product);
+      await adapty.makePurchase({ product }); // Updated signature check?
       return true;
 
     } catch (e: any) {
-      console.error("ADAPTY: Real purchase failed", JSON.stringify(e, null, 2));
+      console.error("ADAPTY: Real purchase failed", e);
+      console.error("ADAPTY Error Message:", e.message);
+
+      // Visual feedback for debugging
+      if (isDebugMode() || Capacitor.getPlatform() !== 'web') {
+        alert(`Purchase Error: ${e.message}`);
+      }
 
       // User Cancellation Check
-      const errStr = JSON.stringify(e).toLowerCase();
+      const errStr = (e?.message || JSON.stringify(e)).toLowerCase();
       if (errStr.includes("cancel") || e?.code === 2 || e?.adaptyCode === 2) {
         console.log("ADAPTY: User cancelled purchase.");
         return false;
