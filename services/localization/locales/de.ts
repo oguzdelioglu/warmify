@@ -140,7 +140,6 @@ export const de: TranslationKeys = {
     "results.xp_gained": "XP Gained",
     "results.level_progress": "Level Progress",
     "results.level_up_anim": "LEVEL UP!",
-    "results.claim": "Claim Rewards",
     "results.retry": "Retry",
 
     "paywall.subtitle": "Upgrade to the ultimate AI coaching experience.",
@@ -173,4 +172,8 @@ export const de: TranslationKeys = {
     "badge.survivor.name": "Tank", "badge.survivor.desc": "Survived with low health",
     "badge.ninja.name": "Ninja", "badge.ninja.desc": "Perfect precision",
     "badge.unknown.name": "Unknown", "badge.unknown.desc": "Mystery Badge",
+    "home.accolades": "Agent Accolades",
+    "game.feedback.perfect": "PERFECT!",
+    "game.feedback.good": "GOOD!",
+    "game.feedback.miss": "MISS!",
 };

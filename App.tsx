@@ -239,7 +239,7 @@ export default function App() {
                 score: prev.score + points,
                 combo: combo,
                 health: Math.min(100, prev.health + (quality === 'PERFECT' ? 5 : 2)),
-                feedback: `${quality}!`,
+                feedback: quality === 'PERFECT' ? t('game.feedback.perfect') : t('game.feedback.good'),
                 feedbackType: 'good',
                 lastHitTime: Date.now()
             };

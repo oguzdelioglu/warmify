@@ -31,6 +31,7 @@ export const tr: TranslationKeys = {
     "home.streak": "Seri",
     "home.level": "Seviye",
     "home.premium_banner": "Tüm Görevleri ve Kostümleri Aç",
+    "home.accolades": "Ajan Başarıları",
 
     // HEADER
     "header.points": "PUAN",
@@ -59,6 +60,9 @@ export const tr: TranslationKeys = {
     "game.next_round": "SONRAKİ TUR!",
     "game.workout_failed": "Antrenman Başarısız! Enerjin bitti.",
     "game.score": "Skor",
+    "game.feedback.perfect": "MÜKEMMEL!",
+    "game.feedback.good": "GÜZEL!",
+    "game.feedback.miss": "ISKADIN!",
 
     // RESULTS
     "results.title": "Görev Tamamlandı",

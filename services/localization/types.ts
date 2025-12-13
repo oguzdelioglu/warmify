@@ -33,6 +33,7 @@ export type TranslationKeys = {
     "home.streak": string;
     "home.level": string;
     "home.premium_banner": string;
+    "home.accolades": string;
 
     // HEADER
     "header.points": string;
@@ -61,6 +62,9 @@ export type TranslationKeys = {
     "game.next_round": string;
     "game.workout_failed": string;
     "game.score": string;
+    "game.feedback.perfect": string;
+    "game.feedback.good": string;
+    "game.feedback.miss": string;
 
     // RESULTS
     "results.title": string;

@@ -1,18 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowLeft, Lock, Unlock, Star, Shield, Zap, Crown, Gift, ChevronUp } from 'lucide-react';
+import { ArrowLeft, Lock, Unlock, Star, Shield, Zap, Crown, Gift, ChevronUp, ChevronsUp, Award } from 'lucide-react';
 import { UserStats } from '../types';
 import { SoundEngine } from '../services/audioService';
+import { LEVEL_MAP } from '../utils/levelUtils';
+import { useLocalization } from '../services/localization/LocalizationContext';
 
 interface LevelingSystemProps {
     stats: UserStats;
     onBack: () => void;
 }
-
-import { LEVEL_MAP } from '../utils/levelUtils';
-import { useLocalization } from '../services/localization/LocalizationContext';
-
-// ... interface ...
-
 
 const LevelingSystem: React.FC<LevelingSystemProps> = ({ stats, onBack }) => {
     const { t } = useLocalization();
@@ -23,7 +19,9 @@ const LevelingSystem: React.FC<LevelingSystemProps> = ({ stats, onBack }) => {
         if (scrollRef.current) {
             const activeNode = document.getElementById(`lvl-node-${stats.level}`);
             if (activeNode) {
-                activeNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => {
+                    activeNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
             }
         }
     }, [stats.level]);
@@ -37,152 +35,157 @@ const LevelingSystem: React.FC<LevelingSystemProps> = ({ stats, onBack }) => {
     const nextLevelData = LEVEL_MAP.find(l => l.lvl === stats.level + 1);
 
     const xpForNextLevel = stats.level * 1000;
-    const progress = (stats.xp / xpForNextLevel) * 100;
+    const progress = Math.min(100, (stats.xp / xpForNextLevel) * 100);
 
     return (
-        <div className="flex-1 flex flex-col pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] bg-slate-900 h-full overflow-hidden relative">
-
-            {/* Background Ambience */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
-                <div className="absolute top-[-10%] left-[20%] w-[80%] h-[40%] bg-indigo-600/20 rounded-full blur-[100px]"></div>
-                <div className="absolute bottom-[-10%] right-[20%] w-[60%] h-[40%] bg-emerald-600/10 rounded-full blur-[100px]"></div>
+        <div className="fixed inset-0 z-50 bg-slate-950 flex flex-col overflow-hidden animate-[fadeIn_0.3s_ease-out]">
+            {/* Background Effects */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[-20%] left-[-10%] w-[150%] h-[60%] bg-indigo-900/20 rounded-full blur-[120px] animate-pulse"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[100%] h-[50%] bg-blue-900/10 rounded-full blur-[100px]"></div>
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
             </div>
 
-            {/* HEADER */}
-            <div className="flex items-center px-4 pt-4 shrink-0 z-10 relative">
-                <button onClick={handleBack} className="p-2 bg-slate-800/80 backdrop-blur rounded-full mr-4 hover:bg-slate-700 transition-colors border border-white/10">
-                    <ArrowLeft size={20} className="text-white" />
-                </button>
-                <div>
-                    <h2 className="text-2xl font-black text-white uppercase italic tracking-wider">{t('leveling.title')}</h2>
-                    <div className="text-[10px] text-indigo-300 font-bold tracking-[0.2em] uppercase">{t('leveling.subtitle')}</div>
+            {/* HEADER - Fixed at top with safe area handling */}
+            <div className="relative z-10 shrink-0 bg-slate-950/80 backdrop-blur-md border-b border-white/5 pt-[calc(env(safe-area-inset-top)+12px)] pb-4 px-6 shadow-2xl">
+                <div className="flex items-center justify-between">
+                    <button
+                        onClick={handleBack}
+                        className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-white hover:bg-slate-700 active:scale-95 transition-all shadow-lg border border-slate-700"
+                    >
+                        <ArrowLeft size={20} />
+                    </button>
+                    <div className="text-right">
+                        <div className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-0.5">{t('leveling.subtitle')}</div>
+                        <h2 className="text-xl font-black text-white italic tracking-wide uppercase leading-none">{t('leveling.title')}</h2>
+                    </div>
                 </div>
             </div>
 
-            {/* CURRENT STATUS CARD */}
-            <div className="px-4 py-6 z-10 relative shrink-0">
-                <div className="bg-gradient-to-br from-indigo-900/80 to-slate-900/80 backdrop-blur-xl p-6 rounded-3xl border border-indigo-500/30 shadow-[0_0_30px_rgba(79,70,229,0.15)] relative overflow-hidden group">
+            {/* SCROLLABLE CONTENT */}
+            <div ref={scrollRef} className="flex-1 overflow-y-auto no-scrollbar relative z-10 pb-[calc(env(safe-area-inset-bottom)+100px)]">
 
-                    {/* Holographic Scan Line */}
-                    <div className="absolute top-0 left-0 w-full h-[2px] bg-indigo-400/50 blur-[2px] animate-[scan_3s_linear_infinite]"></div>
+                {/* CURRENT LEVEL HERO CARD */}
+                <div className="px-6 py-8">
+                    <div className="relative bg-gradient-to-br from-indigo-600 to-blue-700 rounded-[2rem] p-6 shadow-[0_10px_40px_-10px_rgba(79,70,229,0.5)] overflow-hidden border border-indigo-400/30">
+                        {/* Decorative Circles */}
+                        <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-black/20 to-transparent"></div>
 
-                    <div className="flex justify-between items-center mb-6">
-                        <div>
-                            <div className="text-xs font-bold text-indigo-400 uppercase mb-1">{t('leveling.current')}</div>
-                            <div className="text-3xl font-black text-white tracking-tight">{t(currentLevelData.titleKey)}</div>
-                        </div>
-                        <div className="relative">
-                            <div className="w-16 h-16 rounded-full bg-slate-800 border-2 border-indigo-400 flex items-center justify-center text-2xl font-black text-white shadow-[0_0_20px_rgba(99,102,241,0.5)] z-10 relative">
-                                {stats.level}
+                        <div className="relative z-10 flex flex-col items-center text-center">
+                            <div className="w-24 h-24 rounded-full bg-slate-900 border-4 border-indigo-400 flex items-center justify-center mb-4 shadow-xl relative group">
+                                <span className="text-4xl font-black text-white">{stats.level}</span>
+                                <div className="absolute inset-0 border-4 border-white/20 rounded-full animate-[spin_10s_linear_infinite] border-t-white/80"></div>
+                                <div className="absolute -bottom-2 bg-indigo-500 text-[10px] font-bold px-2 py-0.5 rounded-full text-white shadow-sm border border-white/20">LVL</div>
                             </div>
-                            <div className="absolute inset-0 bg-indigo-500 rounded-full blur-md animate-pulse"></div>
-                        </div>
-                    </div>
 
-                    {/* XP Bar */}
-                    <div className="mb-2 flex justify-between text-xs font-bold text-slate-300">
-                        <span>{t('leveling.xp')}</span>
-                        <span className="text-indigo-300">{stats.xp} / {xpForNextLevel}</span>
-                    </div>
-                    <div className="h-3 bg-slate-800 rounded-full overflow-hidden border border-slate-700 relative">
-                        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-                        <div
-                            className="h-full bg-gradient-to-r from-indigo-600 via-purple-500 to-indigo-400 shadow-[0_0_15px_rgba(129,140,248,0.5)] transition-all duration-1000 ease-out relative"
-                            style={{ width: `${progress}%` }}
-                        >
-                            <div className="absolute top-0 right-0 w-[2px] h-full bg-white blur-[1px] animate-pulse"></div>
+                            <h3 className="text-3xl font-black text-white uppercase italic tracking-tight mb-1 drop-shadow-md">
+                                {t(currentLevelData.titleKey)}
+                            </h3>
+                            <div className="text-indigo-200 text-xs font-bold uppercase tracking-widest mb-6">
+                                {t('leveling.current')}
+                            </div>
+
+                            {/* XP Progress */}
+                            <div className="w-full bg-black/30 h-4 rounded-full overflow-hidden backdrop-blur-sm border border-white/10 relative cursor-help group-hover:scale-[1.02] transition-transform">
+                                <div
+                                    className="h-full bg-gradient-to-r from-emerald-400 to-green-500 shadow-[0_0_15px_rgba(52,211,153,0.5)] relative"
+                                    style={{ width: `${progress}%` }}
+                                >
+                                    <div className="absolute inset-0 bg-white/30 animate-[shimmer_2s_infinite]"></div>
+                                </div>
+                                <div className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white drop-shadow-md">
+                                    {stats.xp} / {xpForNextLevel} XP
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    {nextLevelData && (
-                        <div className="mt-3 text-[10px] text-center text-slate-400 font-medium bg-slate-800/50 py-1 rounded-lg border border-white/5">
-                            {t('leveling.next_reward')}: <span className="text-emerald-400 font-bold">{t(nextLevelData.rewardKey)}</span>
-                        </div>
-                    )}
                 </div>
-            </div>
 
-            {/* TIMELINE SCROLL */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 pb-20 relative z-10 no-scrollbar space-y-4">
-                <div className="absolute left-[27px] top-4 bottom-0 w-[2px] bg-slate-700/50 z-0"></div>
+                {/* TIMELINE */}
+                <div className="px-6 relative">
+                    {/* Timeline Line */}
+                    <div className="absolute left-[43px] top-0 bottom-0 w-[3px] bg-slate-800 rounded-full"></div>
+                    <div
+                        className="absolute left-[43px] top-0 w-[3px] bg-indigo-500/50 rounded-full transition-all duration-1000"
+                        style={{ height: `${Math.min(100, (stats.level / LEVEL_MAP.length) * 100)}%` }}
+                    ></div>
 
-                {LEVEL_MAP.map((item, index) => {
-                    const isUnlocked = stats.level >= item.lvl;
-                    const isCurrent = stats.level === item.lvl;
-                    const isNext = stats.level + 1 === item.lvl;
+                    <div className="space-y-8 relative">
+                        {LEVEL_MAP.map((item) => {
+                            const isUnlocked = stats.level >= item.lvl;
+                            const isCurrent = stats.level === item.lvl;
+                            const isFuture = stats.level < item.lvl;
 
-                    return (
-                        <div
-                            id={`lvl-node-${item.lvl}`}
-                            key={item.lvl}
-                            className={`relative flex items-center gap-4 group ${isUnlocked ? 'opacity-100' : 'opacity-60'}`}
-                        >
-                            {/* NODE */}
-                            <div className={`
-                        w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center z-10 border-2 transition-all duration-300
-                        ${isCurrent
-                                    ? 'bg-indigo-600 border-indigo-400 scale-110 shadow-[0_0_25px_rgba(99,102,241,0.6)]'
-                                    : isUnlocked
-                                        ? 'bg-slate-800 border-emerald-500/50 text-emerald-400'
-                                        : 'bg-slate-900 border-slate-700 text-slate-600'
-                                }
-                    `}>
-                                {isUnlocked
-                                    ? (item.type === 'skin' ? <Gift size={24} /> : item.type === 'feature' ? <Zap size={24} /> : <Shield size={24} />)
-                                    : <Lock size={20} />
-                                }
-                            </div>
+                            return (
+                                <div
+                                    key={item.lvl}
+                                    id={`lvl-node-${item.lvl}`}
+                                    className={`relative flex gap-5 group ${isFuture ? 'opacity-50 grayscale-[0.8]' : 'opacity-100'} transition-all duration-500`}
+                                >
+                                    {/* NODE ICON */}
+                                    <div className={`
+                                        w-9 h-9 shrink-0 rounded-full z-10 flex items-center justify-center border-[3px] shadow-lg transition-transform duration-300
+                                        ${isCurrent
+                                            ? 'bg-indigo-500 border-white scale-125 shadow-indigo-500/50'
+                                            : isUnlocked
+                                                ? 'bg-slate-800 border-indigo-500'
+                                                : 'bg-slate-900 border-slate-700'
+                                        }
+                                    `}>
+                                        {isUnlocked
+                                            ? <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                            : <Lock size={12} className="text-slate-500" />
+                                        }
+                                    </div>
 
-                            {/* CARD */}
-                            <div className={`
-                        flex-1 p-4 rounded-xl border transition-all duration-300
-                        ${isCurrent
-                                    ? 'bg-slate-800/90 border-indigo-500/50 shadow-lg translate-x-2'
-                                    : isUnlocked
-                                        ? 'bg-slate-800/40 border-slate-700 grayscale-[0.5]'
-                                        : 'bg-slate-900/40 border-slate-800'
-                                }
-                    `}>
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <div className={`text-[10px] font-bold uppercase tracking-wider mb-0.5 ${isCurrent ? 'text-indigo-400' : 'text-slate-500'}`}>
-                                            {t('home.level')} {item.lvl}
+                                    {/* CONTENT CARD */}
+                                    <div className={`
+                                        flex-1 p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden
+                                        ${isCurrent
+                                            ? 'bg-slate-800 border-indigo-500 shadow-lg shadow-indigo-900/20 translate-x-2'
+                                            : 'bg-slate-900/60 border-slate-800'
+                                        }
+                                    `}>
+                                        {/* Current Indicator Tag */}
+                                        {isCurrent && (
+                                            <div className="absolute top-0 right-0 bg-indigo-500 text-[8px] font-black text-white px-2 py-1 rounded-bl-xl">
+                                                ACTIVE
+                                            </div>
+                                        )}
+
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <div className={`p-2 rounded-lg ${isUnlocked ? 'bg-indigo-500/10' : 'bg-slate-800'}`}>
+                                                {item.type === 'skin' ? <Gift size={16} className={isUnlocked ? 'text-pink-400' : 'text-slate-500'} /> :
+                                                    item.type === 'feature' ? <Zap size={16} className={isUnlocked ? 'text-yellow-400' : 'text-slate-500'} /> :
+                                                        <Award size={16} className={isUnlocked ? 'text-cyan-400' : 'text-slate-500'} />}
+                                            </div>
+                                            <div>
+                                                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{t('home.level')} {item.lvl}</div>
+                                                <div className={`font-bold text-base leading-tight ${isUnlocked ? 'text-white' : 'text-slate-400'}`}>{t(item.titleKey)}</div>
+                                            </div>
                                         </div>
-                                        <div className={`text-base font-bold ${isUnlocked ? 'text-white' : 'text-slate-400'}`}>
-                                            {t(item.titleKey)}
+
+                                        <div className="text-xs font-medium text-slate-400 bg-black/20 p-2 rounded-lg flex items-center gap-2">
+                                            <span className="text-[10px] uppercase font-bold text-slate-600">{t('leveling.next_reward')}:</span>
+                                            <span className={isUnlocked ? 'text-indigo-300' : 'text-slate-500'}>{t(item.rewardKey)}</span>
                                         </div>
                                     </div>
-                                    {isUnlocked && <CheckCircleIcon />}
                                 </div>
+                            );
+                        })}
+                    </div>
+                </div>
 
-                                <div className={`mt-2 text-xs flex items-center gap-2 ${isUnlocked ? 'text-emerald-300' : 'text-slate-500'}`}>
-                                    {item.type === 'skin' && <div className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500"></div>}
-                                    {t(item.rewardKey)}
-                                </div>
-                            </div>
-
-                            {isNext && (
-                                <div className="absolute -right-2 top-1/2 -translate-y-1/2">
-                                    <div className="bg-indigo-600 text-[9px] font-bold px-2 py-0.5 rounded text-white animate-pulse">
-                                        NEXT
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    );
-                })}
-
-                <div className="text-center py-8 text-slate-600 text-xs font-mono uppercase tracking-widest opacity-50">
-                    {t('leveling.more_soon')}
+                <div className="text-center py-12">
+                    <div className="inline-block p-4 rounded-full bg-slate-900 border border-slate-800">
+                        <ChevronsUp className="text-slate-700 animate-bounce" size={24} />
+                    </div>
+                    <p className="mt-4 text-xs font-mono text-slate-600 uppercase tracking-[0.2em]">{t('leveling.more_soon')}</p>
                 </div>
             </div>
         </div>
     );
 };
-
-const CheckCircleIcon = () => (
-    <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center">
-        <div className="w-2.5 h-1.5 border-b-2 border-l-2 border-emerald-400 -rotate-45 mb-0.5"></div>
-    </div>
-);
 
 export default LevelingSystem;

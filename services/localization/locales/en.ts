@@ -31,6 +31,7 @@ export const en: TranslationKeys = {
     "home.streak": "Streak",
     "home.level": "Level",
     "home.premium_banner": "Unlock All Missions & Skins",
+    "home.accolades": "Agent Accolades",
 
     // HEADER
     "header.points": "PTS",
@@ -59,6 +60,9 @@ export const en: TranslationKeys = {
     "game.next_round": "NEXT ROUND!",
     "game.workout_failed": "Workout Failed! Run out of health.",
     "game.score": "Score",
+    "game.feedback.perfect": "PERFECT!",
+    "game.feedback.good": "GOOD!",
+    "game.feedback.miss": "MISS!",
 
     // RESULTS
     "results.title": "Mission Complete",
