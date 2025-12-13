@@ -2,8 +2,8 @@
 include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/android/capacitor')
 
+include ':adapty-capacitor'
+project(':adapty-capacitor').projectDir = new File('../node_modules/@adapty/capacitor/android')
+
 include ':capacitor-community-in-app-review'
 project(':capacitor-community-in-app-review').projectDir = new File('../node_modules/@capacitor-community/in-app-review/android')
-
-include ':capacitor-adapty'
-project(':capacitor-adapty').projectDir = new File('../node_modules/capacitor-adapty/android')

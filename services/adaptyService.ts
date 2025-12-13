@@ -1,9 +1,6 @@
 /// <reference types="vite/client" />
 import { OnboardingAnswers } from "../types";
-import { Adapty as NativeAdapty } from 'capacitor-adapty';
-
-// Workaround for type definition issues in capacitor-adapty v4
-const Adapty = NativeAdapty as any;
+import { adapty } from '@adapty/capacitor';
 import { Capacitor } from '@capacitor/core';
 
 export interface AdaptyProduct {
@@ -57,11 +54,11 @@ export const AdaptyService = {
             // Try to enable verbose logging for better debugging of native errors
             try {
               // @ts-ignore
-              if (Adapty.setLogLevel) { await Adapty.setLogLevel('verbose'); }
+              if (adapty.setLogLevel) { await adapty.setLogLevel('verbose'); }
             } catch { /* ignore */ }
 
             console.log("ADAPTY: Activating Native SDK...");
-            await Adapty.activate(key);
+            await adapty.activate(key);
             isInitialized = true;
             console.log("ADAPTY: Native SDK Activation Successful.");
           } catch (e) {
@@ -109,11 +106,11 @@ export const AdaptyService = {
       }
 
       console.log(`ADAPTY: Fetching real paywall '${placementId}'`);
-      const paywall = await Adapty.getPaywall(placementId);
+      const paywall = await adapty.getPaywall({ placementId });
       const products = paywall.products;
 
       return {
-        id: paywall.placementId,
+        id: (paywall as any).placementId || placementId,
         name: paywall.name,
         products: products.map((p: any) => ({
           vendorProductId: p.vendorProductId,
@@ -147,7 +144,7 @@ export const AdaptyService = {
       // Step 1: Fetch Paywall
       let paywall;
       try {
-        paywall = await Adapty.getPaywall(placementId);
+        paywall = await adapty.getPaywall({ placementId });
       } catch (pwError) {
         throw new Error(`Paywall fetch failed: ${JSON.stringify(pwError)}`);
       }
@@ -161,7 +158,7 @@ export const AdaptyService = {
 
       // Step 2: Make Purchase
       console.log("ADAPTY: invoking makePurchase(product)...");
-      await Adapty.makePurchase(product);
+      await adapty.makePurchase(product);
       return true;
 
     } catch (e: any) {
@@ -186,7 +183,7 @@ export const AdaptyService = {
     }
 
     try {
-      const profile = await Adapty.restorePurchases();
+      const profile = await adapty.restorePurchases();
       return profile.accessLevels['premium']?.isActive ?? false;
     } catch (e) {
       console.error("ADAPTY: Restore failed", e);

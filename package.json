@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@adapty/capacitor": "^3.12.0-beta.1",
     "@capacitor-community/in-app-review": "^7.1.0",
     "@capacitor/android": "^8.0.0",
     "@capacitor/cli": "^8.0.0",
@@ -19,7 +20,6 @@
     "@google/genai": "^1.32.0",
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/pose": "^0.5.1675469404",
-    "capacitor-adapty": "^4.1.5",
     "lucide-react": "^0.556.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
