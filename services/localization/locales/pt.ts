@@ -151,7 +151,7 @@ export const pt: TranslationKeys = {
     "paywall.benefit3.title": "Elite Leaderboard Access", "paywall.benefit3.sub": "Compete with the best agents",
     "paywall.benefit4.title": "Unlock All Archetypes", "paywall.benefit4.sub": "Cyber, Mech, Spirit & more",
     "paywall.cta_loading": "PROCESSING...",
-    "paywall.cta_default": "UNLOCK FOREVER",
+    "paywall.cta_default": "CONTINUAR",
     "paywall.save_percent": "SAVE 33%",
 
     "rate.thank_you_title": "THANK YOU!",

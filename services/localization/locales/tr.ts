@@ -105,7 +105,7 @@ export const tr: TranslationKeys = {
     "paywall.benefit3.title": "Elit Liderlik Tablosu", "paywall.benefit3.sub": "En iyi ajanlarla yarış",
     "paywall.benefit4.title": "Tüm Arketipleri Aç", "paywall.benefit4.sub": "Siber, Mekanik, Ruh ve daha fazlası",
     "paywall.cta_loading": "İŞLENİYOR...",
-    "paywall.cta_default": "SONSUZA DEK AÇ",
+    "paywall.cta_default": "DEVAM ET",
     "paywall.save_percent": "%33 TASARRUF",
 
     // RATE US
