@@ -1,5 +1,6 @@
-package com.warmify.app;
+package com.odel.warmify;
 
 import com.getcapacitor.BridgeActivity;
 
-public class MainActivity extends BridgeActivity {}
+public class MainActivity extends BridgeActivity {
+}
