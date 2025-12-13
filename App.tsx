@@ -348,6 +348,13 @@ export default function App() {
     }, [view]);
 
     const startWorkout = () => {
+        const today = new Date().toISOString().split('T')[0];
+        if (!userStats.isPremium && userStats.lastWorkoutDate === today) {
+            alert("Daily Mission Limit Reached! 🛑\n\nRecruits can only complete one mission per day.\nUpgrade to Captain for UNLIMITED missions!");
+            setView(AppView.PAYWALL);
+            return;
+        }
+
         SoundEngine.playUI('click');
         // Clear previous state just in case
         poseServiceRef.current = null;
