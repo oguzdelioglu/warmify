@@ -19,7 +19,7 @@ import { useLocalization } from '../../services/localization/LocalizationContext
 export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView, startWorkout, newUnlockedBadge }) => {
     const { t } = useLocalization();
     return (
-        <div className="flex-1 flex flex-col justify-evenly gap-4 animate-[fadeIn_0.5s_ease-out] overflow-y-auto no-scrollbar pb-8 relative">
+        <div className="flex-1 flex flex-col justify-evenly gap-4 animate-[fadeIn_0.5s_ease-out] overflow-y-auto no-scrollbar pb-8 relative w-full max-w-2xl mx-auto">
 
             {/* Background Ambient Blobs */}
             <div className="absolute top-10 left-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl animate-pulse pointer-events-none"></div>

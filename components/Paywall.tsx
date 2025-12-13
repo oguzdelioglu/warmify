@@ -86,7 +86,7 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
             </button>
 
             {/* MAIN LAYOUT: Flex Column */}
-            <div className="relative z-10 w-full h-full max-w-lg mx-auto flex flex-col">
+            <div className="relative z-10 w-full h-full max-w-md md:max-w-3xl mx-auto flex flex-col">
 
                 {/* SCROLLABLE CONTENT (Top Part) */}
                 <div className="flex-1 overflow-y-auto no-scrollbar px-6 pt-[calc(env(safe-area-inset-top,20px)+40px)] pb-4">

@@ -531,7 +531,7 @@ export default function App() {
         <div className="relative h-screen max-h-screen text-white font-sans selection:bg-blue-500 overflow-hidden bg-slate-900 flex flex-col pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
             {view !== AppView.WORKOUT && <ThreeScene intensity={intensity} />}
 
-            <div className="relative z-10 w-full max-w-md mx-auto h-full flex flex-col p-4 transition-all duration-500">
+            <div className="relative z-10 w-full md:max-w-3xl lg:max-w-4xl mx-auto h-full flex flex-col p-4 transition-all duration-500">
 
                 <Header view={view} setView={setView} userStats={userStats} />
 
