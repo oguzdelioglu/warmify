@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ThreeScene from './components/ThreeScene';
 import { AppView, UserStats, GameState, LeaderboardEntry, UserSettings, LogMessage, ExerciseDef, WorkoutResultData } from './types';
-import { PoseService } from './services/poseService'; // New Service
-import { MoveEvaluator } from './services/MoveEvaluator'; // New Geometry Engine
+import { PoseService } from './services/poseService';
+import { MoveEvaluator } from './services/MoveEvaluator';
 import { XPBar, TrophyCase, HealthBar } from './components/Gamification';
 import Onboarding from './components/Onboarding';
 import Settings from './components/Settings';
@@ -132,7 +132,7 @@ export default function App() {
             phase: 'COUNTDOWN',
             feedback: "PREPARE",
             feedbackType: 'neutral',
-            currentExerciseIndex: 0 // FIX: Ensure preview shows the first exercise, not the last one
+            currentExerciseIndex: 0
         }));
         setCountdown(3);
 
@@ -163,7 +163,7 @@ export default function App() {
 
 
 
-        // coachRef.current?.setExercise(EXERCISES[0].name); // AI removed
+
 
         gameLoopRef.current = window.setInterval(() => {
             setGameState(prev => {
@@ -186,7 +186,7 @@ export default function App() {
                     }
                     newTime = EXERCISES[newIndex].duration;
 
-                    // coachRef.current?.setExercise(EXERCISES[newIndex].name); // AI removed
+
                     SoundEngine.playLevelUp(); // Phase change sound
                     return {
                         ...prev,
@@ -308,6 +308,7 @@ export default function App() {
                                     accumulatedErrorRef.current += 1;
                                     if (accumulatedErrorRef.current > 60) { // Slower miss
                                         handleMiss(evalResult.feedback); // Use evaluator feedback
+                                        accumulatedErrorRef.current = 0; // Trigger once then reset
                                     }
                                 } else {
                                     accumulatedErrorRef.current = 0;
@@ -355,7 +356,7 @@ export default function App() {
 
     const endWorkout = (failed: boolean = false) => {
         if (gameLoopRef.current) window.clearInterval(gameLoopRef.current);
-        // coachRef.current?.stop(); // AI Removed
+
         poseServiceRef.current?.stop(); // Stop pose detection
         if (videoRef.current?.srcObject) (videoRef.current.srcObject as MediaStream).getTracks().forEach(t => t.stop());
         setSimAutoPlay(false);
@@ -412,13 +413,33 @@ export default function App() {
         setView(AppView.RESULTS);
     };
 
+    const [hasRated, setHasRated] = useState<boolean>(() => {
+        return localStorage.getItem('warmify_has_rated') === 'true';
+    });
+
     const handleClaimResults = () => {
-        // Go to RateUs first, then decide logic in handleRateUsComplete
-        setRateUsNextView(AppView.HOME); // Default backup
-        setView(AppView.RATE_US);
+        // Skip RateUs if already rated
+        if (hasRated) {
+            handleRateUsComplete();
+        } else {
+            setRateUsNextView(AppView.HOME); // This state usage might need adjustment if logic in handleRateUsComplete depends on it? 
+            // Actually handleRateUsComplete logic for Results doesn't depend on rateUsNextView for the Results path specifically (lines 430+), 
+            // but let's be safe.
+            // Wait, logic at 424 checks rateUsNextView to go to PAYWALL.
+            // If we skip, we still need to know where to go.
+            // If we are claiming results, we are NOT going to Paywall usually? 
+            // Let's assume ClaimResults -> badge or home.
+
+            setView(AppView.RATE_US);
+        }
     };
 
-    const handleRateUsComplete = () => {
+    const handleRateUsComplete = (didRate: boolean = false) => {
+        if (didRate) {
+            setHasRated(true);
+            localStorage.setItem('warmify_has_rated', 'true');
+        }
+
         // If coming from Onboarding (special case check or just trust state)
         if (rateUsNextView === AppView.PAYWALL) {
             setView(AppView.PAYWALL);

@@ -4,7 +4,7 @@ import { Star, ThumbsUp, MessageSquare } from 'lucide-react';
 import { SoundEngine } from '../services/audioService';
 
 interface RateUsProps {
-    onComplete: () => void;
+    onComplete: (didRate: boolean) => void;
 }
 
 export const RateUs: React.FC<RateUsProps> = ({ onComplete }) => {
@@ -39,7 +39,7 @@ export const RateUs: React.FC<RateUsProps> = ({ onComplete }) => {
                     <h2 className="text-3xl font-black italic text-white">THANK YOU!</h2>
                     <p className="text-slate-300">Your support helps us keep the fire burning!</p>
                     <button
-                        onClick={onComplete}
+                        onClick={() => onComplete(true)}
                         className="mt-8 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-xl transition-all border border-slate-700"
                     >
                         CONTINUE
@@ -93,7 +93,7 @@ export const RateUs: React.FC<RateUsProps> = ({ onComplete }) => {
                 )}
 
                 <button
-                    onClick={onComplete}
+                    onClick={() => onComplete(false)}
                     className="mt-6 text-slate-500 text-xs font-bold hover:text-white transition-colors uppercase tracking-widest"
                 >
                     No thanks, maybe later

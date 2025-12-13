@@ -3,7 +3,7 @@ import { ExerciseType, CharacterArchetype, CharacterSkinId } from '../types';
 
 interface RigOverlayProps {
     exercise: string;
-    mode: 'INSTRUCTION' | 'TRACKER';
+    mode: 'INSTRUCTION' | 'TRACKER' | 'PREVIEW';
     isActive: boolean;
     videoRef?: React.RefObject<HTMLVideoElement>;
     seatedMode?: boolean;

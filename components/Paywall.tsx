@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Check, Zap, Crown, Star, ShieldCheck, Activity } from 'lucide-react';
-import { AdaptyService } from '../services/adaptyService';
+import { AdaptyService, AdaptyProduct } from '../services/adaptyService';
 import { SoundEngine } from '../services/audioService';
 
 interface PaywallProps {
@@ -10,12 +10,35 @@ interface PaywallProps {
 
 const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
     const [isLoading, setIsLoading] = useState(false);
+    const [product, setProduct] = useState<AdaptyProduct | null>(null);
+    const [isFetching, setIsFetching] = useState(true);
+
+    useEffect(() => {
+        const loadPaywall = async () => {
+            try {
+                const placementId = import.meta.env.VITE_ADAPTY_PLACEMENT_ID || 'default_placement';
+                const paywall = await AdaptyService.getPaywall(placementId);
+
+                if (paywall && paywall.products.length > 0) {
+                    // Find annual product or take first
+                    const annual = paywall.products.find(p => p.vendorProductId === 'warmify_annually') || paywall.products[0];
+                    setProduct(annual);
+                }
+            } catch (err) {
+                console.error("Failed to load paywall", err);
+            } finally {
+                setIsFetching(false);
+            }
+        };
+        loadPaywall();
+    }, []);
 
     const handlePurchase = async () => {
         SoundEngine.playUI('click');
         setIsLoading(true);
-        // Simulate purchase
-        const success = await AdaptyService.makePurchase('warmify_annually');
+        // Use fetched ID or fallback
+        const productId = product?.vendorProductId || 'warmify_annually';
+        const success = await AdaptyService.makePurchase(productId);
         setIsLoading(false);
         if (success) {
             SoundEngine.playLevelUp();
@@ -34,6 +57,11 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
         { icon: Crown, text: "Elite Leaderboard Access", sub: "Compete with the best agents" },
         { icon: Star, text: "Unlock All Archetypes", sub: "Cyber, Mech, Spirit & more" },
     ];
+
+    // Defaults if fetch fails (fallback UI)
+    const priceDisplay = product?.localizedPrice || "$59.99";
+    const periodDisplay = product?.subscriptionPeriod === 'year' ? '/year' : '/month';
+    const offerText = product?.introductoryOffer || "SAVE 33%";
 
     return (
         <div className="absolute inset-0 z-[60] bg-[#0f172a] text-white flex flex-col items-center justify-center overflow-hidden">
@@ -102,17 +130,21 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
                     {/* Price Tag */}
                     <div className="flex justify-between items-end px-1 mb-3">
                         <div className="text-left leading-none">
+                            {/* Fake Strikethrough for psychology? Or just show price */}
                             <div className="text-xs text-slate-500 line-through decoration-red-500 mb-0.5">$99.99</div>
-                            <div className="text-2xl font-black text-white">$59.99<span className="text-xs font-medium text-slate-400 ml-1">/year</span></div>
+                            <div className="text-2xl font-black text-white">
+                                {isFetching ? <span className="animate-pulse">...</span> : priceDisplay}
+                                <span className="text-xs font-medium text-slate-400 ml-1">{periodDisplay}</span>
+                            </div>
                         </div>
                         <div className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded text-[10px] font-bold">
-                            SAVE 33%
+                            {offerText}
                         </div>
                     </div>
 
                     <button
                         onClick={handlePurchase}
-                        disabled={isLoading}
+                        disabled={isLoading || isFetching}
                         className="group relative w-full py-3.5 rounded-xl bg-white overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] active:scale-95 transition-all"
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 opacity-0 group-hover:opacity-10 transition-opacity"></div>
@@ -128,7 +160,7 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
                     </button>
 
                     <div className="flex justify-center gap-6 text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-3">
-                        <button className="hover:text-white transition-colors">Restore</button>
+                        <button onClick={() => AdaptyService.restorePurchases().then(s => s && onPurchaseSuccess())} className="hover:text-white transition-colors">Restore</button>
                         <button className="hover:text-white transition-colors">Terms</button>
                         <button className="hover:text-white transition-colors">Privacy</button>
                     </div>

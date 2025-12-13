@@ -1,10 +1,31 @@
 @import "tailwindcss";
 
-/* Custom Animations from original HTML */
+/* Custom Animations */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shine {
+  from { left: -100%; }
+  to { left: 200%; }
+}
+
+@keyframes combo-pop {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.0); opacity: 0; }
 }
 
 .shake {

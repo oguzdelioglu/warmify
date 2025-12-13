@@ -179,11 +179,19 @@ const Evaluators: Record<string, (lm: any[], prevLm: any[] | null, state: Moveme
 
     'Shadow Box': (lm, prevLm, state) => {
         const now = Date.now();
-        const fast = checkVelocity(lm, prevLm, [15, 16], 2.5);
+
+        // Stricter velocity check (was 2.5)
+        const fast = checkVelocity(lm, prevLm, [15, 16], 6.0);
+
+        // Ensure at least one arm is extending (not just wrist shaking)
+        const leftArmAng = calculateAngle(lm[11], lm[13], lm[15]);
+        const rightArmAng = calculateAngle(lm[12], lm[14], lm[16]);
+        const isExtended = leftArmAng > 90 || rightArmAng > 90;
+
         let nextState = { ...state };
         let didTriggerRep = false;
 
-        if (now - state.lastTriggerTime > 300 && fast) {
+        if (now - state.lastTriggerTime > 300 && fast && isExtended) {
             didTriggerRep = true;
             nextState.lastTriggerTime = now;
         }
