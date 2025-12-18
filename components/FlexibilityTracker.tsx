@@ -50,29 +50,29 @@ export const FlexibilityTracker: React.FC<FlexibilityTrackerProps> = ({ data }) 
     );
 
     return (
-        <div className="bg-gradient-to-br from-indigo-900/50 to-purple-900/50 backdrop-blur-md border border-indigo-500/30 rounded-2xl p-4 shadow-xl">
-            <div className="flex items-center justify-between mb-4">
+        <div className="bg-gradient-to-br from-indigo-900/50 to-purple-900/50 backdrop-blur-md border border-indigo-500/30 rounded-2xl p-3 shadow-xl">
+            <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                    <div className="p-2 bg-indigo-500/20 rounded-lg">
-                        <Rotate3D size={18} className="text-indigo-400" />
+                    <div className="p-1.5 bg-indigo-500/20 rounded-lg">
+                        <Rotate3D size={16} className="text-indigo-400" />
                     </div>
-                    <h3 className="text-sm font-black text-white">{t('flexibility.title')}</h3>
+                    <h3 className="text-xs font-black text-white">{t('flexibility.title')}</h3>
                 </div>
                 {hasImprovement && (
-                    <div className="flex items-center gap-1 text-green-400 text-xs font-bold bg-green-500/10 px-2 py-1 rounded-full border border-green-500/20">
-                        <TrendingUp size={12} />
+                    <div className="flex items-center gap-1 text-green-400 text-[10px] font-bold bg-green-500/10 px-1.5 py-0.5 rounded-full border border-green-500/20">
+                        <TrendingUp size={10} />
                         {t('flexibility.improved')}
                     </div>
                 )}
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
                 {renderROMBar(t('flexibility.shoulder'), data.shoulderROM, 180)}
                 {renderROMBar(t('flexibility.hip'), data.hipROM, 120)}
                 {renderROMBar(t('flexibility.spine'), data.spineROM, 90)}
             </div>
 
-            <p className="text-[10px] text-slate-500 mt-3 text-center">
+            <p className="text-[9px] text-slate-500 mt-2 text-center">
                 {t('flexibility.tracking_desc')}
             </p>
         </div>
