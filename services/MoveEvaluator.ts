@@ -12,6 +12,9 @@ export interface MovementState {
     phase: 'READY' | 'HOLD' | 'COOLDOWN' | 'ACTIVE';
     lastTriggerTime: number;
     triggerCount: number;
+    // Enhanced Logic State
+    validPoseStreak?: number;
+    smoothedVelocity?: number;
 }
 
 export interface EvaluationResult {
@@ -73,7 +76,7 @@ const Utils = {
 const LogicBuilders = {
     /**
      * Creates an evaluator for high-intensity, velocity-based movements (e.g., High Knees, Punching).
-     * NOW WITH FORM VALIDATION!
+     * ENHANCED: Includes Velocity Smoothing & Consistency Streak
      */
     velocityRep: (config: {
         joints: number[];
@@ -84,44 +87,73 @@ const LogicBuilders = {
     }): EvaluatorFunction => {
         return (lm, prevLm, state) => {
             const now = Date.now();
-            const velocity = Utils.getVelocity(lm, prevLm, config.joints);
-            const isMoving = velocity > config.threshold;
 
-            // Validate Form
+            // 1. SMART VELOCITY SMOOTHING (Anti-Jitter)
+            // Use weighted average to ignore camera noise
+            const rawVelocity = Utils.getVelocity(lm, prevLm, config.joints);
+            const prevVel = state.smoothedVelocity || 0;
+            // 0.6 prev + 0.4 current = Smooths out spikes
+            const smoothedVelocity = (prevVel * 0.6) + (rawVelocity * 0.4);
+
+            const isMoving = smoothedVelocity > config.threshold;
+
+            // 2. FORM CONSISTENCY CHECK (Anti-Cheese)
+            // User must hold the correct form for a few frames (Consistency Streak)
             let isValidForm = true;
             if (config.validatePose) {
                 isValidForm = config.validatePose(lm);
             }
 
-            let nextState = { ...state };
+            let streak = state.validPoseStreak || 0;
+            if (isValidForm && isMoving) {
+                streak++; // Building consistency
+            } else {
+                // If form breaks or moving stops, reset consistency immediately
+                streak = 0;
+            }
+
+            let nextState = { ...state, smoothedVelocity, validPoseStreak: streak };
             let didTriggerRep = false;
             let feedback = config.prompts.idle;
             let score = 0;
             let incorrectJoints: string[] = [];
 
+            // Require at least 3 consistent frames (approx 100ms) of valid form + motion to count as "Active"
+            const CONSISTENCY_THRESHOLD = 3;
+
             if (isMoving) {
                 if (isValidForm) {
-                    score = 100;
-                    feedback = config.prompts.active;
+                    if (streak >= CONSISTENCY_THRESHOLD) {
+                        // FULL POINTS - Sustained good movement
+                        score = 100;
+                        feedback = config.prompts.active;
 
-                    if (now - state.lastTriggerTime > (config.cooldownMs || 500)) {
-                        didTriggerRep = true;
-                        nextState.lastTriggerTime = now;
+                        if (now - state.lastTriggerTime > (config.cooldownMs || 500)) {
+                            didTriggerRep = true;
+                            nextState.lastTriggerTime = now;
+                        }
+                    } else {
+                        // WARMING UP - Moving correctly but need to sustain it just a bit more
+                        score = 50;
+                        feedback = config.prompts.active;
                     }
                 } else {
-                    score = 40; // Penalty for bad form
+                    // BAD FORM - Moving but wrong
+                    score = 20; // Penalty
                     feedback = config.prompts.wrongForm || "Check Your Form!";
-                    incorrectJoints = ['body']; // Generic highlight
+                    incorrectJoints = ['body'];
+                    nextState.validPoseStreak = 0; // Ensure streak is dead
                 }
             } else {
-                // Not moving enough
+                // IDLE
                 score = 0;
                 feedback = config.prompts.idle;
+                nextState.validPoseStreak = 0;
             }
 
             return {
                 score,
-                isMatch: isMoving && isValidForm,
+                isMatch: isMoving && isValidForm && streak >= CONSISTENCY_THRESHOLD,
                 feedback,
                 incorrectJoints,
                 didTriggerRep,
