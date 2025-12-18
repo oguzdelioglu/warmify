@@ -63,6 +63,7 @@ const HeartIcon = ({ pulse }: { pulse: boolean }) => (
 );
 
 // --- TROPHY CASE ---
+// --- TROPHY CASE ---
 export const TrophyCase: React.FC<{ badges: string[], newBadgeId?: string }> = ({ badges, newBadgeId }) => {
     const { t } = useLocalization();
     const allBadges: { id: string; icon: string; nameKey: keyof TranslationKeys; descKey: keyof TranslationKeys }[] = [
@@ -74,58 +75,68 @@ export const TrophyCase: React.FC<{ badges: string[], newBadgeId?: string }> = (
         { id: 'ninja', icon: '🥷', nameKey: 'badge.ninja.name', descKey: 'badge.ninja.desc' },
     ];
 
+    const unlockedCount = badges.filter(id => allBadges.some(b => b.id === id)).length;
+    const totalCount = allBadges.length;
+
     return (
-        <div className="w-full">
-            <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 flex items-center gap-2">
-                <Shield size={10} className="text-yellow-500" /> {t('home.accolades')}
-            </h3>
+        <div className="w-full h-full flex flex-col">
+            <div className="flex justify-between items-end mb-2 px-1">
+                <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                    <Shield size={12} className="text-amber-500" /> {t('home.accolades')}
+                </h3>
+                <span className="text-[9px] font-mono font-bold text-slate-500 bg-slate-800/50 px-2 py-0.5 rounded-md border border-slate-700">
+                    {unlockedCount}/{totalCount}
+                </span>
+            </div>
 
-            <div className="flex overflow-x-auto gap-2 pb-2 pt-2 snap-x no-scrollbar mask-gradient-right px-1">
-                {allBadges.map((badge) => {
-                    const isUnlocked = badges.includes(badge.id);
-                    const isNew = newBadgeId === badge.id;
+            <div className="flex-1 overflow-y-auto pr-1 no-scrollbar masked-overflow">
+                <div className="flex lg:grid lg:grid-cols-3 gap-2 pb-2 snap-x lg:snap-none w-full">
+                    {allBadges.map((badge) => {
+                        const isUnlocked = badges.includes(badge.id);
+                        const isNew = newBadgeId === badge.id;
 
-                    return (
-                        <div
-                            key={badge.id}
-                            className={`
-                            relative flex-shrink-0 w-20 h-24 snap-center rounded-xl border
-                            flex flex-col items-center justify-center gap-1 p-1
-                            transition-all duration-300 group
-                            ${isNew ? 'border-yellow-400 bg-yellow-500/10 scale-105 shadow-[0_0_20px_rgba(250,204,21,0.5)]' : ''}
-                            ${!isNew && isUnlocked
-                                    ? 'bg-gradient-to-br from-slate-800/90 to-indigo-900/40 border-indigo-500/30 shadow-[0_4px_20px_rgba(99,102,241,0.15)] hover:scale-105'
-                                    : ''
-                                }
-                            ${!isUnlocked && !isNew ? 'bg-slate-900/50 border-slate-800/80 grayscale opacity-40' : ''}
-                        `}
-                        >
-                            {isNew && (
-                                <div className="absolute -inset-3 rounded-xl bg-orange-500/20 blur-md animate-pulse -z-10"></div>
-                            )}
-                            {isUnlocked && <div className="absolute inset-0 bg-indigo-500/10 rounded-xl blur-xl -z-10"></div>}
+                        return (
+                            <div
+                                key={badge.id}
+                                className={`
+                                relative flex-shrink-0 w-20 lg:w-full h-24 lg:min-h-[100px] snap-center rounded-xl border
+                                flex flex-col items-center justify-center gap-1 p-1
+                                transition-all duration-300 group
+                                ${isNew ? 'border-yellow-400 bg-yellow-500/10 scale-105 shadow-[0_0_20px_rgba(250,204,21,0.5)] z-10' : ''}
+                                ${!isNew && isUnlocked
+                                        ? 'bg-gradient-to-br from-slate-800/90 to-indigo-900/40 border-indigo-500/30 shadow-[0_4px_20px_rgba(99,102,241,0.15)] hover:scale-[1.03] hover:border-indigo-400/50'
+                                        : ''
+                                    }
+                                ${!isUnlocked && !isNew ? 'bg-slate-900/40 border-slate-800/60 grayscale opacity-30 hover:opacity-50 transition-opacity' : ''}
+                            `}
+                            >
+                                {isNew && (
+                                    <div className="absolute -inset-3 rounded-xl bg-orange-500/20 blur-md animate-pulse -z-10"></div>
+                                )}
+                                {isUnlocked && <div className="absolute inset-0 bg-indigo-500/10 rounded-xl blur-xl -z-10"></div>}
 
-                            <div className={`text-2xl filter ${isUnlocked ? 'drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]' : ''}`}>
-                                {badge.icon}
-                            </div>
-
-                            <div className="text-center">
-                                <div className="text-[9px] font-black uppercase text-white tracking-wider">{t(badge.nameKey)}</div>
-                                <div className="text-[7px] font-medium text-slate-400 leading-none">{t(badge.descKey)}</div>
-                            </div>
-
-                            {isUnlocked && (
-                                <div className="absolute top-1 right-1">
-                                    <CheckCircle2 size={8} className="text-emerald-400" />
+                                <div className={`text-2xl lg:text-3xl filter ${isUnlocked ? 'drop-shadow-[0_0_10px_rgba(255,255,255,0.4)] group-hover:scale-110 transition-transform' : ''}`}>
+                                    {badge.icon}
                                 </div>
-                            )}
-                            {isNew && (
-                                <div className="absolute -top-1 -right-1 bg-red-500 text-[6px] text-white px-1 rounded-full font-bold animate-bounce shadow-sm">NEW</div>
-                            )}
-                        </div>
-                    );
-                })}
-                <div className="w-1 flex-shrink-0"></div>
+
+                                <div className="text-center w-full px-1">
+                                    <div className={`text-[8px] lg:text-[7px] font-black uppercase tracking-wider truncate w-full ${isUnlocked ? 'text-white' : 'text-slate-500'}`}>{t(badge.nameKey)}</div>
+                                </div>
+
+                                {isUnlocked && (
+                                    <div className="absolute top-1 right-1">
+                                        <CheckCircle2 size={10} className="text-emerald-400 drop-shadow-md" />
+                                    </div>
+                                )}
+                                {isNew && (
+                                    <div className="absolute -top-1 -right-2 bg-red-600 border border-red-400 text-[6px] text-white px-1.5 py-0.5 rounded-full font-bold animate-bounce shadow-lg">NEW</div>
+                                )}
+                            </div>
+                        );
+                    })}
+                    {/* Spacer for scroll mode */}
+                    <div className="w-1 flex-shrink-0 lg:hidden"></div>
+                </div>
             </div>
         </div>
     );
