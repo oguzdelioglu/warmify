@@ -88,7 +88,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
       </div>
 
       {/* SCROLLABLE CONTENT */}
-      <div className="flex-1 overflow-y-auto px-4 pb-20 space-y-6 w-full max-w-2xl mx-auto">
+      <div className="flex-1 overflow-y-auto px-4 pb-20 space-y-6 w-full lg:max-w-5xl mx-auto">
 
         {/* IDENTITY */}
         <div className="bg-slate-800/60 p-4 rounded-2xl border border-slate-700">

@@ -51,7 +51,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
     };
 
     return (
-        <div className="flex-1 flex flex-col justify-evenly gap-2 animate-[fadeIn_0.5s_ease-out] overflow-y-auto no-scrollbar pb-4 relative w-full max-w-2xl mx-auto">
+        <div className="flex-1 flex flex-col justify-evenly gap-2 animate-[fadeIn_0.5s_ease-out] overflow-y-auto no-scrollbar pb-4 relative w-full lg:max-w-5xl mx-auto">
 
             {/* Background Ambient Blobs */}
             <div className="absolute top-10 left-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
