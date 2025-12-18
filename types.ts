@@ -84,7 +84,19 @@ export interface WorkoutResultData {
   newLevel: number;
 }
 
-export type ExerciseType = 'Jumping Jacks' | 'Squats' | 'High Knees' | 'Shadow Boxing' | 'Overhead Reach' | 'T-Pose Pulses' | 'Hooks' | 'Uppercuts' | 'Shoulder Press' | 'Rest';
+export type ExerciseType =
+  | 'Jumping Jacks' | 'Squats' | 'High Knees' | 'Shadow Boxing' | 'Overhead Reach' | 'T-Pose Pulses' | 'Hooks' | 'Uppercuts' | 'Shoulder Press' | 'Rest'
+  // Football
+  | 'Leg Swings' | 'Butt Kicks' | 'Side Lunges' | 'Sprint in Place'
+  // Rugby
+  | 'Arm Circles' | 'Shoulder Shrugs' | 'Push-up Prep' | 'Burpees' | 'Mountain Climbers' | 'Bear Crawls'
+  // Runner
+  | 'Walking Lunges' | 'Calf Raises' | 'Ankle Circles' | 'Skipping' | 'A-Skips'
+  // Cyclist
+  | 'Hip Circles' | 'Cat-Cow Stretch' | 'Knee Hugs' | 'Torso Twists' | 'Hip Flexor Lunge'
+  // Desk
+  | 'Neck Rolls' | 'Shoulder Rolls' | 'Wrist Circles' | 'Seated Twists' | 'Arm Stretches' | 'Standing Reach';
+
 
 export interface ExerciseDef {
   id: ExerciseType;
