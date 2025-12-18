@@ -47,6 +47,9 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState(userStats.username || 'Anonymous');
 
+  // Controlled via .env (VITE_SHOW_DEV_MENU=true)
+  const showDevMenu = import.meta.env.VITE_SHOW_DEV_MENU === 'true';
+
   const handleBack = () => {
     SoundEngine.playUI('back');
     onBack();
@@ -265,8 +268,8 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
           </a>
         </div>
 
-        {/* DEVELOPER - Only Visible in Dev Builds */}
-        {import.meta.env.DEV && (
+        {/* DEVELOPER - Controlled by VITE_SHOW_DEV_MENU */}
+        {showDevMenu && (
           <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
             <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">{t('settings.developer')}</h3>
 
