@@ -168,6 +168,45 @@ export type TranslationKeys = {
     "exercise.shadow_boxing.name": string;
     "exercise.shadow_boxing.instruction": string;
 
+    // Football
+    "exercise.leg_swings.name": string; "exercise.leg_swings.instruction": string;
+    "exercise.high_knees.name": string; "exercise.high_knees.instruction": string;
+    "exercise.butt_kicks.name": string; "exercise.butt_kicks.instruction": string;
+    "exercise.side_lunges.name": string; "exercise.side_lunges.instruction": string;
+    "exercise.sprint_in_place.name": string; "exercise.sprint_in_place.instruction": string;
+    "exercise.jumping_jacks.name": string; "exercise.jumping_jacks.instruction": string;
+
+    // Rugby
+    "exercise.arm_circles.name": string; "exercise.arm_circles.instruction": string;
+    "exercise.shoulder_shrugs.name": string; "exercise.shoulder_shrugs.instruction": string;
+    "exercise.push_up_prep.name": string; "exercise.push_up_prep.instruction": string;
+    "exercise.burpees.name": string; "exercise.burpees.instruction": string;
+    "exercise.mountain_climbers.name": string; "exercise.mountain_climbers.instruction": string;
+    "exercise.bear_crawls.name": string; "exercise.bear_crawls.instruction": string;
+
+    // Runner
+    "exercise.walking_lunges.name": string; "exercise.walking_lunges.instruction": string;
+    "exercise.calf_raises.name": string; "exercise.calf_raises.instruction": string;
+    "exercise.ankle_circles.name": string; "exercise.ankle_circles.instruction": string;
+    "exercise.skipping.name": string; "exercise.skipping.instruction": string;
+    "exercise.a_skips.name": string; "exercise.a_skips.instruction": string;
+
+    // Cyclist
+    "exercise.hip_circles.name": string; "exercise.hip_circles.instruction": string;
+    "exercise.cat_cow_stretch.name": string; "exercise.cat_cow_stretch.instruction": string;
+    "exercise.knee_hugs.name": string; "exercise.knee_hugs.instruction": string;
+    "exercise.torso_twists.name": string; "exercise.torso_twists.instruction": string;
+    "exercise.hip_flexor_lunge.name": string; "exercise.hip_flexor_lunge.instruction": string;
+
+    // Desk
+    "exercise.neck_rolls.name": string; "exercise.neck_rolls.instruction": string;
+    "exercise.shoulder_rolls.name": string; "exercise.shoulder_rolls.instruction": string;
+    "exercise.wrist_circles.name": string; "exercise.wrist_circles.instruction": string;
+    "exercise.seated_twists.name": string; "exercise.seated_twists.instruction": string;
+    "exercise.arm_stretches.name": string; "exercise.arm_stretches.instruction": string;
+    "exercise.standing_reach.name": string; "exercise.standing_reach.instruction": string;
+
+
     // BADGE REVEAL
     "badge.new_accolade": string;
     "badge.continue": string;

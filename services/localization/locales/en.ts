@@ -165,6 +165,73 @@ export const en: TranslationKeys = {
     "exercise.shadow_boxing.name": "Shadow Box",
     "exercise.shadow_boxing.instruction": "Freestyle punches!",
 
+    // Football
+    "exercise.leg_swings.name": "Leg Swings",
+    "exercise.leg_swings.instruction": "Swing legs side to side!",
+    "exercise.high_knees.name": "High Knees",
+    "exercise.high_knees.instruction": "Lift knees to chest!",
+    "exercise.butt_kicks.name": "Butt Kicks",
+    "exercise.butt_kicks.instruction": "Kick heels to glutes!",
+    "exercise.side_lunges.name": "Side Lunges",
+    "exercise.side_lunges.instruction": "Step wide and lunge!",
+    "exercise.sprint_in_place.name": "Sprint in Place",
+    "exercise.sprint_in_place.instruction": "Fast feet!",
+    "exercise.jumping_jacks.name": "Jumping Jacks",
+    "exercise.jumping_jacks.instruction": "Jump and spread!",
+
+    // Rugby
+    "exercise.arm_circles.name": "Arm Circles",
+    "exercise.arm_circles.instruction": "Big circles forward!",
+    "exercise.shoulder_shrugs.name": "Shoulder Shrugs",
+    "exercise.shoulder_shrugs.instruction": "Lift shoulders up!",
+    "exercise.push_up_prep.name": "Push-up Prep",
+    "exercise.push_up_prep.instruction": "Plank position hold!",
+    "exercise.burpees.name": "Burpees",
+    "exercise.burpees.instruction": "Down and jump up!",
+    "exercise.mountain_climbers.name": "Mountain Climbers",
+    "exercise.mountain_climbers.instruction": "Drive knees forward!",
+    "exercise.bear_crawls.name": "Bear Crawls",
+    "exercise.bear_crawls.instruction": "Crawl on all fours!",
+
+    // Runner
+    "exercise.walking_lunges.name": "Walking Lunges",
+    "exercise.walking_lunges.instruction": "Step and lunge!",
+    "exercise.calf_raises.name": "Calf Raises",
+    "exercise.calf_raises.instruction": "Rise on toes!",
+    "exercise.ankle_circles.name": "Ankle Circles",
+    "exercise.ankle_circles.instruction": "Rotate ankles!",
+    "exercise.skipping.name": "Skipping",
+    "exercise.skipping.instruction": "Skip in place!",
+    "exercise.a_skips.name": "A-Skips",
+    "exercise.a_skips.instruction": "Skip with form!",
+
+    // Cyclist
+    "exercise.hip_circles.name": "Hip Circles",
+    "exercise.hip_circles.instruction": "Circle hips!",
+    "exercise.cat_cow_stretch.name": "Cat-Cow Stretch",
+    "exercise.cat_cow_stretch.instruction": "Arch and round spine!",
+    "exercise.knee_hugs.name": "Knee Hugs",
+    "exercise.knee_hugs.instruction": "Pull knee to chest!",
+    "exercise.torso_twists.name": "Torso Twists",
+    "exercise.torso_twists.instruction": "Twist side to side!",
+    "exercise.hip_flexor_lunge.name": "Hip Flexor Lunge",
+    "exercise.hip_flexor_lunge.instruction": "Deep lunge stretch!",
+
+    // Desk
+    "exercise.neck_rolls.name": "Neck Rolls",
+    "exercise.neck_rolls.instruction": "Roll neck gently!",
+    "exercise.shoulder_rolls.name": "Shoulder Rolls",
+    "exercise.shoulder_rolls.instruction": "Roll shoulders back!",
+    "exercise.wrist_circles.name": "Wrist Circles",
+    "exercise.wrist_circles.instruction": "Circle wrists!",
+    "exercise.seated_twists.name": "Seated Twists",
+    "exercise.seated_twists.instruction": "Twist in chair!",
+    "exercise.arm_stretches.name": "Arm Stretches",
+    "exercise.arm_stretches.instruction": "Stretch across body!",
+    "exercise.standing_reach.name": "Standing Reach",
+    "exercise.standing_reach.instruction": "Stand and stretch!",
+
+
     // BADGE REVEAL
     "badge.new_accolade": "New Accolade",
     "badge.continue": "CONTINUE",

@@ -33,53 +33,58 @@ const BASE_EXERCISES: ExerciseDef[] = [
 ];
 
 // Football - Groin & Hamstring focus
+// Football
 const FOOTBALL_EXERCISES: ExerciseDef[] = [
-    { id: 'Leg Swings', name: 'Leg Swings', nameKey: 'exercise.overhead_reach.name', duration: 30, instruction: 'Swing legs side to side!', instructionKey: 'exercise.overhead_reach.instruction', color: 'text-green-400' },
-    { id: 'High Knees', name: 'High Knees', nameKey: 'exercise.t_pose_pulses.name', duration: 30, instruction: 'Lift knees to chest!', instructionKey: 'exercise.t_pose_pulses.instruction', color: 'text-emerald-400' },
-    { id: 'Butt Kicks', name: 'Butt Kicks', nameKey: 'exercise.hooks.name', duration: 30, instruction: 'Kick heels to glutes!', instructionKey: 'exercise.hooks.instruction', color: 'text-lime-400' },
-    { id: 'Side Lunges', name: 'Side Lunges', nameKey: 'exercise.uppercuts.name', duration: 30, instruction: 'Step wide and lunge!', instructionKey: 'exercise.uppercuts.instruction', color: 'text-teal-400' },
-    { id: 'Jumping Jacks', name: 'Jumping Jacks', nameKey: 'exercise.shoulder_press.name', duration: 30, instruction: 'Jump and spread!', instructionKey: 'exercise.shoulder_press.instruction', color: 'text-cyan-400' },
-    { id: 'Sprint in Place', name: 'Sprint in Place', nameKey: 'exercise.shadow_boxing.name', duration: 30, instruction: 'Fast feet!', instructionKey: 'exercise.shadow_boxing.instruction', color: 'text-green-500' },
+    { id: 'Leg Swings', name: 'Leg Swings', nameKey: 'exercise.leg_swings.name', duration: 30, instruction: 'Swing legs side to side!', instructionKey: 'exercise.leg_swings.instruction', color: 'text-green-400' },
+    { id: 'High Knees', name: 'High Knees', nameKey: 'exercise.high_knees.name', duration: 30, instruction: 'Lift knees to chest!', instructionKey: 'exercise.high_knees.instruction', color: 'text-emerald-400' },
+    { id: 'Butt Kicks', name: 'Butt Kicks', nameKey: 'exercise.butt_kicks.name', duration: 30, instruction: 'Kick heels to glutes!', instructionKey: 'exercise.butt_kicks.instruction', color: 'text-lime-400' },
+    { id: 'Side Lunges', name: 'Side Lunges', nameKey: 'exercise.side_lunges.name', duration: 30, instruction: 'Step wide and lunge!', instructionKey: 'exercise.side_lunges.instruction', color: 'text-teal-400' },
+    { id: 'Sprint in Place', name: 'Sprint in Place', nameKey: 'exercise.sprint_in_place.name', duration: 30, instruction: 'Fast feet!', instructionKey: 'exercise.sprint_in_place.instruction', color: 'text-green-500' },
+    { id: 'Jumping Jacks', name: 'Jumping Jacks', nameKey: 'exercise.jumping_jacks.name', duration: 30, instruction: 'Jump and spread!', instructionKey: 'exercise.jumping_jacks.instruction', color: 'text-cyan-400' },
 ];
 
 // Rugby - Shoulder stability & impact prep
+// Rugby
 const RUGBY_EXERCISES: ExerciseDef[] = [
-    { id: 'Arm Circles', name: 'Arm Circles', nameKey: 'exercise.overhead_reach.name', duration: 30, instruction: 'Big circles forward!', instructionKey: 'exercise.overhead_reach.instruction', color: 'text-amber-400' },
-    { id: 'Shoulder Shrugs', name: 'Shoulder Shrugs', nameKey: 'exercise.t_pose_pulses.name', duration: 30, instruction: 'Lift shoulders up!', instructionKey: 'exercise.t_pose_pulses.instruction', color: 'text-orange-400' },
-    { id: 'Push-up Prep', name: 'Push-up Prep', nameKey: 'exercise.hooks.name', duration: 30, instruction: 'Plank position hold!', instructionKey: 'exercise.hooks.instruction', color: 'text-red-400' },
-    { id: 'Burpees', name: 'Burpees', nameKey: 'exercise.uppercuts.name', duration: 30, instruction: 'Down and jump up!', instructionKey: 'exercise.uppercuts.instruction', color: 'text-yellow-500' },
-    { id: 'Mountain Climbers', name: 'Mountain Climbers', nameKey: 'exercise.shoulder_press.name', duration: 30, instruction: 'Drive knees forward!', instructionKey: 'exercise.shoulder_press.instruction', color: 'text-orange-500' },
-    { id: 'Bear Crawls', name: 'Bear Crawls', nameKey: 'exercise.shadow_boxing.name', duration: 30, instruction: 'Crawl on all fours!', instructionKey: 'exercise.shadow_boxing.instruction', color: 'text-amber-500' },
+    { id: 'Arm Circles', name: 'Arm Circles', nameKey: 'exercise.arm_circles.name', duration: 30, instruction: 'Big circles forward!', instructionKey: 'exercise.arm_circles.instruction', color: 'text-amber-400' },
+    { id: 'Shoulder Shrugs', name: 'Shoulder Shrugs', nameKey: 'exercise.shoulder_shrugs.name', duration: 30, instruction: 'Lift shoulders up!', instructionKey: 'exercise.shoulder_shrugs.instruction', color: 'text-orange-400' },
+    { id: 'Push-up Prep', name: 'Push-up Prep', nameKey: 'exercise.push_up_prep.name', duration: 30, instruction: 'Plank position hold!', instructionKey: 'exercise.push_up_prep.instruction', color: 'text-red-400' },
+    { id: 'Burpees', name: 'Burpees', nameKey: 'exercise.burpees.name', duration: 30, instruction: 'Down and jump up!', instructionKey: 'exercise.burpees.instruction', color: 'text-yellow-500' },
+    { id: 'Mountain Climbers', name: 'Mountain Climbers', nameKey: 'exercise.mountain_climbers.name', duration: 30, instruction: 'Drive knees forward!', instructionKey: 'exercise.mountain_climbers.instruction', color: 'text-orange-500' },
+    { id: 'Bear Crawls', name: 'Bear Crawls', nameKey: 'exercise.bear_crawls.name', duration: 30, instruction: 'Crawl on all fours!', instructionKey: 'exercise.bear_crawls.instruction', color: 'text-amber-500' },
 ];
 
 // Runner - Dynamic lunges & calf focus
+// Runner
 const RUNNER_EXERCISES: ExerciseDef[] = [
-    { id: 'Walking Lunges', name: 'Walking Lunges', nameKey: 'exercise.overhead_reach.name', duration: 30, instruction: 'Step and lunge!', instructionKey: 'exercise.overhead_reach.instruction', color: 'text-blue-400' },
-    { id: 'Calf Raises', name: 'Calf Raises', nameKey: 'exercise.t_pose_pulses.name', duration: 30, instruction: 'Rise on toes!', instructionKey: 'exercise.t_pose_pulses.instruction', color: 'text-cyan-400' },
-    { id: 'High Knees', name: 'High Knees', nameKey: 'exercise.hooks.name', duration: 30, instruction: 'Knees to chest fast!', instructionKey: 'exercise.hooks.instruction', color: 'text-sky-400' },
-    { id: 'Ankle Circles', name: 'Ankle Circles', nameKey: 'exercise.uppercuts.name', duration: 30, instruction: 'Rotate ankles!', instructionKey: 'exercise.uppercuts.instruction', color: 'text-indigo-400' },
-    { id: 'Skipping', name: 'Skipping', nameKey: 'exercise.shoulder_press.name', duration: 30, instruction: 'Skip in place!', instructionKey: 'exercise.shoulder_press.instruction', color: 'text-blue-500' },
-    { id: 'A-Skips', name: 'A-Skips', nameKey: 'exercise.shadow_boxing.name', duration: 30, instruction: 'Skip with form!', instructionKey: 'exercise.shadow_boxing.instruction', color: 'text-cyan-500' },
+    { id: 'Walking Lunges', name: 'Walking Lunges', nameKey: 'exercise.walking_lunges.name', duration: 30, instruction: 'Step and lunge!', instructionKey: 'exercise.walking_lunges.instruction', color: 'text-blue-400' },
+    { id: 'Calf Raises', name: 'Calf Raises', nameKey: 'exercise.calf_raises.name', duration: 30, instruction: 'Rise on toes!', instructionKey: 'exercise.calf_raises.instruction', color: 'text-cyan-400' },
+    { id: 'High Knees', name: 'High Knees', nameKey: 'exercise.high_knees.name', duration: 30, instruction: 'Knees to chest fast!', instructionKey: 'exercise.high_knees.instruction', color: 'text-sky-400' },
+    { id: 'Ankle Circles', name: 'Ankle Circles', nameKey: 'exercise.ankle_circles.name', duration: 30, instruction: 'Rotate ankles!', instructionKey: 'exercise.ankle_circles.instruction', color: 'text-indigo-400' },
+    { id: 'Skipping', name: 'Skipping', nameKey: 'exercise.skipping.name', duration: 30, instruction: 'Skip in place!', instructionKey: 'exercise.skipping.instruction', color: 'text-blue-500' },
+    { id: 'A-Skips', name: 'A-Skips', nameKey: 'exercise.a_skips.name', duration: 30, instruction: 'Skip with form!', instructionKey: 'exercise.a_skips.instruction', color: 'text-cyan-500' },
 ];
 
 // Cyclist - Hip flexor & lower back
+// Cyclist
 const CYCLIST_EXERCISES: ExerciseDef[] = [
-    { id: 'Hip Circles', name: 'Hip Circles', nameKey: 'exercise.overhead_reach.name', duration: 30, instruction: 'Circle hips!', instructionKey: 'exercise.overhead_reach.instruction', color: 'text-purple-400' },
-    { id: 'Cat-Cow Stretch', name: 'Cat-Cow Stretch', nameKey: 'exercise.t_pose_pulses.name', duration: 30, instruction: 'Arch and round spine!', instructionKey: 'exercise.t_pose_pulses.instruction', color: 'text-pink-400' },
-    { id: 'Leg Swings', name: 'Leg Swings', nameKey: 'exercise.hooks.name', duration: 30, instruction: 'Swing legs!', instructionKey: 'exercise.hooks.instruction', color: 'text-fuchsia-400' },
-    { id: 'Knee Hugs', name: 'Knee Hugs', nameKey: 'exercise.uppercuts.name', duration: 30, instruction: 'Pull knee to chest!', instructionKey: 'exercise.uppercuts.instruction', color: 'text-violet-400' },
-    { id: 'Torso Twists', name: 'Torso Twists', nameKey: 'exercise.shoulder_press.name', duration: 30, instruction: 'Twist side to side!', instructionKey: 'exercise.shoulder_press.instruction', color: 'text-purple-500' },
-    { id: 'Hip Flexor Lunge', name: 'Hip Flexor Lunge', nameKey: 'exercise.shadow_boxing.name', duration: 30, instruction: 'Deep lunge stretch!', instructionKey: 'exercise.shadow_boxing.instruction', color: 'text-pink-500' },
+    { id: 'Hip Circles', name: 'Hip Circles', nameKey: 'exercise.hip_circles.name', duration: 30, instruction: 'Circle hips!', instructionKey: 'exercise.hip_circles.instruction', color: 'text-purple-400' },
+    { id: 'Cat-Cow Stretch', name: 'Cat-Cow Stretch', nameKey: 'exercise.cat_cow_stretch.name', duration: 30, instruction: 'Arch and round spine!', instructionKey: 'exercise.cat_cow_stretch.instruction', color: 'text-pink-400' },
+    { id: 'Leg Swings', name: 'Leg Swings', nameKey: 'exercise.leg_swings.name', duration: 30, instruction: 'Swing legs!', instructionKey: 'exercise.leg_swings.instruction', color: 'text-fuchsia-400' },
+    { id: 'Knee Hugs', name: 'Knee Hugs', nameKey: 'exercise.knee_hugs.name', duration: 30, instruction: 'Pull knee to chest!', instructionKey: 'exercise.knee_hugs.instruction', color: 'text-violet-400' },
+    { id: 'Torso Twists', name: 'Torso Twists', nameKey: 'exercise.torso_twists.name', duration: 30, instruction: 'Twist side to side!', instructionKey: 'exercise.torso_twists.instruction', color: 'text-purple-500' },
+    { id: 'Hip Flexor Lunge', name: 'Hip Flexor Lunge', nameKey: 'exercise.hip_flexor_lunge.name', duration: 30, instruction: 'Deep lunge stretch!', instructionKey: 'exercise.hip_flexor_lunge.instruction', color: 'text-pink-500' },
 ];
 
 // Desk - Quick upper body & neck
+// Desk
 const DESK_EXERCISES: ExerciseDef[] = [
-    { id: 'Neck Rolls', name: 'Neck Rolls', nameKey: 'exercise.overhead_reach.name', duration: 30, instruction: 'Roll neck gently!', instructionKey: 'exercise.overhead_reach.instruction', color: 'text-slate-400' },
-    { id: 'Shoulder Rolls', name: 'Shoulder Rolls', nameKey: 'exercise.t_pose_pulses.name', duration: 30, instruction: 'Roll shoulders back!', instructionKey: 'exercise.t_pose_pulses.instruction', color: 'text-gray-400' },
-    { id: 'Wrist Circles', name: 'Wrist Circles', nameKey: 'exercise.hooks.name', duration: 30, instruction: 'Circle wrists!', instructionKey: 'exercise.hooks.instruction', color: 'text-zinc-400' },
-    { id: 'Seated Twists', name: 'Seated Twists', nameKey: 'exercise.uppercuts.name', duration: 30, instruction: 'Twist in chair!', instructionKey: 'exercise.uppercuts.instruction', color: 'text-neutral-400' },
-    { id: 'Arm Stretches', name: 'Arm Stretches', nameKey: 'exercise.shoulder_press.name', duration: 30, instruction: 'Stretch across body!', instructionKey: 'exercise.shoulder_press.instruction', color: 'text-stone-400' },
-    { id: 'Standing Reach', name: 'Standing Reach', nameKey: 'exercise.shadow_boxing.name', duration: 30, instruction: 'Stand and stretch!', instructionKey: 'exercise.shadow_boxing.instruction', color: 'text-gray-500' },
+    { id: 'Neck Rolls', name: 'Neck Rolls', nameKey: 'exercise.neck_rolls.name', duration: 30, instruction: 'Roll neck gently!', instructionKey: 'exercise.neck_rolls.instruction', color: 'text-slate-400' },
+    { id: 'Shoulder Rolls', name: 'Shoulder Rolls', nameKey: 'exercise.shoulder_rolls.name', duration: 30, instruction: 'Roll shoulders back!', instructionKey: 'exercise.shoulder_rolls.instruction', color: 'text-gray-400' },
+    { id: 'Wrist Circles', name: 'Wrist Circles', nameKey: 'exercise.wrist_circles.name', duration: 30, instruction: 'Circle wrists!', instructionKey: 'exercise.wrist_circles.instruction', color: 'text-zinc-400' },
+    { id: 'Seated Twists', name: 'Seated Twists', nameKey: 'exercise.seated_twists.name', duration: 30, instruction: 'Twist in chair!', instructionKey: 'exercise.seated_twists.instruction', color: 'text-neutral-400' },
+    { id: 'Arm Stretches', name: 'Arm Stretches', nameKey: 'exercise.arm_stretches.name', duration: 30, instruction: 'Stretch across body!', instructionKey: 'exercise.arm_stretches.instruction', color: 'text-stone-400' },
+    { id: 'Standing Reach', name: 'Standing Reach', nameKey: 'exercise.standing_reach.name', duration: 30, instruction: 'Stand and stretch!', instructionKey: 'exercise.standing_reach.instruction', color: 'text-gray-500' },
 ];
 
 // Get exercises based on sport mode
@@ -199,15 +204,19 @@ export default function App() {
     const gameLoopRef = useRef<number | null>(null);
     const accumulatedErrorRef = useRef<number>(0); // Track consecutive bad frames
     const prevLandmarksRef = useRef<any[] | null>(null); // For velocity tracking
-    const movementStateRef = useRef<{ phase: 'READY' | 'HOLD' | 'COOLDOWN'; lastTriggerTime: number; triggerCount: number; }>({
+    const movementStateRef = useRef<{ phase: 'READY' | 'HOLD' | 'COOLDOWN' | 'ACTIVE'; lastTriggerTime: number; triggerCount: number; }>({
         phase: 'READY',
         lastTriggerTime: 0,
         triggerCount: 0
     });
 
+    const exercisesRef = useRef(EXERCISES);
+
     useEffect(() => { localStorage.setItem('warmify_user_stats', JSON.stringify(userStats)); }, [userStats]);
     useEffect(() => { localStorage.setItem('warmify_settings', JSON.stringify(settings)); }, [settings]);
     useEffect(() => { gameStateRef.current = gameState; }, [gameState]); // Sync ref
+    useEffect(() => { exercisesRef.current = EXERCISES; }, [EXERCISES]); // Sync exercises
+
 
     useEffect(() => {
         if (!hasCompletedOnboarding) {
@@ -250,7 +259,7 @@ export default function App() {
 
     const startGameLoop = () => {
         let exerciseIdx = 0;
-        let phaseTime = EXERCISES[0].duration;
+        let phaseTime = exercisesRef.current[0].duration;
         SoundEngine.playLevelUp(); // Start sound
 
         setGameState(prev => ({
@@ -279,11 +288,11 @@ export default function App() {
 
                 if (newTime <= 0) {
                     newIndex++;
-                    if (newIndex >= EXERCISES.length) {
+                    if (newIndex >= exercisesRef.current.length) {
                         endWorkout(false);
                         return prev;
                     }
-                    newTime = EXERCISES[newIndex].duration;
+                    newTime = exercisesRef.current[newIndex].duration;
 
 
                     SoundEngine.playLevelUp(); // Phase change sound
@@ -385,7 +394,8 @@ export default function App() {
                         // NEW: Run Geometry Evaluation
                         const currentGameState = gameStateRef.current; // Use Ref to get latest state
                         if (currentGameState.isSessionActive && currentGameState.phase === 'ACTIVE') {
-                            const currentExName = EXERCISES[currentGameState.currentExerciseIndex].name;
+                            const currentExName = exercisesRef.current[currentGameState.currentExerciseIndex].name;
+
                             const evalResult = MoveEvaluator.evaluate(currentExName, results.poseLandmarks, prevLandmarksRef.current, movementStateRef.current);
 
                             // Update state

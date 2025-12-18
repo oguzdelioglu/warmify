@@ -165,6 +165,73 @@ export const tr: TranslationKeys = {
     "exercise.shadow_boxing.name": "Gölge Boksu",
     "exercise.shadow_boxing.instruction": "Serbest stil yumruklar!",
 
+    // Futbol
+    "exercise.leg_swings.name": "Bacak Savurma",
+    "exercise.leg_swings.instruction": "Bacaklarını yanlara savur!",
+    "exercise.high_knees.name": "Diz Çekme",
+    "exercise.high_knees.instruction": "Dizlerini göğsüne çek!",
+    "exercise.butt_kicks.name": "Topuk Kalçaya",
+    "exercise.butt_kicks.instruction": "Topuklarını kalçana vur!",
+    "exercise.side_lunges.name": "Yan Hamle",
+    "exercise.side_lunges.instruction": "Yanlara geniş adım at!",
+    "exercise.sprint_in_place.name": "Yerinde Sprint",
+    "exercise.sprint_in_place.instruction": "Hızlı adımlar!",
+    "exercise.jumping_jacks.name": "Zıplama",
+    "exercise.jumping_jacks.instruction": "Zıpla ve açıl!",
+
+    // Ragbi
+    "exercise.arm_circles.name": "Kol Daireleri",
+    "exercise.arm_circles.instruction": "Kollarla büyük daireler çiz!",
+    "exercise.shoulder_shrugs.name": "Omuz Silkme",
+    "exercise.shoulder_shrugs.instruction": "Omuzlarını yukarı kaldır!",
+    "exercise.push_up_prep.name": "Şınav Pozisyonu",
+    "exercise.push_up_prep.instruction": "Plank pozisyonunda bekle!",
+    "exercise.burpees.name": "Burpee",
+    "exercise.burpees.instruction": "Eğil ve zıpla!",
+    "exercise.mountain_climbers.name": "Dağ Tırmanışı",
+    "exercise.mountain_climbers.instruction": "Dizlerini ileri sür!",
+    "exercise.bear_crawls.name": "Ayı Yürüyüşü",
+    "exercise.bear_crawls.instruction": "Dört ayak üzerinde yürü!",
+
+    // Koşucu
+    "exercise.walking_lunges.name": "Yürüyerek Hamle",
+    "exercise.walking_lunges.instruction": "Adım at ve çök!",
+    "exercise.calf_raises.name": "Parmak Ucu",
+    "exercise.calf_raises.instruction": "Parmak ucuna yüksel!",
+    "exercise.ankle_circles.name": "Ayak Bileği",
+    "exercise.ankle_circles.instruction": "Bileklerini çevir!",
+    "exercise.skipping.name": "Sekme",
+    "exercise.skipping.instruction": "Yerinde sek!",
+    "exercise.a_skips.name": "A-Sıçrama",
+    "exercise.a_skips.instruction": "Formuna dikkat ederek sıçra!",
+
+    // Bisikletçi
+    "exercise.hip_circles.name": "Kalça Daireleri",
+    "exercise.hip_circles.instruction": "Kalçanı çevir!",
+    "exercise.cat_cow_stretch.name": "Kedi-İnek",
+    "exercise.cat_cow_stretch.instruction": "Sırtını bük ve düzelt!",
+    "exercise.knee_hugs.name": "Diz Sarılma",
+    "exercise.knee_hugs.instruction": "Dizini göğsüne çek!",
+    "exercise.torso_twists.name": "Gövde Döndürme",
+    "exercise.torso_twists.instruction": "Sağa ve sola dön!",
+    "exercise.hip_flexor_lunge.name": "Kalça Esnetme",
+    "exercise.hip_flexor_lunge.instruction": "Derin hamle pozisyonu!",
+
+    // Masa
+    "exercise.neck_rolls.name": "Boyun Çevirme",
+    "exercise.neck_rolls.instruction": "Boynunu nazikçe çevir!",
+    "exercise.shoulder_rolls.name": "Omuz Çevirme",
+    "exercise.shoulder_rolls.instruction": "Omuzlarını geriye yuvarla!",
+    "exercise.wrist_circles.name": "Bilek Çevirme",
+    "exercise.wrist_circles.instruction": "Bileklerini çevir!",
+    "exercise.seated_twists.name": "Oturarak Dönme",
+    "exercise.seated_twists.instruction": "Sandalyede gövdeni döndür!",
+    "exercise.arm_stretches.name": "Kol Esnetme",
+    "exercise.arm_stretches.instruction": "Kolunu gövdenin üzerinden geçir!",
+    "exercise.standing_reach.name": "Ayakta Uzanma",
+    "exercise.standing_reach.instruction": "Ayağa kalk ve uzan!",
+
+
     // BADGE REVEAL
     "badge.new_accolade": "Yeni Başarı",
     "badge.continue": "DEVAM ET",
