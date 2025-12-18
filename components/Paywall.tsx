@@ -80,49 +80,49 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
             {/* CLOSE BTN */}
             <button
                 onClick={handleClose}
-                className="absolute top-[max(env(safe-area-inset-top),16px)] right-5 z-50 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors backdrop-blur-md"
+                className="absolute top-[max(env(safe-area-inset-top),16px)] right-5 z-50 p-2 md:p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors backdrop-blur-md"
             >
-                <X size={20} className="text-white/90" />
+                <X size={20} className="text-white/90 md:w-6 md:h-6" />
             </button>
 
             {/* MAIN LAYOUT: Flex Column */}
-            <div className="relative z-10 w-full h-full max-w-md md:max-w-3xl mx-auto flex flex-col">
+            <div className="relative z-10 w-full h-full max-w-md md:max-w-2xl lg:max-w-4xl mx-auto flex flex-col">
 
                 {/* SCROLLABLE CONTENT (Top Part) */}
-                <div className="flex-1 overflow-y-auto no-scrollbar px-6 pt-[calc(env(safe-area-inset-top,20px)+40px)] pb-4">
+                <div className="flex-1 overflow-y-auto no-scrollbar px-6 md:px-12 pt-[calc(env(safe-area-inset-top,20px)+40px)] md:pt-[calc(env(safe-area-inset-top,20px)+60px)] pb-4 md:pb-8">
 
                     {/* 1. HEADER SECTION (Compacted) */}
                     <div className="flex flex-col items-center text-center animate-[fadeIn_0.5s_ease-out]">
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 mb-4 backdrop-blur-md shadow-[0_0_15px_rgba(245,158,11,0.2)]">
-                            <Crown size={12} className="text-amber-400" fill="currentColor" />
-                            <span className="text-[10px] font-black text-amber-300 uppercase tracking-widest">{t('paywall.badge')}</span>
+                        <div className="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 mb-4 md:mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                            <Crown size={12} className="text-amber-400 md:w-4 md:h-4" fill="currentColor" />
+                            <span className="text-[10px] md:text-xs font-black text-amber-300 uppercase tracking-widest">{t('paywall.badge')}</span>
                         </div>
 
-                        <h1 className="text-4xl font-black leading-[0.9] tracking-tighter mb-2">
+                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[0.9] tracking-tighter mb-2 md:mb-4">
                             <span className="block text-white">{t('paywall.hero_start')}</span>
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-cyan-400">
                                 {t('paywall.hero_end')}
                             </span>
                         </h1>
 
-                        <p className="text-slate-400 font-medium text-xs leading-relaxed max-w-[250px]">
+                        <p className="text-slate-400 font-medium text-xs md:text-base lg:text-lg leading-relaxed max-w-[250px] md:max-w-md">
                             {t('paywall.subtitle')}
                         </p>
                     </div>
 
                     {/* 2. BENEFITS LIST (Compacted) */}
-                    <div className="flex flex-col justify-center gap-2 mt-6">
+                    <div className="flex flex-col justify-center gap-2 md:gap-4 mt-6 md:mt-10">
                         {benefits.map((b, i) => (
-                            <div key={i} className="flex items-center gap-3 bg-white/5 p-2.5 rounded-xl border border-white/5 backdrop-blur-sm animate-[slideUp_0.5s_ease-out]" style={{ animationDelay: `${i * 100} ms`, opacity: 0, animationFillMode: 'forwards' }}>
-                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center shrink-0 shadow-lg">
-                                    <b.icon size={16} className="text-white" />
+                            <div key={i} className="flex items-center gap-3 md:gap-4 bg-white/5 p-2.5 md:p-4 rounded-xl md:rounded-2xl border border-white/5 backdrop-blur-sm animate-[slideUp_0.5s_ease-out]" style={{ animationDelay: `${i * 100}ms`, opacity: 0, animationFillMode: 'forwards' }}>
+                                <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center shrink-0 shadow-lg">
+                                    <b.icon size={16} className="text-white md:w-6 md:h-6" />
                                 </div>
                                 <div>
-                                    <div className="font-bold text-white text-xs">{b.text}</div>
-                                    <div className="text-slate-400 text-[9px]">{b.sub}</div>
+                                    <div className="font-bold text-white text-xs md:text-base">{b.text}</div>
+                                    <div className="text-slate-400 text-[9px] md:text-sm">{b.sub}</div>
                                 </div>
                                 <div className="ml-auto">
-                                    <Check size={14} className="text-emerald-400" />
+                                    <Check size={14} className="text-emerald-400 md:w-5 md:h-5" />
                                 </div>
                             </div>
                         ))}
@@ -130,18 +130,18 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
                 </div>
 
                 {/* 3. FIXED BOTTOM CTA (Sticky) */}
-                <div className="w-full bg-[#0f172a]/95 backdrop-blur-xl border-t border-white/10 px-6 pt-4 pb-[calc(env(safe-area-inset-bottom,20px)+10px)] z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] animate-[slideUp_0.5s_ease-out_0.4s] opacity-0 [animation-fill-mode:forwards]">
+                <div className="w-full bg-[#0f172a]/95 backdrop-blur-xl border-t border-white/10 px-6 md:px-12 pt-4 md:pt-6 pb-[calc(env(safe-area-inset-bottom,20px)+10px)] md:pb-[calc(env(safe-area-inset-bottom,20px)+20px)] z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] animate-[slideUp_0.5s_ease-out_0.4s] opacity-0 [animation-fill-mode:forwards]">
                     {/* Price Tag */}
-                    <div className="flex justify-between items-end px-1 mb-3">
+                    <div className="flex justify-between items-end px-1 mb-3 md:mb-4">
                         <div className="text-left leading-none">
                             {/* Fake Strikethrough for psychology? Or just show price */}
-                            <div className="text-xs text-slate-500 line-through decoration-red-500 mb-0.5">$99.99</div>
-                            <div className="text-2xl font-black text-white">
+                            <div className="text-xs md:text-base text-slate-500 line-through decoration-red-500 mb-0.5 md:mb-1">$99.99</div>
+                            <div className="text-2xl md:text-4xl font-black text-white">
                                 {isFetching ? <span className="animate-pulse">...</span> : priceDisplay}
-                                <span className="text-xs font-medium text-slate-400 ml-1">{periodDisplay}</span>
+                                <span className="text-xs md:text-base font-medium text-slate-400 ml-1">{periodDisplay}</span>
                             </div>
                         </div>
-                        <div className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded text-[10px] font-bold">
+                        <div className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 md:px-3 py-0.5 md:py-1 rounded text-[10px] md:text-sm font-bold">
                             {offerText}
                         </div>
                     </div>
@@ -149,21 +149,21 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
                     <button
                         onClick={handlePurchase}
                         disabled={isLoading || isFetching}
-                        className="group relative w-full py-3.5 rounded-xl bg-white overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] active:scale-95 transition-all"
+                        className="group relative w-full py-3.5 md:py-5 rounded-xl md:rounded-2xl bg-white overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] active:scale-95 transition-all"
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 opacity-0 group-hover:opacity-10 transition-opacity"></div>
                         <div className="absolute top-0 -left-[100%] w-[50%] h-full bg-white/30 skew-x-[-20deg] animate-[shine_3s_infinite]"></div>
 
-                        <span className="relative z-10 text-black font-black text-base tracking-wide flex items-center justify-center gap-2">
+                        <span className="relative z-10 text-black font-black text-base md:text-xl tracking-wide flex items-center justify-center gap-2">
                             {isLoading ? (
                                 <span className="animate-pulse">{t('paywall.cta_loading')}</span>
                             ) : (
-                                <>{t('paywall.cta_default')} <Zap size={18} fill="black" /></>
+                                <>{t('paywall.cta_default')} <Zap size={18} fill="black" className="md:w-6 md:h-6" /></>
                             )}
                         </span>
                     </button>
 
-                    <div className="flex justify-center gap-6 text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-3">
+                    <div className="flex justify-center gap-6 md:gap-8 text-[9px] md:text-xs text-slate-500 font-bold uppercase tracking-wider mt-3 md:mt-4">
                         <button onClick={() => AdaptyService.restorePurchases().then(s => s && onPurchaseSuccess())} className="hover:text-white transition-colors">{t('paywall.restore')}</button>
                         <button className="hover:text-white transition-colors">{t('paywall.terms')}</button>
                         <button className="hover:text-white transition-colors">{t('paywall.privacy')}</button>

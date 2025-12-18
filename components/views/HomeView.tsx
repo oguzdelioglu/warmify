@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { UserStats, UserSettings, AppView, SportMode } from '../../types';
 import { XPBar, TrophyCase } from '../Gamification';
-import { Play, Trophy, Zap, Target, Activity as ActivityIcon, CircleDot } from 'lucide-react';
+import { Play, Trophy, Zap, Target, Activity as ActivityIcon, CircleDot, Bike, Armchair } from 'lucide-react';
 import { SoundEngine } from '../../services/audioService';
 import { SportModeSelector } from '../SportModeSelector';
 import { FlexibilityTracker } from '../FlexibilityTracker';
@@ -14,6 +14,18 @@ interface HomeViewProps {
     newUnlockedBadge: string | null;
     updateSettings: (settings: UserSettings) => void;
 }
+
+// Sport mode icon and gradient helper
+const getSportModeConfig = (mode: SportMode): { icon: React.ReactNode; gradient: string } => {
+    const configs: Record<SportMode, { icon: React.ReactNode; gradient: string }> = {
+        'FOOTBALL': { icon: <CircleDot size={16} />, gradient: 'from-green-600 to-emerald-700' },
+        'RUGBY': { icon: <Trophy size={16} />, gradient: 'from-amber-600 to-orange-700' },
+        'RUNNER': { icon: <ActivityIcon size={16} />, gradient: 'from-blue-600 to-cyan-700' },
+        'CYCLIST': { icon: <Bike size={16} />, gradient: 'from-purple-600 to-pink-700' },
+        'DESK': { icon: <Armchair size={16} />, gradient: 'from-slate-600 to-gray-700' },
+    };
+    return configs[mode] || configs['FOOTBALL'];
+};
 
 
 
@@ -53,13 +65,19 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
                         <div className="flex justify-between items-start">
                             <div>
                                 <h2 className="text-2xl font-black italic text-white leading-none tracking-tight">{t('home.daily_mission')}</h2>
-                                <button
-                                    onClick={() => setShowModeSelector(true)}
-                                    className="text-indigo-300 text-xs font-medium mt-1 flex items-center gap-1 hover:text-indigo-200 transition-colors"
-                                >
-                                    <CircleDot size={12} />
-                                    {t(`mode.${(settings.sportMode || 'FOOTBALL').toLowerCase()}.name`)}
-                                </button>
+                                {(() => {
+                                    const modeConfig = getSportModeConfig(settings.sportMode || 'FOOTBALL');
+                                    return (
+                                        <button
+                                            onClick={() => setShowModeSelector(true)}
+                                            className="text-white text-sm font-bold mt-1.5 flex items-center gap-2 hover:scale-105 transition-all px-3 py-1.5 rounded-lg border-2 border-white/20 hover:border-white/40 active:scale-95 shadow-lg relative overflow-hidden group"
+                                        >
+                                            <div className={`absolute inset-0 bg-gradient-to-r ${modeConfig.gradient} opacity-80 group-hover:opacity-100 animate-pulse`}></div>
+                                            <div className="relative z-10">{modeConfig.icon}</div>
+                                            <span className="relative z-10 drop-shadow-md">{t(`mode.${(settings.sportMode || 'FOOTBALL').toLowerCase()}.name`)}</span>
+                                        </button>
+                                    );
+                                })()}
                             </div>
                             <div className="flex flex-col items-end gap-2">
                                 <div className="flex items-center gap-1 text-orange-400 font-bold text-sm bg-orange-500/10 px-2 py-1 rounded-lg border border-orange-500/20">
