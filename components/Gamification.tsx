@@ -73,6 +73,21 @@ export const TrophyCase: React.FC<{ badges: string[], newBadgeId?: string }> = (
         { id: 'combo_king', icon: '⚡', nameKey: 'badge.combo_king.name', descKey: 'badge.combo_king.desc' },
         { id: 'survivor', icon: '🛡️', nameKey: 'badge.survivor.name', descKey: 'badge.survivor.desc' },
         { id: 'ninja', icon: '🥷', nameKey: 'badge.ninja.name', descKey: 'badge.ninja.desc' },
+        // Expanded Set (20 Total)
+        { id: 'early_bird', icon: '🌅', nameKey: 'badge.early_bird.name', descKey: 'badge.early_bird.desc' },
+        { id: 'night_owl', icon: '🦉', nameKey: 'badge.night_owl.name', descKey: 'badge.night_owl.desc' },
+        { id: 'marathoner', icon: '🏃', nameKey: 'badge.marathoner.name', descKey: 'badge.marathoner.desc' },
+        { id: 'speedster', icon: '⚡', nameKey: 'badge.speedster.name', descKey: 'badge.speedster.desc' },
+        { id: 'sharpshooter', icon: '🎯', nameKey: 'badge.sharpshooter.name', descKey: 'badge.sharpshooter.desc' },
+        { id: 'social_butterfly', icon: '🦋', nameKey: 'badge.social_butterfly.name', descKey: 'badge.social_butterfly.desc' },
+        { id: 'consistent', icon: '📅', nameKey: 'badge.consistent.name', descKey: 'badge.consistent.desc' },
+        { id: 'unstoppable', icon: '🚀', nameKey: 'badge.unstoppable.name', descKey: 'badge.unstoppable.desc' },
+        { id: 'weekend_warrior', icon: '⚔️', nameKey: 'badge.weekend_warrior.name', descKey: 'badge.weekend_warrior.desc' },
+        { id: 'yogi', icon: '🧘', nameKey: 'badge.yogi.name', descKey: 'badge.yogi.desc' },
+        { id: 'globetrotter', icon: '🌍', nameKey: 'badge.globetrotter.name', descKey: 'badge.globetrotter.desc' },
+        { id: 'clean_sheet', icon: '🧼', nameKey: 'badge.clean_sheet.name', descKey: 'badge.clean_sheet.desc' },
+        { id: 'comeback_kid', icon: '🦅', nameKey: 'badge.comeback_kid.name', descKey: 'badge.comeback_kid.desc' },
+        { id: 'centurion', icon: '💯', nameKey: 'badge.centurion.name', descKey: 'badge.centurion.desc' },
     ];
 
     const unlockedCount = badges.filter(id => allBadges.some(b => b.id === id)).length;

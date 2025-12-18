@@ -218,6 +218,22 @@ export type TranslationKeys = {
     "badge.ninja.name": string; "badge.ninja.desc": string;
     "badge.unknown.name": string; "badge.unknown.desc": string;
 
+    // NEW BADGES
+    "badge.early_bird.name": string; "badge.early_bird.desc": string;
+    "badge.night_owl.name": string; "badge.night_owl.desc": string;
+    "badge.marathoner.name": string; "badge.marathoner.desc": string;
+    "badge.speedster.name": string; "badge.speedster.desc": string;
+    "badge.sharpshooter.name": string; "badge.sharpshooter.desc": string;
+    "badge.social_butterfly.name": string; "badge.social_butterfly.desc": string;
+    "badge.consistent.name": string; "badge.consistent.desc": string;
+    "badge.unstoppable.name": string; "badge.unstoppable.desc": string;
+    "badge.weekend_warrior.name": string; "badge.weekend_warrior.desc": string;
+    "badge.yogi.name": string; "badge.yogi.desc": string;
+    "badge.globetrotter.name": string; "badge.globetrotter.desc": string;
+    "badge.clean_sheet.name": string; "badge.clean_sheet.desc": string;
+    "badge.comeback_kid.name": string; "badge.comeback_kid.desc": string;
+    "badge.centurion.name": string; "badge.centurion.desc": string;
+
     // SPORT MODES
     "mode.select_title": string;
     "mode.select_desc": string;

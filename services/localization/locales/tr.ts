@@ -243,6 +243,21 @@ export const tr: TranslationKeys = {
     "badge.ninja.name": "Ninja", "badge.ninja.desc": "Mükemmel isabet",
     "badge.unknown.name": "Bilinmeyen", "badge.unknown.desc": "Gizemli Rozet",
 
+    "badge.early_bird.name": "Sabah Yıldızı", "badge.early_bird.desc": "08:00'den önce antrenman",
+    "badge.night_owl.name": "Gece Kuşu", "badge.night_owl.desc": "22:00'den sonra antrenman",
+    "badge.marathoner.name": "Dayanıklı", "badge.marathoner.desc": "10+ dk antrenman",
+    "badge.speedster.name": "Şimşek", "badge.speedster.desc": "1 dk altı antrenman",
+    "badge.sharpshooter.name": "Keskin Nişancı", "badge.sharpshooter.desc": "%100 İsabet",
+    "badge.social_butterfly.name": "Bağlayıcı", "badge.social_butterfly.desc": "Arkadaş davet edildi",
+    "badge.consistent.name": "Güvenilir", "badge.consistent.desc": "7 Gün Serisi",
+    "badge.unstoppable.name": "Durdurulamaz", "badge.unstoppable.desc": "30 Gün Serisi",
+    "badge.weekend_warrior.name": "Hafta Sonu Savaşçısı", "badge.weekend_warrior.desc": "Cmt & Paz antrenman",
+    "badge.yogi.name": "Zen Ustası", "badge.yogi.desc": "Yüksek esneklik puanı",
+    "badge.globetrotter.name": "Kaşif", "badge.globetrotter.desc": "Tüm modlar denendi",
+    "badge.clean_sheet.name": "Mükemmeliyetçi", "badge.clean_sheet.desc": "Can kaybı yok",
+    "badge.comeback_kid.name": "Zümrüdüanka", "badge.comeback_kid.desc": "7 gün sonra dönüş",
+    "badge.centurion.name": "Yüzbaşı", "badge.centurion.desc": "Toplam 100 antrenman",
+
     // SPORT MODES
     "mode.select_title": "Sporunuzu Seçin",
     "mode.select_desc": "Zirve performans için özel ısınmalar",

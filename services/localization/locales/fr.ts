@@ -176,6 +176,21 @@ export const fr: TranslationKeys = {
     "badge.ninja.name": "Ninja", "badge.ninja.desc": "Perfect precision",
     "badge.unknown.name": "Unknown", "badge.unknown.desc": "Mystery Badge",
 
+    "badge.early_bird.name": "Morning Star", "badge.early_bird.desc": "Workout before 8 AM",
+    "badge.night_owl.name": "Night Crawler", "badge.night_owl.desc": "Workout after 10 PM",
+    "badge.marathoner.name": "Endurer", "badge.marathoner.desc": "10+ min workout",
+    "badge.speedster.name": "Flash", "badge.speedster.desc": "Under 1 min workout",
+    "badge.sharpshooter.name": "Sniper", "badge.sharpshooter.desc": "100% Accuracy",
+    "badge.social_butterfly.name": "Connector", "badge.social_butterfly.desc": "Invited a friend",
+    "badge.consistent.name": "Reliable", "badge.consistent.desc": "7 Day Streak",
+    "badge.unstoppable.name": "Juggernaut", "badge.unstoppable.desc": "30 Day Streak",
+    "badge.weekend_warrior.name": "Weekender", "badge.weekend_warrior.desc": "Sat & Sun Workout",
+    "badge.yogi.name": "Zenith", "badge.yogi.desc": "High flexibility score",
+    "badge.globetrotter.name": "Explorer", "badge.globetrotter.desc": "Tried all modes",
+    "badge.clean_sheet.name": "Perfectionist", "badge.clean_sheet.desc": "No health lost",
+    "badge.comeback_kid.name": "Phoenix", "badge.comeback_kid.desc": "Return after 7 days",
+    "badge.centurion.name": "Centurion", "badge.centurion.desc": "100 Workouts total",
+
     // SPORT MODES
     "mode.select_title": "Choisissez votre Sport",
     "mode.select_desc": "Échauffements personnalisés pour des performances optimales",
