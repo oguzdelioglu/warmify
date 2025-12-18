@@ -153,9 +153,9 @@ const RigOverlay: React.FC<RigOverlayProps> = ({
             });
 
             ctx.setLineDash([]);
-            // Floating orbs at joints
-            [11, 12, 13, 14, 15, 16, 23, 24].forEach(idx => {
-                drawPoint(ctx, joints[idx], '#ffffff', 3, w, h);
+            // Floating orbs at joints (Added 0 for Head)
+            [0, 11, 12, 13, 14, 15, 16, 23, 24].forEach(idx => {
+                if (joints[idx]) drawPoint(ctx, joints[idx], '#ffffff', 3, w, h);
             });
         };
 
@@ -174,10 +174,10 @@ const RigOverlay: React.FC<RigOverlayProps> = ({
                 drawLine(ctx, joints[s], joints[e], primary, 4, w, h);
             });
 
-            // Servos
-            [13, 14, 25, 26].forEach(idx => {
+            // Servos (Added 0)
+            [0, 13, 14, 25, 26].forEach(idx => {
                 if (seatedMode && idx > 20) return;
-                drawPoint(ctx, joints[idx], secondary, 6, w, h);
+                if (joints[idx]) drawPoint(ctx, joints[idx], secondary, 6, w, h);
             });
         };
 
@@ -195,7 +195,7 @@ const RigOverlay: React.FC<RigOverlayProps> = ({
             connections.forEach(([s, e]) => drawLine(ctx, joints[s], joints[e], primary, 4, w, h));
 
             // Head
-            drawPoint(ctx, joints[0], 'white', 15, w, h);
+            if (joints[0]) drawPoint(ctx, joints[0], 'white', 15, w, h);
         };
 
         // 5. ALIEN: Curvy/Organic
@@ -213,9 +213,14 @@ const RigOverlay: React.FC<RigOverlayProps> = ({
                 drawLine(ctx, joints[s], joints[e], primary, 4, w, h);
             });
 
+            // Head (Added 0)
+            if (joints[0]) drawPoint(ctx, joints[0], secondary, 5, w, h);
+
             // Eyes
-            drawPoint(ctx, joints[2], secondary, 3, w, h); // Eye L
-            drawPoint(ctx, joints[5], secondary, 3, w, h); // Eye R
+            // (Optional: if we want eyes, we need them populated in AnimationService relative to head)
+            // For now, removing static eyes 2 & 5 if they are just 0,0
+            // drawPoint(ctx, joints[2], secondary, 3, w, h); 
+            // drawPoint(ctx, joints[5], secondary, 3, w, h); 
         };
 
 
