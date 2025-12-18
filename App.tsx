@@ -87,8 +87,21 @@ const DESK_EXERCISES: ExerciseDef[] = [
     { id: 'Standing Reach', name: 'Standing Reach', nameKey: 'exercise.standing_reach.name', duration: 30, instruction: 'Stand and stretch!', instructionKey: 'exercise.standing_reach.instruction', color: 'text-gray-500' },
 ];
 
+// Seated Mode - Accessible & Low Impact (Overrides Sport Mode if active)
+const SEATED_EXERCISES: ExerciseDef[] = [
+    { id: 'Neck Rolls', name: 'Neck Rolls', nameKey: 'exercise.neck_rolls.name', duration: 30, instruction: 'Roll neck gently!', instructionKey: 'exercise.neck_rolls.instruction', color: 'text-slate-400' },
+    { id: 'Shoulder Rolls', name: 'Shoulder Rolls', nameKey: 'exercise.shoulder_rolls.name', duration: 30, instruction: 'Roll shoulders back!', instructionKey: 'exercise.shoulder_rolls.instruction', color: 'text-gray-400' },
+    { id: 'Arm Circles', name: 'Arm Circles', nameKey: 'exercise.arm_circles.name', duration: 30, instruction: 'Big circles!', instructionKey: 'exercise.arm_circles.instruction', color: 'text-amber-400' },
+    { id: 'Seated Twists', name: 'Seated Twists', nameKey: 'exercise.seated_twists.name', duration: 30, instruction: 'Twist torso sitting!', instructionKey: 'exercise.seated_twists.instruction', color: 'text-neutral-400' },
+    { id: 'Shoulder Press', name: 'Shoulder Press', nameKey: 'exercise.shoulder_press.name', duration: 30, instruction: 'Press hands up!', instructionKey: 'exercise.shoulder_press.instruction', color: 'text-emerald-400' },
+    { id: 'Uppercuts', name: 'Uppercuts', nameKey: 'exercise.uppercuts.name', duration: 30, instruction: 'Punch up!', instructionKey: 'exercise.uppercuts.instruction', color: 'text-yellow-400' },
+    { id: 'Hooks', name: 'Hooks', nameKey: 'exercise.hooks.name', duration: 30, instruction: 'Side punches!', instructionKey: 'exercise.hooks.instruction', color: 'text-red-400' },
+    { id: 'Arm Stretches', name: 'Arm Stretches', nameKey: 'exercise.arm_stretches.name', duration: 30, instruction: 'Stretch arms across!', instructionKey: 'exercise.arm_stretches.instruction', color: 'text-stone-400' },
+];
+
 // Get exercises based on sport mode
-const getExercisesBySportMode = (mode: SportMode): ExerciseDef[] => {
+const getExercisesBySportMode = (mode: SportMode, isSeated: boolean = false): ExerciseDef[] => {
+    if (isSeated) return SEATED_EXERCISES;
     switch (mode) {
         case 'FOOTBALL': return FOOTBALL_EXERCISES;
         case 'RUGBY': return RUGBY_EXERCISES;
@@ -175,7 +188,7 @@ export default function App() {
     });
 
     // Get exercises based on current sport mode
-    const EXERCISES = getExercisesBySportMode(settings.sportMode || 'FOOTBALL');
+    const EXERCISES = getExercisesBySportMode(settings.sportMode || 'FOOTBALL', settings.seatedMode);
 
     const [gameState, setGameState] = useState<GameState>({
         score: 0, combo: 1, health: 100,
