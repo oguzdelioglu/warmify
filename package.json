@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:ios": "vite build && cap copy web && node scripts/update-plist.cjs && cap open ios",
+    "build:ios": "vite build && cap sync ios && node scripts/update-plist.cjs && cap open ios",
     "build:android": "vite build && cap sync && cap open android",
     "preview": "vite preview"
   },

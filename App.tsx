@@ -37,8 +37,10 @@ const DEFAULT_SETTINGS: UserSettings = {
     soundEnabled: true,
     seatedMode: false,
     characterArchetype: 'SPIRIT', // Default changed to Spirit
-    characterSkin: 0
+    characterSkin: 0,
+    sportMode: 'FOOTBALL' // Default sport mode
 };
+
 
 // Header and other views extracted to components
 import { SplashScreen } from './components/SplashScreen';
@@ -85,12 +87,19 @@ export default function App() {
     const [settings, setSettings] = useState<UserSettings>(() => {
         const saved = localStorage.getItem('warmify_settings');
         const parsed = saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
+
+        // Migration: Add sportMode if missing
+        if (!parsed.sportMode) {
+            parsed.sportMode = 'FOOTBALL';
+        }
+
         // Enforce: Debug Mode must be OFF in Production (Store Builds)
         if (import.meta.env.PROD) {
             // parsed.isDebugMode = false; 
         }
         return parsed;
     });
+
 
     const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState<boolean>(() => {
         return localStorage.getItem('warmify_onboarding_complete') === 'true';
@@ -554,6 +563,7 @@ export default function App() {
                         setView={setView}
                         startWorkout={startWorkout}
                         newUnlockedBadge={newUnlockedBadge}
+                        updateSettings={setSettings}
                     />
                 )}
 

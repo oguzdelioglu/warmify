@@ -178,4 +178,40 @@ export type TranslationKeys = {
     "badge.survivor.name": string; "badge.survivor.desc": string;
     "badge.ninja.name": string; "badge.ninja.desc": string;
     "badge.unknown.name": string; "badge.unknown.desc": string;
+
+    // SPORT MODES
+    "mode.select_title": string;
+    "mode.select_desc": string;
+    "mode.football.name": string;
+    "mode.football.desc": string;
+    "mode.rugby.name": string;
+    "mode.rugby.desc": string;
+    "mode.runner.name": string;
+    "mode.runner.desc": string;
+    "mode.cyclist.name": string;
+    "mode.cyclist.desc": string;
+    "mode.desk.name": string;
+    "mode.desk.desc": string;
+
+    // FLEXIBILITY TRACKING
+    "flexibility.title": string;
+    "flexibility.shoulder": string;
+    "flexibility.hip": string;
+    "flexibility.spine": string;
+    "flexibility.improved": string;
+    "flexibility.tracking_desc": string;
+
+    // TEAM CHALLENGES
+    "team.title": string;
+    "team.join": string;
+    "team.create": string;
+    "team.members": string;
+    "team.progress": string;
+    "team.sync_desc": string;
+
+    // KIT UNLOCKING
+    "kit.unlocked": string;
+    "kit.new_colorway": string;
+    "kit.milestone": string;
+    "kit.customize": string;
 };

@@ -179,4 +179,40 @@ export const es: TranslationKeys = {
     "game.feedback.perfect": "PERFECT!",
     "game.feedback.good": "GOOD!",
     "game.feedback.miss": "MISS!",
+
+    // SPORT MODES
+    "mode.select_title": "Elige tu Deporte",
+    "mode.select_desc": "Calentamientos personalizados para el máximo rendimiento",
+    "mode.football.name": "Fútbol",
+    "mode.football.desc": "Activación de ingle e isquiotibiales para delanteros",
+    "mode.rugby.name": "Rugby",
+    "mode.rugby.desc": "Estabilidad de hombros y preparación para impactos",
+    "mode.runner.name": "Preparación de Corredor",
+    "mode.runner.desc": "Zancadas dinámicas y bombeo de pantorrillas",
+    "mode.cyclist.name": "Liberación para Ciclista",
+    "mode.cyclist.desc": "Alivio de flexor de cadera y espalda baja",
+    "mode.desk.name": "Detox de Escritorio",
+    "mode.desk.desc": "Movilidad de 3 minutos para trabajadores de oficina",
+
+    // FLEXIBILITY TRACKING
+    "flexibility.title": "Progreso de Flexibilidad",
+    "flexibility.shoulder": "ROM de Hombro",
+    "flexibility.hip": "ROM de Cadera",
+    "flexibility.spine": "ROM de Columna",
+    "flexibility.improved": "¡Mejorado!",
+    "flexibility.tracking_desc": "La IA rastrea tu rango de movimiento con el tiempo",
+
+    // TEAM CHALLENGES
+    "team.title": "Desafíos de Equipo",
+    "team.join": "Unirse al Equipo",
+    "team.create": "Crear Equipo",
+    "team.members": "Miembros",
+    "team.progress": "Progreso del Equipo",
+    "team.sync_desc": "Sincroniza con tu equipo para asegurar que todos se calienten",
+
+    // KIT UNLOCKING
+    "kit.unlocked": "¡Nuevo Kit Desbloqueado!",
+    "kit.new_colorway": "Nueva Combinación de Colores Disponible",
+    "kit.milestone": "Hito de Flexibilidad Alcanzado",
+    "kit.customize": "Personalizar Avatar",
 };

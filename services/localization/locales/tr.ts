@@ -175,4 +175,40 @@ export const tr: TranslationKeys = {
     "badge.survivor.name": "Tank", "badge.survivor.desc": "Düşük canla hayatta kalındı",
     "badge.ninja.name": "Ninja", "badge.ninja.desc": "Mükemmel isabet",
     "badge.unknown.name": "Bilinmeyen", "badge.unknown.desc": "Gizemli Rozet",
+
+    // SPORT MODES
+    "mode.select_title": "Sporunuzu Seçin",
+    "mode.select_desc": "Zirve performans için özel ısınmalar",
+    "mode.football.name": "Futbol",
+    "mode.football.desc": "Forvetler için kasık ve hamstring aktivasyonu",
+    "mode.rugby.name": "Ragbi",
+    "mode.rugby.desc": "Omuz stabilitesi ve çarpışma hazırlığı",
+    "mode.runner.name": "Koşucu Hazırlığı",
+    "mode.runner.desc": "Dinamik hamle ve baldır pompalamaları",
+    "mode.cyclist.name": "Bisikletçi Rahatlaması",
+    "mode.cyclist.desc": "Kalça fleksörü ve bel rahatlaması",
+    "mode.desk.name": "Masa Detoksu",
+    "mode.desk.desc": "Ofis çalışanları için 3 dakikalık mobilite",
+
+    // FLEXIBILITY TRACKING
+    "flexibility.title": "Esneklik İlerlemesi",
+    "flexibility.shoulder": "Omuz Hareket Açısı",
+    "flexibility.hip": "Kalça Hareket Açısı",
+    "flexibility.spine": "Omurga Hareket Açısı",
+    "flexibility.improved": "Gelişti!",
+    "flexibility.tracking_desc": "YZ hareket açınızı zamanla takip eder",
+
+    // TEAM CHALLENGES
+    "team.title": "Takım Meydan Okumaları",
+    "team.join": "Takıma Katıl",
+    "team.create": "Takım Oluştur",
+    "team.members": "Üyeler",
+    "team.progress": "Takım İlerlemesi",
+    "team.sync_desc": "Herkesin ısınmasını sağlamak için takımınla senkronize ol",
+
+    // KIT UNLOCKING
+    "kit.unlocked": "Yeni Form Açıldı!",
+    "kit.new_colorway": "Yeni Renk Kombinasyonu Mevcut",
+    "kit.milestone": "Esneklik Hedefine Ulaşıldı",
+    "kit.customize": "Avatarı Özelleştir",
 };

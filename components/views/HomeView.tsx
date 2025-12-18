@@ -1,8 +1,10 @@
-import React from 'react';
-import { UserStats, UserSettings, AppView } from '../../types';
+import React, { useState } from 'react';
+import { UserStats, UserSettings, AppView, SportMode } from '../../types';
 import { XPBar, TrophyCase } from '../Gamification';
-import { Play, Trophy, Settings as SettingsIcon, Zap, Target, Activity as ActivityIcon } from 'lucide-react';
+import { Play, Trophy, Zap, Target, Activity as ActivityIcon, CircleDot } from 'lucide-react';
 import { SoundEngine } from '../../services/audioService';
+import { SportModeSelector } from '../SportModeSelector';
+import { FlexibilityTracker } from '../FlexibilityTracker';
 
 interface HomeViewProps {
     userStats: UserStats;
@@ -10,14 +12,32 @@ interface HomeViewProps {
     setView: (view: AppView) => void;
     startWorkout: () => void;
     newUnlockedBadge: string | null;
+    updateSettings: (settings: UserSettings) => void;
 }
 
 
 
 import { useLocalization } from '../../services/localization/LocalizationContext';
 
-export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView, startWorkout, newUnlockedBadge }) => {
+export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView, startWorkout, newUnlockedBadge, updateSettings }) => {
     const { t } = useLocalization();
+    const [showModeSelector, setShowModeSelector] = useState(false);
+
+    const handleModeChange = (mode: SportMode) => {
+        updateSettings({ ...settings, sportMode: mode });
+        SoundEngine.playUI('click');
+        setShowModeSelector(false);
+    };
+
+    // Initialize flexibility data if not exists
+    const flexibilityData = userStats.flexibilityData || {
+        shoulderROM: 65,
+        hipROM: 70,
+        spineROM: 55,
+        lastUpdated: new Date().toISOString(),
+        history: []
+    };
+
     return (
         <div className="flex-1 flex flex-col justify-evenly gap-4 animate-[fadeIn_0.5s_ease-out] overflow-y-auto no-scrollbar pb-8 relative w-full max-w-2xl mx-auto">
 
@@ -33,11 +53,15 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
                         <div className="flex justify-between items-start">
                             <div>
                                 <h2 className="text-3xl font-black italic text-white leading-none tracking-tight">{t('home.daily_mission')}</h2>
-                                <p className="text-indigo-200 text-xs font-medium mt-1">
-                                    {settings.seatedMode ? "Upper body sequence (Seated)." : "Full body sequence."}
-                                </p>
+                                <button
+                                    onClick={() => setShowModeSelector(true)}
+                                    className="text-indigo-300 text-xs font-medium mt-1 flex items-center gap-1 hover:text-indigo-200 transition-colors"
+                                >
+                                    <CircleDot size={12} />
+                                    {t(`mode.${(settings.sportMode || 'FOOTBALL').toLowerCase()}.name`)}
+                                </button>
                             </div>
-                            <div className="flex flex-col items-end">
+                            <div className="flex flex-col items-end gap-2">
                                 <div className="flex items-center gap-1 text-orange-400 font-bold text-sm bg-orange-500/10 px-2 py-1 rounded-lg border border-orange-500/20">
                                     <Zap size={14} fill="currentColor" /> {userStats.streak}
                                 </div>
@@ -56,6 +80,11 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
                         </button>
                     </div>
                 </div>
+            </div>
+
+            {/* Flexibility Tracker */}
+            <div className="flex-shrink-0 z-10">
+                <FlexibilityTracker data={flexibilityData} />
             </div>
 
             {/* Trophy Row */}
@@ -88,6 +117,15 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
             <button onClick={() => { SoundEngine.playUI('click'); setView(AppView.LEADERBOARD); }} className="flex-shrink-0 w-full py-3 bg-slate-800/40 border border-slate-700/50 rounded-xl font-bold text-slate-400 hover:bg-slate-700 hover:text-white transition-colors tracking-wide text-xs flex items-center justify-center gap-2 z-10">
                 <Trophy size={14} /> {t('leaderboard.title')}
             </button>
+
+            {/* Sport Mode Selector Modal */}
+            {showModeSelector && (
+                <SportModeSelector
+                    currentMode={settings.sportMode}
+                    onSelectMode={handleModeChange}
+                    onClose={() => setShowModeSelector(false)}
+                />
+            )}
         </div>
     );
-}
+};

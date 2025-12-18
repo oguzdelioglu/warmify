@@ -175,4 +175,40 @@ export const en: TranslationKeys = {
     "badge.survivor.name": "Tank", "badge.survivor.desc": "Survived with low health",
     "badge.ninja.name": "Ninja", "badge.ninja.desc": "Perfect precision",
     "badge.unknown.name": "Unknown", "badge.unknown.desc": "Mystery Badge",
+
+    // SPORT MODES
+    "mode.select_title": "Choose Your Sport",
+    "mode.select_desc": "Tailored warm-ups for peak performance",
+    "mode.football.name": "Football",
+    "mode.football.desc": "Groin & hamstring activation for strikers",
+    "mode.rugby.name": "Rugby",
+    "mode.rugby.desc": "Shoulder stability & impact prep",
+    "mode.runner.name": "Runner's Prep",
+    "mode.runner.desc": "Dynamic lunges & calf pumps",
+    "mode.cyclist.name": "Cyclist's Release",
+    "mode.cyclist.desc": "Hip flexor & lower back relief",
+    "mode.desk.name": "Desk Detox",
+    "mode.desk.desc": "3-minute mobility for office workers",
+
+    // FLEXIBILITY TRACKING
+    "flexibility.title": "Flexibility Progress",
+    "flexibility.shoulder": "Shoulder ROM",
+    "flexibility.hip": "Hip ROM",
+    "flexibility.spine": "Spine ROM",
+    "flexibility.improved": "Improved!",
+    "flexibility.tracking_desc": "AI tracks your range of motion over time",
+
+    // TEAM CHALLENGES
+    "team.title": "Team Challenges",
+    "team.join": "Join Squad",
+    "team.create": "Create Team",
+    "team.members": "Members",
+    "team.progress": "Team Progress",
+    "team.sync_desc": "Sync with your squad to ensure everyone warms up",
+
+    // KIT UNLOCKING
+    "kit.unlocked": "New Kit Unlocked!",
+    "kit.new_colorway": "New Colorway Available",
+    "kit.milestone": "Flexibility Milestone Reached",
+    "kit.customize": "Customize Avatar",
 };

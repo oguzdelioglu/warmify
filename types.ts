@@ -10,6 +10,26 @@ export interface UserStats {
   isPremium: boolean;
   userId: string;
   username: string;
+  flexibilityData?: FlexibilityData; // Range of motion tracking
+}
+
+// Sport Mode types
+export type SportMode = 'FOOTBALL' | 'RUGBY' | 'RUNNER' | 'CYCLIST' | 'DESK';
+
+// Flexibility tracking for intelligent warm-ups
+export interface FlexibilityData {
+  shoulderROM: number; // Range of Motion in degrees
+  hipROM: number;
+  spineROM: number;
+  lastUpdated: string;
+  history: FlexibilitySnapshot[];
+}
+
+export interface FlexibilitySnapshot {
+  date: string;
+  shoulderROM: number;
+  hipROM: number;
+  spineROM: number;
 }
 
 // 5 Archetypes x 5 Skins
@@ -22,7 +42,9 @@ export interface UserSettings {
   seatedMode: boolean;
   characterArchetype: CharacterArchetype;
   characterSkin: CharacterSkinId;
+  sportMode: SportMode; // Selected sport for tailored warm-ups
 }
+
 
 export interface LogMessage {
   id: string;
