@@ -19,8 +19,6 @@ import { HomeView } from './components/views/HomeView';
 import { Header } from './components/Header';
 import { LeaderboardView } from './components/views/LeaderboardView';
 import { useLocalization } from './services/localization/LocalizationContext';
-import { AppTrackingTransparency } from 'capacitor-plugin-app-tracking-transparency';
-import { LocalNotifications } from '@capacitor/local-notifications';
 
 // --- GAME CONFIG ---
 const EXERCISES: ExerciseDef[] = [
@@ -141,27 +139,6 @@ export default function App() {
         }
         // Initialize sound mute state
         SoundEngine.setMuted(!settings.soundEnabled);
-
-        // Request Native Permissions (ATT & Notifications) on launch
-        const requestNativePermissions = async () => {
-            try {
-                // 1. App Tracking Transparency (iOS)
-                await AppTrackingTransparency.requestPermission();
-            } catch (e) {
-                console.warn("ATT Request Failed/Not Supported", e);
-            }
-
-            try {
-                // 2. Local Notifications
-                await LocalNotifications.requestPermissions();
-            } catch (e) {
-                console.warn("Notification Request Failed", e);
-            }
-        };
-
-        // Create a small delay to allow Splash to settle/unmount
-        setTimeout(requestNativePermissions, 2000);
-
     }, [hasCompletedOnboarding, settings.soundEnabled]);
 
     const addLog = (message: string, type: 'info' | 'error' | 'success' = 'info') => {

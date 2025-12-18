@@ -49,3 +49,79 @@ if (modified) {
 } else {
   console.log('👍 Info.plist is already up to date.');
 }
+
+// ========================================
+// AUTO-GENERATE APP ICONS
+// ========================================
+console.log('\n📱 Configuring App Icons...');
+
+const iconSourcePath = path.join(__dirname, '../assets/icon.png');
+const iconsetPath = path.join(__dirname, '../ios/App/App/Assets.xcassets/AppIcon.appiconset');
+
+if (!fs.existsSync(iconSourcePath)) {
+  console.log('⚠️ Icon source not found at assets/icon.png - skipping icon generation');
+} else {
+  // Ensure iconset directory exists
+  if (!fs.existsSync(iconsetPath)) {
+    fs.mkdirSync(iconsetPath, { recursive: true });
+  }
+
+  // Icon sizes needed for iOS
+  const iconSizes = [
+    { size: 20, scales: [1, 2, 3] },
+    { size: 29, scales: [1, 2, 3] },
+    { size: 40, scales: [1, 2, 3] },
+    { size: 60, scales: [2, 3] },
+    { size: 76, scales: [1, 2] },
+    { size: 83.5, scales: [2] },
+    { size: 1024, scales: [1], name: 'AppIcon-1024.png' }
+  ];
+
+  const { execSync } = require('child_process');
+  
+  iconSizes.forEach(({ size, scales, name }) => {
+    scales.forEach(scale => {
+      const actualSize = Math.round(size * scale);
+      const filename = name || `AppIcon-${size}x${size}@${scale}x.png`;
+      const outputPath = path.join(iconsetPath, filename);
+      
+      try {
+        execSync(`sips -z ${actualSize} ${actualSize} "${iconSourcePath}" --out "${outputPath}"`, { stdio: 'ignore' });
+      } catch (e) {
+        console.log(`⚠️ Failed to generate ${filename}`);
+      }
+    });
+  });
+
+  // Create Contents.json
+  const contentsJson = {
+    images: [
+      { filename: 'AppIcon-20x20@2x.png', idiom: 'iphone', scale: '2x', size: '20x20' },
+      { filename: 'AppIcon-20x20@3x.png', idiom: 'iphone', scale: '3x', size: '20x20' },
+      { filename: 'AppIcon-29x29@2x.png', idiom: 'iphone', scale: '2x', size: '29x29' },
+      { filename: 'AppIcon-29x29@3x.png', idiom: 'iphone', scale: '3x', size: '29x29' },
+      { filename: 'AppIcon-40x40@2x.png', idiom: 'iphone', scale: '2x', size: '40x40' },
+      { filename: 'AppIcon-40x40@3x.png', idiom: 'iphone', scale: '3x', size: '40x40' },
+      { filename: 'AppIcon-60x60@2x.png', idiom: 'iphone', scale: '2x', size: '60x60' },
+      { filename: 'AppIcon-60x60@3x.png', idiom: 'iphone', scale: '3x', size: '60x60' },
+      { filename: 'AppIcon-20x20@1x.png', idiom: 'ipad', scale: '1x', size: '20x20' },
+      { filename: 'AppIcon-20x20@2x.png', idiom: 'ipad', scale: '2x', size: '20x20' },
+      { filename: 'AppIcon-29x29@1x.png', idiom: 'ipad', scale: '1x', size: '29x29' },
+      { filename: 'AppIcon-29x29@2x.png', idiom: 'ipad', scale: '2x', size: '29x29' },
+      { filename: 'AppIcon-40x40@1x.png', idiom: 'ipad', scale: '1x', size: '40x40' },
+      { filename: 'AppIcon-40x40@2x.png', idiom: 'ipad', scale: '2x', size: '40x40' },
+      { filename: 'AppIcon-76x76@1x.png', idiom: 'ipad', scale: '1x', size: '76x76' },
+      { filename: 'AppIcon-76x76@2x.png', idiom: 'ipad', scale: '2x', size: '76x76' },
+      { filename: 'AppIcon-83.5x83.5@2x.png', idiom: 'ipad', scale: '2x', size: '83.5x83.5' },
+      { filename: 'AppIcon-1024.png', idiom: 'ios-marketing', scale: '1x', size: '1024x1024' }
+    ],
+    info: { author: 'xcode', version: 1 }
+  };
+
+  fs.writeFileSync(
+    path.join(iconsetPath, 'Contents.json'),
+    JSON.stringify(contentsJson, null, 2)
+  );
+
+  console.log('✅ App icons generated and configured');
+}
