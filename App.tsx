@@ -87,7 +87,7 @@ export default function App() {
         const parsed = saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
         // Enforce: Debug Mode must be OFF in Production (Store Builds)
         if (import.meta.env.PROD) {
-            parsed.isDebugMode = false;
+            // parsed.isDebugMode = false; 
         }
         return parsed;
     });

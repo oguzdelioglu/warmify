@@ -239,40 +239,38 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
         </div>
 
         {/* DEVELOPER - Only Visible in Dev Builds */}
-        {import.meta.env.DEV && (
-          <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
-            <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">{t('settings.developer')}</h3>
+        <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">{t('settings.developer')}</h3>
 
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <Bug className={settings.isDebugMode ? "text-emerald-400" : "text-slate-500"} />
-                <div className="flex flex-col">
-                  <span>{t('settings.debug')}</span>
-                </div>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <Bug className={settings.isDebugMode ? "text-emerald-400" : "text-slate-500"} />
+              <div className="flex flex-col">
+                <span>{t('settings.debug')}</span>
               </div>
-              <button
-                onClick={() => update({ ...settings, isDebugMode: !settings.isDebugMode })}
-                className={`w-12 h-6 rounded-full transition-colors relative ${settings.isDebugMode ? 'bg-emerald-600' : 'bg-slate-600'}`}
-              >
-                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${settings.isDebugMode ? 'left-7' : 'left-1'}`} />
-              </button>
             </div>
-
             <button
-              onClick={() => {
-                if (confirm(t('settings.resetConfirm'))) {
-                  onReset();
-                }
-              }}
-              className="w-full flex items-center justify-between text-red-400 hover:text-red-300 transition-colors mt-2"
+              onClick={() => update({ ...settings, isDebugMode: !settings.isDebugMode })}
+              className={`w-12 h-6 rounded-full transition-colors relative ${settings.isDebugMode ? 'bg-emerald-600' : 'bg-slate-600'}`}
             >
-              <div className="flex items-center gap-3">
-                <Trash2 size={20} />
-                <span>{t('settings.reset')}</span>
-              </div>
+              <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${settings.isDebugMode ? 'left-7' : 'left-1'}`} />
             </button>
           </div>
-        )}
+
+          <button
+            onClick={() => {
+              if (confirm(t('settings.resetConfirm'))) {
+                onReset();
+              }
+            }}
+            className="w-full flex items-center justify-between text-red-400 hover:text-red-300 transition-colors mt-2"
+          >
+            <div className="flex items-center gap-3">
+              <Trash2 size={20} />
+              <span>{t('settings.reset')}</span>
+            </div>
+          </button>
+        </div>
 
         <div className="text-center pb-8">
           <p className="text-[10px] text-slate-600">v2.1.0 • AI-Powered</p>
