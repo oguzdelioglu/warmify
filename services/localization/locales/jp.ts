@@ -43,6 +43,9 @@ export const jp: TranslationKeys = {
     "settings.reset": "データをリセット",
     "settings.resetConfirm": "本当によろしいですか？ストリークとポイントがリセットされます。",
     "settings.language": "言語",
+    "settings.support": "サポート",
+    "settings.rate_us": "Warmifyを評価",
+    "settings.contact": "フィードバック送信",
 
     // GAME
     "game.prepare": "準備",

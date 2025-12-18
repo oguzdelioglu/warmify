@@ -44,7 +44,7 @@ const DEFAULT_SETTINGS: UserSettings = {
 import { SplashScreen } from './components/SplashScreen';
 
 import { LeaderboardService } from './services/leaderboardService';
-import { getAvatarForLevel } from './utils/levelUtils';
+import { getAvatarForLevel, calculateNextLevelXP } from './utils/levelUtils';
 
 // ... existing imports ...
 
@@ -229,8 +229,8 @@ export default function App() {
     const handleHit = (quality: string, feedback: string) => {
         SoundEngine.playHit(quality as 'PERFECT' | 'GOOD');
         setGameState(prev => {
-            if (prev.phase !== 'ACTIVE') return prev;
-            const combo = Math.min(50, prev.combo + 0.5); // Increased max combo to 50x
+            // Cap combo at 20x to prevent inflation
+            const combo = Math.min(20, prev.combo + 0.5);
             const basePoints = quality === 'PERFECT' ? 50 : 20;
             const points = Math.floor(basePoints * Math.floor(combo));
 
@@ -400,15 +400,21 @@ export default function App() {
 
         const today = new Date().toISOString().split('T')[0];
         const isNewDay = userStats.lastWorkoutDate !== today;
-        const xpGained = gameState.score;
+        const xpGained = Math.min(gameState.score, 50000); // Max XP Cap to prevent exploits
         let currentXp = userStats.xp + xpGained;
         let currentLevel = userStats.level;
         let isLevelUp = false;
 
-        while (currentXp >= currentLevel * 1000) {
-            currentXp -= currentLevel * 1000;
-            currentLevel++;
-            isLevelUp = true;
+        // Dynamic Difficulty using shared Utility
+        while (true) {
+            const xpReq = calculateNextLevelXP(currentLevel);
+            if (currentXp >= xpReq) {
+                currentXp -= xpReq;
+                currentLevel++;
+                isLevelUp = true;
+            } else {
+                break;
+            }
         }
 
         const newBadges: string[] = [];
@@ -535,7 +541,7 @@ export default function App() {
 
                 <Header view={view} setView={setView} userStats={userStats} />
 
-                {view === AppView.SETTINGS && <Settings settings={settings} userStats={userStats} updateSettings={setSettings} updateUserStats={setUserStats} onBack={() => setView(AppView.HOME)} onReset={() => { localStorage.clear(); window.location.reload(); }} />}
+                {view === AppView.SETTINGS && <Settings settings={settings} userStats={userStats} updateSettings={setSettings} updateUserStats={setUserStats} onBack={() => setView(AppView.HOME)} onReset={() => { localStorage.clear(); window.location.reload(); }} onRateUs={() => setView(AppView.RATE_US)} />}
 
                 {view === AppView.LEVELING && <LevelingSystem stats={userStats} onBack={() => setView(AppView.HOME)} />}
 

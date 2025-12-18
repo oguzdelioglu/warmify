@@ -43,6 +43,9 @@ export const fr: TranslationKeys = {
     "settings.reset": "Réinitialiser les Données",
     "settings.resetConfirm": "Êtes-vous sûr ? Cela réinitialisera votre série et vos points.",
     "settings.language": "Langue",
+    "settings.support": "Support",
+    "settings.rate_us": "Noter Warmify",
+    "settings.contact": "Envoyer des commentaires",
 
     // GAME
     "game.prepare": "PRÉPAREZ-VOUS",

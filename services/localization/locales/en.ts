@@ -53,6 +53,9 @@ export const en: TranslationKeys = {
     "settings.reset": "Reset App Data",
     "settings.resetConfirm": "Are you sure? This will reset your streak and points.",
     "settings.language": "Language",
+    "settings.support": "Support",
+    "settings.rate_us": "Rate Warmify",
+    "settings.contact": "Send Feedback",
 
     // GAME
     "game.prepare": "PREPARE",

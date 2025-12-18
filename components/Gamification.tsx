@@ -3,10 +3,11 @@ import { LeaderboardEntry } from '../types';
 import { Shield, CheckCircle2, Crown, Medal } from 'lucide-react';
 import { useLocalization } from '../services/localization/LocalizationContext';
 import { TranslationKeys } from '../services/localization/types';
+import { calculateNextLevelXP } from '../utils/levelUtils';
 
 // --- BARS ---
 export const XPBar: React.FC<{ xp: number; level: number }> = ({ xp, level }) => {
-    const xpForNextLevel = level * 1000;
+    const xpForNextLevel = calculateNextLevelXP(level);
     const progress = (xp / xpForNextLevel) * 100;
 
     return (

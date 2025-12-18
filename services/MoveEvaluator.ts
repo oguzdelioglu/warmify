@@ -217,10 +217,30 @@ function checkVelocity(cur: any[], prev: any[] | null | undefined, indices: numb
     return avgVel > threshold;
 }
 
+// Helper to check visibility of critical landmarks
+function checkVisibility(landmarks: any[], indices: number[], threshold: number = 0.65): boolean {
+    return indices.every(idx => landmarks[idx] && landmarks[idx].visibility > threshold);
+}
+
 export class MoveEvaluator {
     static evaluate(exerciseName: string, landmarks: any[], prevLandmarks: any[] | null, currentState: MovementState): EvaluationResult {
         if (!landmarks || landmarks.length < 33) {
             return { score: 0, feedback: "No Pose Detected", incorrectJoints: [], isMatch: false, didTriggerRep: false, nextState: currentState };
+        }
+
+        // VISIBILITY CHECK: Prevent scoring if arms/shoulders are not clearly visible
+        // We check Shoulders (11,12) and Elbows (13,14) as a baseline for upper body exercises.
+        const criticalJoints = [11, 12, 13, 14];
+        if (!checkVisibility(landmarks, criticalJoints)) {
+            // If we can't see the arms, we can't score.
+            return {
+                score: 0,
+                feedback: "Make sure your upper body is visible!",
+                incorrectJoints: [],
+                isMatch: false,
+                didTriggerRep: false,
+                nextState: currentState
+            };
         }
 
         const evaluator = Evaluators[exerciseName] || Evaluators['Freestyle'];

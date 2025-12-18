@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowLeft, Lock, Unlock, Star, Shield, Zap, Crown, Gift, ChevronUp, ChevronsUp, Award } from 'lucide-react';
 import { UserStats } from '../types';
 import { SoundEngine } from '../services/audioService';
-import { LEVEL_MAP } from '../utils/levelUtils';
+import { LEVEL_MAP, calculateNextLevelXP } from '../utils/levelUtils';
 import { useLocalization } from '../services/localization/LocalizationContext';
 
 interface LevelingSystemProps {
@@ -34,7 +34,7 @@ const LevelingSystem: React.FC<LevelingSystemProps> = ({ stats, onBack }) => {
     const currentLevelData = LEVEL_MAP.find(l => l.lvl === stats.level) || LEVEL_MAP[0];
     const nextLevelData = LEVEL_MAP.find(l => l.lvl === stats.level + 1);
 
-    const xpForNextLevel = stats.level * 1000;
+    const xpForNextLevel = calculateNextLevelXP(stats.level);
     const progress = Math.min(100, (stats.xp / xpForNextLevel) * 100);
 
     return (

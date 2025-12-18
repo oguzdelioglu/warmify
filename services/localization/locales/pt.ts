@@ -43,6 +43,9 @@ export const pt: TranslationKeys = {
     "settings.reset": "Redefinir Dados",
     "settings.resetConfirm": "Tem certeza? Isso redefinirá sua sequência e pontos.",
     "settings.language": "Idioma",
+    "settings.support": "Suporte",
+    "settings.rate_us": "Avaliar Warmify",
+    "settings.contact": "Enviar feedback",
 
     // GAME
     "game.prepare": "PREPARAR",

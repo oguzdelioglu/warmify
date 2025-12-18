@@ -53,6 +53,9 @@ export const tr: TranslationKeys = {
     "settings.reset": "Verileri Sıfırla",
     "settings.resetConfirm": "Emin misin? Bu işlem puanlarını ve serini sıfırlar.",
     "settings.language": "Dil",
+    "settings.support": "Destek",
+    "settings.rate_us": "Warmify'ı Değerlendir",
+    "settings.contact": "Geri Bildirim",
 
     // GAME
     "game.prepare": "HAZIRLAN",

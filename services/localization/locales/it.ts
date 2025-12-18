@@ -43,6 +43,9 @@ export const it: TranslationKeys = {
     "settings.reset": "Resetta Dati App",
     "settings.resetConfirm": "Sei sicuro? Questo resetterà la tua serie e i punti.",
     "settings.language": "Lingua",
+    "settings.support": "Supporto",
+    "settings.rate_us": "Valuta Warmify",
+    "settings.contact": "Invia feedback",
 
     // GAME
     "game.prepare": "PREPARATI",

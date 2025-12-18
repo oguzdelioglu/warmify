@@ -43,6 +43,9 @@ export const kr: TranslationKeys = {
     "settings.reset": "앱 데이터 초기화",
     "settings.resetConfirm": "확실합니까? 연속 기록과 포인트가 초기화됩니다.",
     "settings.language": "언어",
+    "settings.support": "지원",
+    "settings.rate_us": "Warmify 평가",
+    "settings.contact": "피드백 보내기",
 
     // GAME
     "game.prepare": "준비",

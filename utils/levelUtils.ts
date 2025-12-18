@@ -43,3 +43,7 @@ export const getLevelDefinition = (level: number): LevelDefinition => {
 export const getAvatarForLevel = (level: number): string => {
     return getLevelDefinition(level).avatar;
 };
+
+export const calculateNextLevelXP = (currLevel: number): number => {
+    return 5000 + (currLevel * 5000);
+};

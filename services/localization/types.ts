@@ -55,6 +55,9 @@ export type TranslationKeys = {
     "settings.reset": string;
     "settings.resetConfirm": string;
     "settings.language": string;
+    "settings.support": string;
+    "settings.rate_us": string;
+    "settings.contact": string;
 
     // GAME
     "game.prepare": string;

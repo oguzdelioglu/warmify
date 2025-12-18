@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Bug, Trash2, Info, Volume2, VolumeX, Armchair, User, Palette, PenSquare, CheckCircle2, Globe } from 'lucide-react';
+import { ArrowLeft, Bug, Trash2, Info, Volume2, VolumeX, Armchair, User, Palette, PenSquare, CheckCircle2, Globe, Heart, Mail } from 'lucide-react';
 import { UserStats, UserSettings, CharacterArchetype, CharacterSkinId } from '../types';
 import RigOverlay from './RigOverlay';
 import { SoundEngine } from '../services/audioService';
@@ -15,6 +15,7 @@ interface SettingsProps {
   updateUserStats: (newStats: UserStats) => void;
   onBack: () => void;
   onReset: () => void;
+  onRateUs: () => void;
 }
 
 const ARCHETYPES: { id: CharacterArchetype; name: string }[] = [
@@ -236,6 +237,32 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
               <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${settings.seatedMode ? 'left-7' : 'left-1'}`} />
             </button>
           </div>
+        </div>
+
+        {/* SUPPORT & FEEDBACK */}
+        <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">{t('settings.support') || 'Support'}</h3>
+
+          <button
+            onClick={() => { SoundEngine.playUI('click'); onRateUs(); }}
+            className="w-full flex items-center justify-between text-white hover:text-pink-400 transition-colors mb-4"
+          >
+            <div className="flex items-center gap-3">
+              <Heart size={20} className="text-pink-500" />
+              <span>{t('settings.rate_us') || 'Rate Warmify'}</span>
+            </div>
+          </button>
+
+          <a
+            href="mailto:info@odel.dev?subject=Warmify Feedback&body=Hi Warmify Team,%0D%0A%0D%0AI have some feedback for you:"
+            onClick={() => SoundEngine.playUI('click')}
+            className="w-full flex items-center justify-between text-white hover:text-blue-400 transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <Mail size={20} className="text-blue-500" />
+              <span>{t('settings.contact') || 'Send Feedback'}</span>
+            </div>
+          </a>
         </div>
 
         {/* DEVELOPER - Only Visible in Dev Builds */}

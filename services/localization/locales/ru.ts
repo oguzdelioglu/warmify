@@ -43,6 +43,9 @@ export const ru: TranslationKeys = {
     "settings.reset": "Сброс данных",
     "settings.resetConfirm": "Вы уверены? Это сбросит вашу серию и очки.",
     "settings.language": "Язык",
+    "settings.support": "Поддержка",
+    "settings.rate_us": "Оценить Warmify",
+    "settings.contact": "Отправить отзыв",
 
     // GAME
     "game.prepare": "ПРИГОТОВИТЬСЯ",

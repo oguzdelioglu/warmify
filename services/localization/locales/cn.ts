@@ -43,6 +43,9 @@ export const cn: TranslationKeys = {
     "settings.reset": "重置数据",
     "settings.resetConfirm": "确定吗？这将重置您的连胜和积分。",
     "settings.language": "语言",
+    "settings.support": "支持",
+    "settings.rate_us": "评价 Warmify",
+    "settings.contact": "发送反馈",
 
     // GAME
     "game.prepare": "准备",

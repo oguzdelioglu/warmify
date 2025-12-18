@@ -43,6 +43,9 @@ export const es: TranslationKeys = {
     "settings.reset": "Restablecer Datos",
     "settings.resetConfirm": "¿Estás seguro? Esto restablecerá tu racha y puntos.",
     "settings.language": "Idioma",
+    "settings.support": "Soporte",
+    "settings.rate_us": "Valorar Warmify",
+    "settings.contact": "Enviar comentarios",
 
     // GAME
     "game.prepare": "PREPÁRATE",
