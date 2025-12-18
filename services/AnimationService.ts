@@ -69,6 +69,7 @@ export class AnimationService {
         let liftRightAnkle = 0;
 
         let torsoTwist = 0; // Rotation of shoulders relative to hips
+        let neckRollOffset = { x: 0, y: 0 }; // Head offset
 
         // --- EXERCISE LOGIC MAPPERS ---
 
@@ -80,7 +81,7 @@ export class AnimationService {
             rArmA = 0.3 + (Math.PI * 0.7 * val);
             if (!isSeated) legAngle = 0.5 * val;
         }
-        else if (exercise === 'Skipping' || exercise === 'Sprint in Place' || exercise === 'High Knees') {
+        else if (exercise === 'Skipping' || exercise === 'Sprint in Place' || exercise === 'High Knees' || exercise === 'A-Skips') {
             const runSpeed = 2.0;
             const p = Math.sin(t * runSpeed);
             // Arms pumping
@@ -125,8 +126,6 @@ export class AnimationService {
             if (!isSeated) {
                 legAngle = 0.3 + Math.abs(p) * 0.4;
                 bodyY += Math.abs(p) * 0.05;
-                // Shift body X slightly
-                // hips.x += p * 0.1 * aspect; (Needs complex recalc, skip for now)
             }
         }
         else if (exercise === 'Hip Flexor Lunge') {
@@ -139,50 +138,82 @@ export class AnimationService {
                 rArmA = -Math.PI;
             }
         }
+        else if (exercise === 'Calf Raises') {
+            const lift = Math.abs(Math.sin(t * 2)); // Up/Down
+            bodyY -= lift * 0.03; // Lift body
+            // Heel check? Hard.
+        }
+        else if (exercise === 'Knee Hugs') {
+            const p = Math.sin(t * 0.5); // Slower
+            const isLeft = p > 0;
+            // Lift knee very high
+            if (isLeft) liftLeftKnee = 0.4;
+            else liftRightKnee = 0.4;
+
+            // Should hug with arms?
+            // Simple approach: Arms down
+        }
 
         // 3. UPPER BODY & ARMS
         else if (exercise === 'Arm Circles') {
             const angle = t * 2; // Continuous rotation
             lArmA = angle;
-            rArmA = -angle; // Mirror or same direction? Usually forward together.
-            rArmA = angle;
-            // Fix visual glitch if angle wraps.
+            rArmA = angle; // Both circle
         }
-        else if (exercise === 'Shoulder Press' || exercise === 'Overhead Reach') {
+        else if (exercise === 'Shoulder Press' || exercise === 'Overhead Reach' || exercise === 'Standing Reach') {
             const p = (Math.sin(t) + 1) / 2;
             // Arms go from shoulder level (horizontal) to Up
             lArmA = -Math.PI / 2 - (p * Math.PI / 2);
             rArmA = Math.PI / 2 + (p * Math.PI / 2);
             lForearmA = Math.PI; // Vertical hands
-            rForearmA = Math.PI; // Vertical hands (Simulated)
-            // Actually polar logic: Angle 0 is Down. PI is Up.
-            // Start: Horizontal (-PI/2). End: Up (-PI). 
-            lArmA = -Math.PI / 2 + (-Math.PI / 2 * p); // -1.57 to -3.14
-            rArmA = Math.PI / 2 + (Math.PI / 2 * p);   // 1.57 to 3.14
-
-            // Forearms: strictly UP (PI or -PI)
-            lForearmA = Math.PI;
             rForearmA = Math.PI;
         }
         else if (exercise === 'T-Pose Pulses' || exercise === 'Arm Stretches') {
             const p = Math.sin(t * 3);
             lArmA = -Math.PI / 2 + p * 0.1;
             rArmA = Math.PI / 2 - p * 0.1;
+
+            if (exercise === 'Arm Stretches') {
+                // Cross body
+                const pSlow = Math.sin(t * 0.5);
+                if (pSlow > 0) { lArmA = 0.5; lForearmA = 0.8; } // Cross L
+                else { rArmA = -0.5; rForearmA = -0.8; } // Cross R
+            }
         }
         else if (exercise === 'Shoulder Shrugs' || exercise === 'Shoulder Rolls') {
-            const p = Math.sin(t * 2);
-            shoulderY -= p * 0.02; // Shoulders go up/down
-            neckY -= p * 0.01;
+            if (exercise === 'Shoulder Rolls') {
+                const roll = t * 2;
+                shoulderY += Math.sin(roll) * 0.02;
+                neckRollOffset.y = Math.cos(roll) * 0.005; // Subtle head bob
+            } else {
+                // Shrugs
+                const p = Math.abs(Math.sin(t * 2));
+                shoulderY -= p * 0.03;
+            }
         }
         else if (exercise === 'Neck Rolls') {
-            // Visualize by moving nose circular
-            // Handled in point construction
+            const roll = t * 1.5;
+            neckRollOffset.x = Math.sin(roll) * 0.05; // Left/Right
+            neckRollOffset.y = Math.cos(roll) * 0.03; // Up/Down (Looking down/up)
+            // Hands relaxed
+            lArmA = 0.1; rArmA = -0.1;
+        }
+        else if (exercise === 'Wrist Circles') {
+            // Waving motion
+            lForearmA = -Math.PI / 2 + Math.sin(t * 3) * 0.4;
+            rForearmA = Math.PI / 2 + Math.sin(t * 3) * 0.4;
+            lArmA = -0.5; rArmA = 0.5; // Arms bent
+        }
+        else if (exercise === 'Ankle Circles') {
+            if (!isSeated) {
+                liftRightKnee = 0.1; // Lift foot
+                // No way to rotate ankle bone, assume user mimics lifted foot
+            }
         }
 
         // 4. COMBAT & BOXING
         else if (exercise === 'Shadow Boxing' || exercise === 'Hooks' || exercise === 'Uppercuts') {
             const p = Math.sin(t * 3);
-            const isPunch = Math.abs(p) > 0.5;
 
             // Base Guard
             let baseL = -2.5; // Hands up near face
@@ -199,39 +230,28 @@ export class AnimationService {
             }
         }
 
-        // 5. FLOOR & MAT (Simulated upright or special)
+        // 5. FLOOR & MIBILITY
         else if (exercise === 'Push-up Prep' || exercise === 'Burpees' || exercise === 'Mountain Climbers' || exercise === 'Bear Crawls' || exercise === 'Cat-Cow Stretch') {
-            // These are horizontal moves. In 2D standing rig, we simulate them by:
-            // - Leaning torso forward (how?) -> Hard in 2D bone view without foreshortening.
-            // - Best compromise: Show the "Top" view or "Side" view logic?
-            // - Or simply generic "Plank" visualization:
-            // Body horizontal?
-
-            // Let's rotate the whole body 90 degrees visually?
-            // Torso is 11-12 to 23-24.
-            // If we set shoulders X/Y and Hips X/Y manually, we can rotate.
-
             const isBurpee = exercise === 'Burpees';
-            // Burpee: Jump (Standing) -> Plank (Horizontal)
             if (isBurpee) {
-                const phase = Math.sin(t) > 0; // Up or Down
+                const phase = Math.sin(t) > 0;
                 if (phase) {
-                    // Jump Phase (Like Jacks)
-                    lArmA = -Math.PI; rArmA = Math.PI; // Arms Up
+                    lArmA = -Math.PI; rArmA = Math.PI; // Jump
                 } else {
-                    // Plank Phase
-                    // Rotate body
-                    // This requires complex matrix or manual point override.
-                    // Fallback: Just Squat deep for now.
-                    bodyY += 0.2;
-                    lArmA = -1.2; rArmA = 1.2; // Hands on floor
+                    bodyY += 0.2; // Squat/Plank
+                    lArmA = -1.2; rArmA = 1.2;
                 }
+            } else if (exercise === 'Cat-Cow Stretch') {
+                // Simulation: Standing stretch logic
+                const p = Math.sin(t * 0.5);
+                bodyY += 0.05; // Slight crouch
+                lArmA = -0.5; rArmA = 0.5; // Hands on thighs
+                // Head moves Up/Down
+                neckRollOffset.y = p * 0.05;
+                shoulderY += p * 0.03; // Rounding back imply shoulders moving
             } else {
-                // Static Plank / Climbers
-                // Simulate by putting hands down and feet back (perspective hard)
-                // Trick: Arms forward (down), Legs "up" (behind)?
-                // Let's just do Mountain Climber upright animation (High knees + Arms pushing)
-                lArmA = -1.5; rArmA = 1.5; // Arms forward holding ground
+                // Mountain Climbers
+                lArmA = -1.5; rArmA = 1.5;
                 const climbP = Math.sin(t * 3);
                 if (climbP > 0) liftLeftKnee = 0.3; else liftRightKnee = 0.3;
             }
@@ -240,7 +260,6 @@ export class AnimationService {
         // 6. NUANCE & SPECIFIC
         else if (exercise === 'Torso Twists' || exercise === 'Seated Twists') {
             torsoTwist = Math.sin(t) * 0.4;
-            // Arms swing with twist
             lArmA = -0.5 + torsoTwist;
             rArmA = 0.5 + torsoTwist;
         }
@@ -248,16 +267,12 @@ export class AnimationService {
             // Hips orbit center
             const orbit = 0.05;
             hipY += Math.cos(t) * orbit;
-            // Hip X needs orbit too
+            // Hip X later
         }
         else if (exercise === 'Leg Swings') {
             const p = Math.sin(t);
-            // Swing Right leg
             if (!isSeated) {
-                // Manually override Right Leg Angle only?
-                // Our system assumes symmetric legAngle.
-                // We'll hack rKnee position calculation below if needed.
-                // For now use generic spread which looks like jumping jacks legs.
+                // Will override leg angles below
                 legAngle = Math.abs(p) * 0.8;
             }
         }
@@ -276,7 +291,6 @@ export class AnimationService {
 
         // Arms
         const lElbow = polar(lShoulder.x, lShoulder.y, lArmA, armLen, aspect);
-        // Correct wrist relative to elbow
         const lWrist = polar(lElbow.x, lElbow.y, lForearmAngleFinal, armLen, aspect);
 
         const rElbow = polar(rShoulder.x, rShoulder.y, rArmA, armLen, aspect);
@@ -291,22 +305,12 @@ export class AnimationService {
         const rKneeY = hipY + legLen - liftRightKnee;
 
         // Leg Swings Override (Asymmetric)
-        let lLegA = legAngle;
-        let rLegA = -legAngle;
+        let lLegA = -legAngle;
+        let rLegA = legAngle;
         if (exercise === 'Leg Swings') {
             lLegA = 0; // Stand still
             rLegA = Math.sin(t) * 1.0; // Swing wide
-        } else {
-            // Standard symmetric spread
-            lLegA = -legAngle; // Out left
-            rLegA = legAngle;  // Out right
         }
-
-        const lKnee = polar(lHip.x, lHip.y, Math.PI + lLegA, legLen, aspect);
-        // PI is UP. Wait.
-        // We want Down + deviation. 0 is Down.
-        // So Left Leg goes -Angle (Left). Right Leg goes +Angle.
-        // Let's reuse polar properly.
 
         // Re-calc Knees with polar
         const lKneeP = polar(lHip.x, lHip.y, lLegA, legLen, aspect);
@@ -322,7 +326,7 @@ export class AnimationService {
 
         // --- CONSTRUCT LANDMARKS ---
         const lm: any = [];
-        lm[0] = { x: cx + (exercise === 'Neck Rolls' ? Math.sin(t) * 0.05 : 0), y: neckY - 0.05, visibility: 1 }; // Nose
+        lm[0] = { x: cx + neckRollOffset.x, y: neckY - 0.05 + neckRollOffset.y, visibility: 1 }; // Nose
         lm[11] = { ...lShoulder, visibility: 1 };
         lm[12] = { ...rShoulder, visibility: 1 };
         lm[13] = { ...lElbow, visibility: 1 };
