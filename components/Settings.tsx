@@ -288,19 +288,51 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
               </button>
             </div>
 
-            <button
-              onClick={() => {
-                if (confirm(t('settings.resetConfirm'))) {
-                  onReset();
-                }
-              }}
-              className="w-full flex items-center justify-between text-red-400 hover:text-red-300 transition-colors mt-2"
-            >
-              <div className="flex items-center gap-3">
-                <Trash2 size={20} />
-                <span>{t('settings.reset')}</span>
-              </div>
-            </button>
+            {/* SCREENSHOT & DATA TOOLS */}
+            <div className="border-t border-slate-700 pt-4 mt-2">
+              <h4 className="text-[10px] font-bold text-slate-500 uppercase mb-3 tracking-widest">Store Assets Tools</h4>
+
+              <button
+                onClick={() => {
+                  const fakeStats: UserStats = {
+                    ...userStats,
+                    streak: 14,
+                    totalPoints: 85450,
+                    xp: 125000,
+                    level: 24,
+                    workoutsCompleted: 68,
+                    lastWorkoutDate: new Date().toISOString().split('T')[0],
+                    badges: ['first_step', 'champion', 'streak_3', 'high_score'], // Generic valid IDs if specific ones fail
+                    isPremium: true,
+                    username: "Warmify Pro",
+                    flexibilityData: {
+                      shoulderROM: 85,
+                      hipROM: 90,
+                      spineROM: 80,
+                      lastUpdated: new Date().toISOString(),
+                      history: []
+                    }
+                  };
+                  updateUserStats(fakeStats);
+                  SoundEngine.playLevelUp();
+                }}
+                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-bold text-xs mb-3 transition-colors uppercase tracking-wide shadow-lg border border-indigo-500/50"
+              >
+                Inject Mock Data (Rich)
+              </button>
+
+              <button
+                onClick={() => {
+                  if (confirm(t('settings.resetConfirm'))) {
+                    onReset();
+                  }
+                }}
+                className="w-full flex items-center justify-center gap-2 py-2.5 bg-red-900/30 hover:bg-red-900/60 text-red-200 border border-red-800/50 rounded-lg font-bold text-xs transition-colors uppercase tracking-wide"
+              >
+                <Trash2 size={14} />
+                {t('settings.reset')}
+              </button>
+            </div>
           </div>
         )}
 
