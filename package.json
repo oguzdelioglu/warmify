@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:ios": "vite build && cap sync && cap open ios",
+    "build:ios": "vite build && cap sync && node scripts/update-plist.cjs && cap open ios",
     "build:android": "vite build && cap sync && cap open android",
     "preview": "vite preview"
   },
@@ -17,10 +17,12 @@
     "@capacitor/cli": "^8.0.0",
     "@capacitor/core": "^8.0.0",
     "@capacitor/ios": "^8.0.0",
+    "@capacitor/local-notifications": "^8.0.0",
     "@google/genai": "^1.32.0",
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/pose": "^0.5.1675469404",
     "@supabase/supabase-js": "^2.87.1",
+    "capacitor-plugin-app-tracking-transparency": "^2.0.5",
     "lucide-react": "^0.556.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
