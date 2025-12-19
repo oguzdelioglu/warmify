@@ -80,7 +80,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
   return (
     <div className="flex-1 flex flex-col pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] bg-slate-900 h-full overflow-hidden">
       {/* HEADER */}
-      <div className="flex items-center mb-4 px-4 pt-4 shrink-0">
+      <div className="flex items-center mb-4 px-4 pt-0 shrink-0">
         <button onClick={handleBack} className="p-2 bg-slate-800 rounded-full mr-4 hover:bg-slate-700 transition-colors">
           <ArrowLeft size={20} />
         </button>

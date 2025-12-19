@@ -7,6 +7,3 @@ project(':adapty-capacitor').projectDir = new File('../node_modules/@adapty/capa
 
 include ':capacitor-community-in-app-review'
 project(':capacitor-community-in-app-review').projectDir = new File('../node_modules/@capacitor-community/in-app-review/android')
-
-include ':capacitor-local-notifications'
-project(':capacitor-local-notifications').projectDir = new File('../node_modules/@capacitor/local-notifications/android')

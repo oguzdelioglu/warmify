@@ -125,3 +125,55 @@ if (!fs.existsSync(iconSourcePath)) {
 
   console.log('✅ App icons generated and configured');
 }
+
+// ========================================
+// INJECT APP TRACKING TRANSPARENCY
+// ========================================
+console.log('\n🕵️ Injecting App Tracking Transparency Logic...');
+const appDelegatePath = path.join(__dirname, '../ios/App/App/AppDelegate.swift');
+
+if (fs.existsSync(appDelegatePath)) {
+    let content = fs.readFileSync(appDelegatePath, 'utf8');
+    let modified = false;
+
+    // 1. Inject Import
+    if (!content.includes('import AppTrackingTransparency')) {
+        content = content.replace('import UIKit', 'import UIKit\nimport AppTrackingTransparency');
+        console.log('Added AppTrackingTransparency import.');
+        modified = true;
+    }
+
+    // 2. Inject Logic
+    if (!content.includes('ATTrackingManager.requestTrackingAuthorization')) {
+        const logic = `
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // Request App Tracking Transparency
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization { status in
+                    print("ATT Status: \\(status.rawValue)")
+                }
+            }
+        }
+    }`;
+        
+        if (content.includes('func applicationDidBecomeActive')) {
+             content = content.replace(/func applicationDidBecomeActive\(_ application: UIApplication\) \{[\s\S]*?\}/, logic);
+             console.log('Injected ATT logic into applicationDidBecomeActive.');
+        } else {
+            const lastBraceIndex = content.lastIndexOf('}');
+            content = content.slice(0, lastBraceIndex) + logic + '\n' + content.slice(lastBraceIndex);
+             console.log('Added applicationDidBecomeActive with ATT logic.');
+        }
+        modified = true;
+    } else {
+        console.log('👍 ATT logic already present.');
+    }
+
+    if (modified) {
+        fs.writeFileSync(appDelegatePath, content, 'utf8');
+        console.log('✅ AppDelegate.swift updated with ATT.');
+    }
+} else {
+    console.log('⚠️ AppDelegate.swift not found.');
+}

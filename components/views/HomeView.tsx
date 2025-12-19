@@ -53,7 +53,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
 
     // Dynamic Avatar for Hero Card
     const HeroAvatar = () => (
-        <div className="absolute right-[-20%] bottom-[-10%] w-[70%] h-[120%] opacity-90 grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 pointer-events-none mask-image-gradient">
+        <div className="absolute right-[-20%] bottom-[-10%] w-[60%] h-[100%] opacity-90 grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 pointer-events-none mask-image-gradient">
             <RigOverlay
                 exercise="Jumping Jacks"
                 mode="PREVIEW"
@@ -66,14 +66,14 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
     );
 
     return (
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,5fr)_minmax(0,4fr)_auto] gap-5 animate-[fadeIn_0.5s_ease-out] overflow-y-auto lg:overflow-hidden no-scrollbar pb-0 relative w-full lg:max-w-7xl mx-auto h-full p-1">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,5fr)_minmax(0,4fr)_auto] gap-5 animate-[fadeIn_0.5s_ease-out] overflow-y-auto lg:overflow-hidden no-scrollbar pb-0 relative w-full lg:max-w-7xl mx-auto h-auto lg:h-full p-1 scroll-smooth">
 
             {/* Background Ambient Blobs */}
             <div className="absolute top-10 left-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
             <div className="absolute bottom-10 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-700 pointer-events-none"></div>
 
             {/* 1. HERO CARD (Daily Mission) */}
-            <div className="lg:col-span-2 bg-gradient-to-br from-indigo-950/90 to-slate-950/90 backdrop-blur-md border border-indigo-500/30 p-6 rounded-[2rem] shadow-2xl relative overflow-hidden group z-10 flex flex-col justify-between h-full hover:border-indigo-500/50 transition-colors">
+            <div className="lg:col-span-2 bg-gradient-to-br from-indigo-950/90 to-slate-950/90 backdrop-blur-md border border-indigo-500/30 p-6 rounded-[2rem] shadow-2xl relative overflow-hidden group z-10 flex flex-col justify-between min-h-[340px] lg:min-h-0 h-auto lg:h-full hover:border-indigo-500/50 transition-colors">
                 {/* 3D Avatar Background */}
                 <HeroAvatar />
 
@@ -81,8 +81,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
 
                 {/* Header */}
                 <div className="relative z-10 flex justify-between items-start">
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-3">
+                    <div className="flex flex-col gap-1">
+                        <div className="flex items-baseline gap-2">
                             <h2 className="text-3xl lg:text-5xl font-black italic text-white leading-none tracking-tight drop-shadow-xl">{t('home.daily_mission')}</h2>
                             <div className="px-3 py-1 bg-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-white/70 backdrop-blur-sm border border-white/5">
                                 Day {userStats.streak + 1}
@@ -125,9 +125,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
                 </div>
             </div>
 
-            {/* 2. STATS COLUMN */}
-            <div className="lg:col-span-1 grid grid-cols-2 lg:grid-cols-1 gap-5 z-10 h-full">
-                <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md p-6 rounded-[2rem] border border-white/5 shadow-xl flex flex-col items-center justify-center relative overflow-hidden group h-full">
+            <div className="lg:col-span-1 grid grid-cols-2 lg:grid-cols-1 gap-5 z-10 h-full lg:h-auto">
+                <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md p-6 rounded-[2rem] border border-white/5 shadow-xl flex flex-col items-center justify-center relative overflow-hidden group h-32 lg:h-full">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-all"></div>
                     <div className="p-4 bg-cyan-500/10 rounded-full mb-3 group-hover:scale-110 transition-transform duration-500 border border-cyan-500/20">
                         <Target size={28} className="text-cyan-400" />
@@ -136,7 +135,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
                     <div className="text-2xl lg:text-4xl font-black text-white font-mono tracking-tighter group-hover:text-cyan-200 transition-colors">{userStats.totalPoints.toLocaleString()}</div>
                 </div>
 
-                <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md p-6 rounded-[2rem] border border-white/5 shadow-xl flex flex-col items-center justify-center relative overflow-hidden group h-full">
+                <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md p-6 rounded-[2rem] border border-white/5 shadow-xl flex flex-col items-center justify-center relative overflow-hidden group h-32 lg:h-full">
                     <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-all"></div>
                     <div className="p-4 bg-emerald-500/10 rounded-full mb-3 group-hover:scale-110 transition-transform duration-500 border border-emerald-500/20">
                         <ActivityIcon size={28} className="text-emerald-400" />
@@ -147,7 +146,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
             </div>
 
             {/* 3. FLEXIBILITY TRACKER */}
-            <div className="lg:col-span-2 z-10 h-full min-h-0">
+            <div className="lg:col-span-2 z-10 h-64 lg:h-full min-h-0">
                 <div className="h-full bg-slate-900/60 rounded-[2rem] border border-white/5 backdrop-blur-sm shadow-lg flex flex-col p-1 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 pointer-events-none"></div>
                     <FlexibilityTracker data={flexibilityData} />
@@ -155,7 +154,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
             </div>
 
             {/* 4. TROPHY CASE */}
-            <div className="lg:col-span-1 z-10 h-full min-h-0">
+            <div className="lg:col-span-1 z-10 h-40 lg:h-full min-h-0">
                 <div className="h-full bg-slate-900/60 rounded-[2rem] border border-white/5 backdrop-blur-sm p-3 flex flex-col shadow-lg overflow-hidden relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent pointer-events-none"></div>
                     <TrophyCase badges={userStats.badges} newBadgeId={newUnlockedBadge || undefined} />

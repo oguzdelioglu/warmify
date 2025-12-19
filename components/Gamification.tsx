@@ -104,8 +104,8 @@ export const TrophyCase: React.FC<{ badges: string[], newBadgeId?: string }> = (
                 </span>
             </div>
 
-            <div className="flex-1 overflow-y-auto pr-1 no-scrollbar masked-overflow">
-                <div className="flex lg:grid lg:grid-cols-3 gap-2 pb-2 snap-x lg:snap-none w-full">
+            <div className="flex-1 overflow-x-auto lg:overflow-x-hidden lg:overflow-y-auto p-2 lg:pr-1 no-scrollbar masked-overflow-x lg:masked-overflow-y">
+                <div className="flex flex-row lg:grid lg:grid-cols-3 gap-2 pb-2 snap-x lg:snap-none w-max lg:w-full">
                     {allBadges.map((badge) => {
                         const isUnlocked = badges.includes(badge.id);
                         const isNew = newBadgeId === badge.id;
