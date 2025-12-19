@@ -1,146 +1,120 @@
-# Warmify - AI-Powered Gamified Fitness Coach 🦁
+# Warmify - AI-Powered Gamified Fitness RPG 🦁
 
 ![Warmify Banner](./thumbnail.svg)
 
-> **Submission for Google DeepMind - Vibe Code with Gemini 3 Pro**  
-> *Turning fitness into an immersive RPG using Multimodal AI.*
-
-## 🚀 Summary
-
-**Warmify** is a futuristic, AI-powered Progressive Web App (PWA) that transforms your daily workout into an immersive Rhythm RPG. Built entirely using **Google AI Studio's Vibe Coding** workflow with Gemini 3 Pro, it solves the two biggest problems in home fitness: boredom and lack of professional feedback.
+> **Transform your daily workout into an immersive RPG.**  
+> Warmify uses your device's camera and advanced AI to track your movements, count your reps, and correct your form in real-time—all while you earn XP, unlock skins, and climb the global leaderboard.
 
 ---
 
-## 📸 Gallery
+## � App Store Metadata
 
-| Dashboard | Workout Mode |
-|-----------|--------------|
-| ![Home](./screen_home.svg) | ![Workout](./screen_workout.svg) |
+### 📝 General Information
+- **App Name:** Warmify: AI Fitness RPG
+- **Subtitle:** Gamified Home Workouts & Form
+- **Copyright:** © 2025 Warmify
+- **Category:** Health & Fitness / Gaming
 
-| Results & Rewards | Customization |
-|-------------------|---------------|
-| ![Results](./screen_results.svg) | ![Settings](./screen_settings.svg) |
+### � Keywords (ASO)
+`fitness game`, `ai workout`, `posture corrector`, `gamification`, `home gym`, `rpg fitness`, `squat tracker`, `exercise game`, `health rpg`, `interactive fitness`, `body tracking`, `calisthenics`, `workout tracker`, `flexibility test`
 
----
+### � Promotional Text
+Turn your fitness routine into a game! Warmify uses AI to count your reps and correct your form. No equipment needed—just your camera. Level up your real-life stats today.
 
-## 🎥 Demo & Links
+### 📜 Description
+**Bored of static workout videos? Welcome to the future of fitness.**
 
-- **[🔴 Live App Link (Google AI Studio)](https://ai.studio/apps/drive/1T7PuVGZq9Kz2yh-5b1dVVc8H2t-wHmKR)**
-- **[📺 Video Demo (YouTube)](https://www.youtube.com/watch?v=TfxhVNkPQmY)**
-- **[📄 Kaggle Writeup](https://www.kaggle.com/competitions/gemini-3/writeups/warmify)**
+Warmify is the first AI-powered fitness app that plays like a video game. Using advanced computer vision and Google Gemini AI, Warmify sees your movements in real-time, providing instant feedback on your form while you earn rewards.
 
----
+**WHY WARMIFY?**
 
-## 📱 App Store & Play Store Configuration
+🎮 **Gamified Fitness:** Earn XP for every squat, lunge, and jumping jack. Level up from "Rookie" to "Legend" and unlock exclusive neon avatars (Cyber, Mech, Spirit).
+🤖 **AI Form Coach:** Our advanced AI analyzes your posture 30 times per second. It visually alerts you if you're slouching or not squatting low enough.
+🌍 **Global Leaderboards:** Compete with friends and users worldwide. Climb the ranks to become the #1 fitness agent.
+🧘 **Flexibility Tracker:** Track your range of motion (ROM) progress for shoulders, hips, and spine with our specialized computer vision tool.
+🏆 **Daily Missions:** Keep your streak alive with generated daily quests tailored to your sport style (Football, Runner, Cyclist, Desk Worker, etc.).
 
-### Bundle ID
-- **ID:** `com.odel.warmify`
+**FEATURES:**
+- **Real-Time Body Tracking:** Privacy-first, on-device tracking.
+- **5 Sport Modes:** Tailored warmups for Football, Running, Cycling, Rugby, and Desk Life.
+- **11+ Languages:** English, Turkish, Spanish, French, German, Italian, Portuguese, Russian, Japanese, Korean, Chinese.
+- **Dynamic 3D Avatars:** See your digital twin mirror your moves with cool particle effects.
+- **Pro Membership:** Unlock unlimited workouts, advanced flexibility insights, and premium skins.
 
-### Subscription Plan
-The app uses a single annual subscription model.
-
-- **Product ID:** `warmify_annually`
-- **Price:** $59.99 / year
-- **Billing Period:** 1 Year
-
----
-
-## 🔴 The Problem
-
-Working out at home is difficult. Without a trainer, users struggle with **form** ("Am I squatting low enough?") and **motivation** ("This is boring"). Personal trainers are expensive, and existing apps are just passive video players that don't know if you are actually doing the work.
-
-## 💡 The Solution
-
-Warmify turns your webcam into a sensor for a digital game using Multimodal AI.
-
-1.  **See:** Using **MediaPipe**, it tracks 33 skeletal landmarks in real-time directly on your device (Privacy First).
-2.  **Think:** **Gemini 3 Pro** acts as the Game Engine and Referee. It analyzes your movement quality, speed, and rhythm in real-time.
-3.  **React:** Perform a "Perfect" rep, and your digital avatar glows neon green while you earn XP and Combos. Slouch or stop, and the system alerts you visually and audibly to correct your form.
+**No equipment required. Your body is the controller.**
 
 ---
 
-## 🛠️ Tech Stack & Vibe Coding Journey
+## 🛠️ Technical Stack
 
-This project demonstrates the power of Gemini 3 Pro's "Vibe Coding". Instead of writing boilerplate manually, I prompted the vibe: 
+Warmify is a cutting-edge hybrid application built with:
 
-> *'Create a leveling system where users unlock new neon skins for their skeleton avatar based on XP'* 
->
-> *'Design a Three.js background that reacts to workout intensity'*
-
-Gemini generated the complex logic for the `LevelingSystem`, `RigOverlay`, and `GameLoop`, allowing for a polished, high-fidelity prototype in record time.
-
-*   **Frontend:** React 19, TailwindCSS, Lucide React.
-*   **AI & Logic:** 
-    *   **Google GenAI SDK:** Utilizing the Multimodal Live API for real-time interaction context.
-    *   **MediaPipe Pose:** Client-side skeletal tracking for privacy-first performance.
-*   **Visuals:** 
-    *   **Three.js:** Procedurally generated background environments that react to workout intensity.
-    *   **Canvas API:** Drawing the "Rig Overlay" (Cyber, Mech, Spirit avatars) over the user's video feed.
-*   **Deployment:** Capacitor (iOS/Android) & PWA.
+- **Core:** React 19, TypeScript, Vite
+- **UI:** TailwindCSS v4, Lucide React
+- **Mobile Native:** Capacitor v8 (iOS & Android)
+- **AI & Vision:** 
+    - **MediaPipe Pose:** Real-time skeletal tracking.
+    - **Google Gemini:** Logic and feedback analysis.
+- **Graphics:** Three.js (Reactive environments), Custom Canvas rendering.
+- **Monetization:** Adapty (In-App Purchases).
+- **Backend:** Supabase (Leaderboards).
 
 ---
 
-## 🎮 Key Features
+## 📦 Installation & Development
 
-*   **Multimodal Coaching:** Real-time form correction using computer vision + GenAI logic.
-*   **Gamification:** Level up from "Rookie" to "Legend", unlock badges, and customize your skeletal avatar (Cyber, Mech, Spirit).
-*   **Immersive Tech:** Three.js reactive backgrounds and a custom Web Audio API synthesizer for dynamic SFX.
-*   **Accessible:** Runs entirely in the browser (iOS/Android/Desktop) with no installation required.
+### Prerequisites
+- Node.js (v18+)
+- Xcode (for iOS) / Android Studio (for Android)
+- CocoaPods (for iOS dependencies)
 
----
-
-## 🏆 Impact
-
-Warmify makes elite personal training free, fun, and accessible to anyone with a camera, lowering the barrier to a healthy lifestyle through the power of AI.
-
----
-
-## 📦 Installation (Local Dev)
-
-While the app is designed to be Vibe Coded in AI Studio, you can run it locally:
+### Setup
 
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/oguzdelioglu/warmify.git
 
-# Install dependencies
+# 2. Install dependencies
 npm install
 
-# Set up API Key
-export API_KEY="your_gemini_api_key"
+# 3. Setup Environment Variables (.env)
+cp .env.example .env
+# Add API Keys: VITE_GEMINI_API_KEY, VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY
 
-# Run the development server
+# 4. Run Locally (Web)
 npm run dev
 ```
 
-## ☁️ Supabase Configuration (Leaderboard)
+### Building for Mobile
 
-To enable the global leaderboard feature, you need to set up a free Supabase project:
+**iOS:**
+```bash
+# Build web assets and sync native project
+npm run build:ios
 
-1.  **Create Project:** Go to [Supabase](https://supabase.com) and create a new project.
-2.  **Get Keys:** In Project Settings -> API, copy the `Project URL` and `anon public key`.
-3.  **Env Setup:** Add them to your `.env` file:
-    ```env
-    VITE_SUPABASE_URL=your_project_url
-    VITE_SUPABASE_ANON_KEY=your_anon_key
-    ```
-4.  **Create Setup:** Run the following SQL in the Supabase SQL Editor to create the leaderboard table and policies:
+# This command automatically:
+# 1. Builds the Vite project
+# 2. Syncs Capacitor plugins/assets
+# 3. Updates Info.plist permissions
+# 4. Injects App Tracking Transparency (ATT) logic
+# 5. Opens Xcode workspace
+```
 
-    ```sql
-    create table leaderboard (
-      id text primary key,
-      username text,
-      points bigint,
-      level int,
-      avatar text,
-      updated_at timestamp default now()
-    );
+**Android:**
+```bash
+npm run build:android
+```
 
-    -- Enable security policies
-    alter table leaderboard enable row level security;
-    create policy "Public read" on leaderboard for select using (true);
-    create policy "Public insert/update" on leaderboard for insert with check (true);
-    create policy "Public update" on leaderboard for update using (true);
-    ```
+---
 
-*Built with ❤️ and ☕ using Google AI Studio.*
+## 🔒 Privacy & Permissions
+
+Warmify requires the following permissions to function:
+- **Camera:** To track body movements (Data is processed locally on-device).
+- **Microphone:** For voice commands (optional).
+- **Tracking (iOS):** To provide personalized ads and improve app performance.
+- **Notifications:** For daily workout reminders (optional).
+
+---
+
+*Built with ❤️ by Oguz Delioglu.*
