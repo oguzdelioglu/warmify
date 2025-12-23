@@ -70,8 +70,8 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
 
     // Defaults if fetch fails (fallback UI)
     const priceDisplay = product?.localizedPrice || "$59.99";
-    // FIX: Default to /year unless explicitly month
-    const periodDisplay = product?.subscriptionPeriod === 'month' ? '/month' : '/year';
+    // FIX: Force /year as user only offers annual plans
+    const periodDisplay = '/year';
     const offerText = product?.introductoryOffer || t('paywall.save_percent');
 
     return (

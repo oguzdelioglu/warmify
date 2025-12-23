@@ -117,18 +117,18 @@ export const AdaptyService = {
 
       console.log(`ADAPTY: Fetching real paywall '${placementId}'`);
       const paywall = await adapty.getPaywall({ placementId });
-      const products = paywall.products;
+      const products = (paywall.products || []).filter((p: any) => !!p);
 
       return {
         id: (paywall as any).placementId || placementId,
         name: paywall.name,
         products: products.map((p: any) => ({
-          vendorProductId: p.vendorProductId,
+          vendorProductId: p.vendorProductId || p.productId,
           localizedTitle: p.localizedTitle,
           price: p.price,
           currencySymbol: p.currencySymbol,
           localizedPrice: p.localizedPrice,
-          subscriptionPeriod: p.subscriptionPeriod?.unit === 'year' ? 'year' : 'month',
+          subscriptionPeriod: p.subscriptionPeriod?.unit === 'month' ? 'month' : 'year',
           introductoryOfferEligibility: p.introductoryOfferEligibility,
           introductoryOffer: p.introductoryDiscount?.localizedPrice
         }))
@@ -159,10 +159,10 @@ export const AdaptyService = {
         throw new Error(`Paywall fetch failed: ${JSON.stringify(pwError)}`);
       }
 
-      const products = paywall?.products || [];
-      console.log(`ADAPTY: Paywall fetched. Found ${products.length} products:`, products.map((p: any) => p.vendorProductId));
+      const products = (paywall?.products || []).filter((p: any) => !!p);
+      console.log(`ADAPTY: Paywall fetched. Found ${products.length} products. RAW:`, JSON.stringify(products));
 
-      const product = products.find((p: any) => p.vendorProductId === productId);
+      const product = products.find((p: any) => (p.vendorProductId || p.productId) === productId);
 
       if (!product) {
         // More descriptive error
