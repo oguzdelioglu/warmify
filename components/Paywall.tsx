@@ -40,13 +40,19 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
     const handlePurchase = async () => {
         SoundEngine.playUI('click');
         setIsLoading(true);
-        // Use fetched ID or fallback
-        const productId = product?.vendorProductId || 'warmify_annually';
-        const success = await AdaptyService.makePurchase(productId);
-        setIsLoading(false);
-        if (success) {
-            SoundEngine.playLevelUp();
-            onPurchaseSuccess();
+        try {
+            // Use fetched ID or fallback
+            const productId = product?.vendorProductId || 'warmify_annually';
+            const success = await AdaptyService.makePurchase(productId);
+
+            if (success) {
+                SoundEngine.playLevelUp();
+                onPurchaseSuccess();
+            }
+        } catch (error) {
+            console.error("Purchase flow error:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -64,7 +70,8 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
 
     // Defaults if fetch fails (fallback UI)
     const priceDisplay = product?.localizedPrice || "$59.99";
-    const periodDisplay = product?.subscriptionPeriod === 'year' ? '/year' : '/month';
+    // FIX: Default to /year unless explicitly month
+    const periodDisplay = product?.subscriptionPeriod === 'month' ? '/month' : '/year';
     const offerText = product?.introductoryOffer || t('paywall.save_percent');
 
     return (

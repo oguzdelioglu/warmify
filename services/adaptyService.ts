@@ -165,7 +165,9 @@ export const AdaptyService = {
       const product = products.find((p: any) => p.vendorProductId === productId);
 
       if (!product) {
-        throw new Error(`Product '${productId}' not found in placement '${placementId}'. Available: ${products.map((p: any) => p.vendorProductId).join(', ')}`);
+        // More descriptive error
+        const avail = products.length > 0 ? products.map((p: any) => p.vendorProductId).join(', ') : 'None';
+        throw new Error(`Product '${productId}' not found. Available products: ${avail}. Check Adapty Placement '${placementId}'.`);
       }
 
       // Step 2: Make Purchase
@@ -178,8 +180,12 @@ export const AdaptyService = {
       console.error("ADAPTY Error Message:", e.message);
 
       // Visual feedback for debugging
-      if (isDebugMode() || Capacitor.getPlatform() !== 'web') {
+      if (isDebugMode()) {
         alert(`Purchase Error: ${e.message}`);
+      } else {
+        // In production, maybe just log or show a generic toast if available, 
+        // but avoid blocking usage with technical alerts unless critical.
+        console.warn("Purchase failed:", e.message);
       }
 
       // User Cancellation Check
