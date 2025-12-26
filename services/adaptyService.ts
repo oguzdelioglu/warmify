@@ -159,20 +159,38 @@ export const AdaptyService = {
         throw new Error(`Paywall fetch failed: ${JSON.stringify(pwError)}`);
       }
 
-      const products = (paywall?.products || []).filter((p: any) => !!p);
-      console.log(`ADAPTY: Paywall fetched. Found ${products.length} products. RAW:`, JSON.stringify(products));
+      console.log(`ADAPTY: Paywall fetched: ${paywall.name}`);
 
-      const product = products.find((p: any) => (p.vendorProductId || p.productId || p.vendorId) === productId);
-
-      if (!product) {
-        // More descriptive error
-        const avail = products.length > 0 ? products.map((p: any) => p.vendorProductId || p.vendorId).join(', ') : 'None';
-        throw new Error(`Product '${productId}' not found. Available products: ${avail}. Check Adapty Placement '${placementId}'.`);
+      // Step 2: Get FULL product objects using getPaywallProducts
+      // This is REQUIRED - getPaywall only returns metadata, but makePurchase
+      // needs the full product objects with native SKProduct/SKU data
+      let fullProducts: any[];
+      try {
+        fullProducts = await adapty.getPaywallProducts({ paywall });
+        console.log(`ADAPTY: Got ${fullProducts.length} full products from getPaywallProducts`);
+      } catch (prodError) {
+        throw new Error(`getPaywallProducts failed: ${JSON.stringify(prodError)}`);
       }
 
-      // Step 2: Make Purchase
-      console.log("ADAPTY: invoking makePurchase(product)...");
-      await adapty.makePurchase({ product }); // Updated signature check?
+      // Step 3: Find the product by vendorProductId
+      const product = fullProducts.find((p: any) => {
+        const vendorId = p.vendorProductId || p.vendorId || p.productId;
+        console.log(`ADAPTY: Checking product vendorId: ${vendorId}`);
+        return vendorId === productId;
+      });
+
+      if (!product) {
+        const avail = fullProducts.length > 0
+          ? fullProducts.map((p: any) => p.vendorProductId || p.vendorId || p.productId).join(', ')
+          : 'None';
+        throw new Error(`Product '${productId}' not found in full products. Available: ${avail}. Check Adapty Placement '${placementId}'.`);
+      }
+
+      // Step 4: Make Purchase with the FULL product object
+      console.log("ADAPTY: invoking makePurchase with full product object...");
+      console.log("ADAPTY: Full product keys:", Object.keys(product).join(', '));
+
+      await adapty.makePurchase({ product });
       return true;
 
     } catch (e: any) {
