@@ -137,6 +137,9 @@ export const jp: TranslationKeys = {
     "onboarding.freq.q": "Weekly Frequency?",
     "onboarding.freq.opt1": "1-2 Days", "onboarding.freq.opt2": "3-4 Days", "onboarding.freq.opt3": "Everyday",
     "onboarding.later": "後で聞く",
+    "onboarding.permission.manual_ios": "設定 > プライバシーとセキュリティ > カメラ > Warmify > 許可",
+    "onboarding.permission.manual_android": "設定 > サイトの設定 > メディア > 許可",
+    "onboarding.permission.manual_generic": "ブラウザの設定 > プライバシー > カメラ > 許可",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

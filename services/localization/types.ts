@@ -30,6 +30,9 @@ export type TranslationKeys = {
     "onboarding.freq.q": string;
     "onboarding.freq.opt1": string; "onboarding.freq.opt2": string; "onboarding.freq.opt3": string;
     "onboarding.later": string;
+    "onboarding.permission.manual_ios": string;
+    "onboarding.permission.manual_android": string;
+    "onboarding.permission.manual_generic": string;
 
     // HOME
     "home.daily_mission": string;

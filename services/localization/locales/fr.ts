@@ -137,6 +137,9 @@ export const fr: TranslationKeys = {
     "onboarding.freq.q": "Weekly Frequency?",
     "onboarding.freq.opt1": "1-2 Days", "onboarding.freq.opt2": "3-4 Days", "onboarding.freq.opt3": "Everyday",
     "onboarding.later": "Demander plus tard",
+    "onboarding.permission.manual_ios": "Réglages > Confidentialité et sécurité > Appareil photo > Warmify > Autoriser",
+    "onboarding.permission.manual_android": "Paramètres > Paramètres de site > Médias > Autoriser",
+    "onboarding.permission.manual_generic": "Paramètres du navigateur > Confidentialité > Caméra > Autoriser",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

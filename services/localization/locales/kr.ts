@@ -137,6 +137,9 @@ export const kr: TranslationKeys = {
     "onboarding.freq.q": "Weekly Frequency?",
     "onboarding.freq.opt1": "1-2 Days", "onboarding.freq.opt2": "3-4 Days", "onboarding.freq.opt3": "Everyday",
     "onboarding.later": "나중에 묻기",
+    "onboarding.permission.manual_ios": "설정 > 개인정보 보호 및 보안 > 카메라 > Warmify > 허용",
+    "onboarding.permission.manual_android": "설정 > 사이트 설정 > 미디어 > 허용",
+    "onboarding.permission.manual_generic": "브라우저 설정 > 개인정보 > 카메라 > 허용",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

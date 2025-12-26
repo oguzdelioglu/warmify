@@ -137,6 +137,9 @@ export const ru: TranslationKeys = {
     "onboarding.freq.q": "Weekly Frequency?",
     "onboarding.freq.opt1": "1-2 Days", "onboarding.freq.opt2": "3-4 Days", "onboarding.freq.opt3": "Everyday",
     "onboarding.later": "Спросить позже",
+    "onboarding.permission.manual_ios": "Настройки > Конфиденциальность и безопасность > Камера > Warmify > Разрешить",
+    "onboarding.permission.manual_android": "Настройки > Настройки сайтов > Медиа > Разрешить",
+    "onboarding.permission.manual_generic": "Настройки браузера > Приватность > Камера > Разрешить",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

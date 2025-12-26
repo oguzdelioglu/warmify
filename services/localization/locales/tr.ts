@@ -28,6 +28,9 @@ export const tr: TranslationKeys = {
     "onboarding.freq.q": "Haftalık Sıklık?",
     "onboarding.freq.opt1": "1-2 Gün", "onboarding.freq.opt2": "3-4 Gün", "onboarding.freq.opt3": "Her Gün",
     "onboarding.later": "Sonra Sor",
+    "onboarding.permission.manual_ios": "Ayarlar > Gizlilik ve Güvenlik > Kamera > Warmify > İzin Ver",
+    "onboarding.permission.manual_android": "Ayarlar > Site Ayarları > Medya > Engellenenler > İzin Ver",
+    "onboarding.permission.manual_generic": "Tarayıcı Ayarları > Gizlilik > Kamera > İzin Ver",
 
     // HOME
     "home.daily_mission": "Günlük Görev",

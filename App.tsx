@@ -665,7 +665,14 @@ export default function App() {
                             {t('onboarding.permission.retry')}
                         </button>
                         <div className="text-center">
-                            <p className="text-[10px] text-slate-500 mb-2">If blocked, check Browser Settings &gt; Site Settings</p>
+                            <p className="text-[10px] text-slate-500 mb-2">
+                                {t((() => {
+                                    const ua = navigator.userAgent.toLowerCase();
+                                    if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) return 'onboarding.permission.manual_ios';
+                                    if (ua.includes('android')) return 'onboarding.permission.manual_android';
+                                    return 'onboarding.permission.manual_generic';
+                                })())}
+                            </p>
                         </div>
                         <button
                             onClick={() => { setShowPermissionError(false); setView(AppView.HOME); }}
