@@ -17,6 +17,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [permissionStatus, setPermissionStatus] = useState<'idle' | 'granted' | 'denied'>('idle');
+  const [showPermissionAlert, setShowPermissionAlert] = useState(false);
 
   // --- SLIDES & QUESTIONS ---
   const introSlides = [
@@ -86,8 +87,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     } catch (err) {
       console.error(err);
       setPermissionStatus('denied');
-      // Allow them to proceed anyway, we handle no-camera later
-      setTimeout(() => setStep(step + 1), 1000);
+      setShowPermissionAlert(true);
     }
   };
 
@@ -178,11 +178,6 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
               {permissionStatus === 'granted' && <>{t('onboarding.permission.granted')} <Zap size={18} /></>}
               {permissionStatus === 'denied' && <>{t('onboarding.permission.denied')}</>}
             </button>
-            {permissionStatus === 'denied' && (
-              <button onClick={() => setStep(step + 1)} className="mt-4 text-slate-500 text-xs underline">
-                {t('onboarding.permission.skip')}
-              </button>
-            )}
           </div>
         )}
 
@@ -220,6 +215,27 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           ))}
         </div>
       </div>
+
+      {/* Permission Alert Modal */}
+      {showPermissionAlert && (
+        <div className="absolute inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 fade-in">
+          <div className="bg-slate-800 border border-slate-600 rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-100 animate-slide-up">
+            <div className="flex justify-center mb-4 text-red-400">
+              <Shield size={48} />
+            </div>
+            <h3 className="text-xl font-black text-white text-center mb-2">{t('onboarding.permission.required_title')}</h3>
+            <p className="text-slate-300 text-center mb-6 leading-relaxed">
+              {t('onboarding.permission.required_desc')}
+            </p>
+            <button
+              onClick={() => setShowPermissionAlert(false)}
+              className="w-full py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold transition-colors"
+            >
+              {t('onboarding.permission.retry')}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

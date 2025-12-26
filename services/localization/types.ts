@@ -13,6 +13,9 @@ export type TranslationKeys = {
     "onboarding.permission.grant": string;
     "onboarding.permission.granted": string;
     "onboarding.permission.denied": string;
+    "onboarding.permission.required_title": string;
+    "onboarding.permission.required_desc": string;
+    "onboarding.permission.retry": string;
     "onboarding.permission.skip": string;
     "onboarding.q1.title": string;
     "onboarding.q2.title": string;

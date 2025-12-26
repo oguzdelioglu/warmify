@@ -187,6 +187,29 @@ export default function App() {
         return localStorage.getItem('warmify_onboarding_complete') === 'true';
     });
 
+    // --- PERMISSION CHECK ---
+    const [isPermissionDenied, setIsPermissionDenied] = useState(false);
+
+    useEffect(() => {
+        const checkGlobalPermissions = async () => {
+            // Only check if onboarding is done (Onboarding handles its own prompts)
+            if (hasCompletedOnboarding && !showSplash) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                    // If successful, stop tracks immediately; we just wanted to verify access
+                    stream.getTracks().forEach(t => t.stop());
+                    setIsPermissionDenied(false);
+                } catch (e) {
+                    console.error("Startup Permission Check Failed:", e);
+                    setIsPermissionDenied(true);
+                }
+            }
+        };
+
+        checkGlobalPermissions();
+    }, [hasCompletedOnboarding, showSplash]);
+
+
     // Get exercises based on current sport mode
     const EXERCISES = getExercisesBySportMode(settings.sportMode || 'FOOTBALL', settings.seatedMode);
 
@@ -228,7 +251,8 @@ export default function App() {
     useEffect(() => { localStorage.setItem('warmify_user_stats', JSON.stringify(userStats)); }, [userStats]);
     useEffect(() => { localStorage.setItem('warmify_settings', JSON.stringify(settings)); }, [settings]);
     useEffect(() => { gameStateRef.current = gameState; }, [gameState]); // Sync ref
-    useEffect(() => { exercisesRef.current = EXERCISES; }, [EXERCISES]); // Sync exercises
+    useEffect(() => { exercisesRef.current = EXERCISES; }, [EXERCISES]); // Sync exercises (rest of state definitions)
+
 
 
     useEffect(() => {
@@ -609,6 +633,26 @@ export default function App() {
     // --- RENDER ---
     if (showSplash) {
         return <SplashScreen onComplete={() => setShowSplash(false)} />;
+    }
+
+    if (isPermissionDenied) {
+        return (
+            <div className="fixed inset-0 z-[100] bg-slate-900 flex flex-col items-center justify-center p-6 text-center">
+                <div className="mb-6 p-6 rounded-full bg-red-500/20 border-2 border-red-500 animate-pulse">
+                    <span className="text-4xl">🔒</span>
+                </div>
+                <h1 className="text-3xl font-black text-white mb-4">{t('onboarding.permission.required_title')}</h1>
+                <p className="text-slate-400 text-lg mb-8 max-w-md">
+                    {t('onboarding.permission.required_desc')}
+                </p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="px-8 py-4 rounded-full bg-white text-black font-black text-xl hover:scale-105 transition-transform"
+                >
+                    {t('onboarding.permission.retry')}
+                </button>
+            </div>
+        );
     }
 
 
