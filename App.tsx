@@ -676,10 +676,17 @@ export default function App() {
                             </p>
                         </div>
                         <button
-                            onClick={() => NativeSettings.open({
-                                optionAndroid: AndroidSettings.ApplicationDetails,
-                                optionIOS: IOSSettings.App
-                            })}
+                            onClick={() => {
+                                // iOS: Use app-settings: URL scheme to open app's settings page
+                                // Android: Use capacitor App plugin or intent
+                                const ua = navigator.userAgent.toLowerCase();
+                                if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) {
+                                    window.location.href = 'app-settings:';
+                                } else {
+                                    // Fallback for non-iOS
+                                    window.open('app-settings:', '_system');
+                                }
+                            }}
                             className="w-full py-4 mb-2 rounded-2xl bg-indigo-600 text-white font-bold shadow-lg hover:bg-indigo-500 transition-all"
                         >
                             {t('onboarding.permission.open_settings')}
