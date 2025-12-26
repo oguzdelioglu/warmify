@@ -190,8 +190,23 @@ export const AdaptyService = {
       console.log("ADAPTY: invoking makePurchase with full product object...");
       console.log("ADAPTY: Full product keys:", Object.keys(product).join(', '));
 
-      await adapty.makePurchase({ product });
-      return true;
+      const purchaseResult = await adapty.makePurchase({ product });
+
+      // VERIFY ACTUAL ENTITLEMENT
+      // Even if purchase flow finishes, ensures we actually have the entitlement
+      // Fetch fresh profile to avoid type issues with purchaseResult
+      const profile = await adapty.getProfile();
+
+      if (profile?.accessLevels?.['premium']?.isActive) {
+        console.log("ADAPTY: Purchase verified, premium is active.");
+        return true;
+      } else {
+        console.warn("ADAPTY: Purchase flow completed but 'premium' is NOT active.");
+        // Attempt a restore just in case?
+        // const restored = await this.restorePurchases();
+        // return restored;
+        return false;
+      }
 
     } catch (e: any) {
       console.error("ADAPTY: Real purchase failed", e);

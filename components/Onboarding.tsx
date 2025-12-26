@@ -87,8 +87,14 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     } catch (err) {
       console.error(err);
       setPermissionStatus('denied');
-      setShowPermissionAlert(true);
+      // Allow proceeding even if denied
+      // setShowPermissionAlert(true); // OLD: Blocking alert
     }
+  };
+
+  const handlePermissionContinue = () => {
+    SoundEngine.playUI('click');
+    setStep(step + 1);
   };
 
   const handleOptionSelect = async (option: string) => {
@@ -170,13 +176,13 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             </p>
 
             <button
-              onClick={requestPermissions}
+              onClick={permissionStatus === 'denied' ? handlePermissionContinue : requestPermissions}
               disabled={permissionStatus === 'granted'}
-              className={`w-full py-4 rounded-2xl font-black text-lg text-white shadow-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 group`}
+              className={`w-full py-4 rounded-2xl font-black text-lg text-white shadow-2xl bg-gradient-to-r ${permissionStatus === 'denied' ? 'from-slate-600 to-slate-500' : 'from-indigo-600 to-blue-600'} hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 group`}
             >
               {permissionStatus === 'idle' && <>{t('onboarding.permission.grant')} <Shield size={18} /></>}
               {permissionStatus === 'granted' && <>{t('onboarding.permission.granted')} <Zap size={18} /></>}
-              {permissionStatus === 'denied' && <>{t('onboarding.permission.denied')}</>}
+              {permissionStatus === 'denied' && <>{t('onboarding.permission.skip')} <ChevronRight size={18} /></>}
             </button>
           </div>
         )}
