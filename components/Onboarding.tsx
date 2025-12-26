@@ -216,7 +216,6 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
         </div>
       </div>
 
-      {/* Permission Alert Modal */}
       {showPermissionAlert && (
         <div className="absolute inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 fade-in">
           <div className="bg-slate-800 border border-slate-600 rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-100 animate-slide-up">
@@ -224,15 +223,34 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
               <Shield size={48} />
             </div>
             <h3 className="text-xl font-black text-white text-center mb-2">{t('onboarding.permission.required_title')}</h3>
-            <p className="text-slate-300 text-center mb-6 leading-relaxed">
-              {t('onboarding.permission.required_desc')}
-            </p>
-            <button
-              onClick={() => setShowPermissionAlert(false)}
-              className="w-full py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold transition-colors"
-            >
-              {t('onboarding.permission.retry')}
-            </button>
+            <div className="text-slate-300 text-center mb-6 leading-relaxed space-y-4">
+              <p>{t('onboarding.permission.required_desc')}</p>
+
+              <div className="bg-slate-900/50 p-3 rounded-xl border border-white/10 text-sm text-left">
+                <p className="font-bold text-indigo-400 mb-1">How to fix:</p>
+                <ol className="list-decimal list-inside space-y-1 text-slate-400">
+                  <li>Click the <span className="text-white"><Shield size={12} className="inline" /> Lock Icon</span> in your address bar (top left).</li>
+                  <li>Find <span className="text-white">Camera & Microphone</span>.</li>
+                  <li>Click <span className="text-white">Reset Permission</span> or Toggle On.</li>
+                  <li>Click the button below to refresh.</li>
+                </ol>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => window.location.reload()}
+                className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-colors shadow-lg"
+              >
+                Refresh Page
+              </button>
+              <button
+                onClick={() => setShowPermissionAlert(false)}
+                className="w-full py-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-300 font-bold transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
           </div>
         </div>
       )}

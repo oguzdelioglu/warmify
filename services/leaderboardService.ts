@@ -27,19 +27,24 @@ export const LeaderboardService = {
 
     async updateUserScore(userId: string, username: string, points: number, level: number, avatar: string) {
         // Upsert: Insert if new, update if exists (on conflict of 'id')
+        const payload = {
+            id: userId,
+            username: username,
+            points: Math.floor(points), // Safe Int
+            level: Math.floor(level),   // Safe Int
+            avatar: avatar,
+            updated_at: new Date().toISOString()
+        };
+
         const { error } = await supabase
             .from('leaderboard')
-            .upsert({
-                id: userId,
-                username: username,
-                points: points,
-                level: level,
-                avatar: avatar,
-                updated_at: new Date().toISOString()
-            }, { onConflict: 'id' });
+            .upsert(payload, { onConflict: 'id' });
 
         if (error) {
-            console.error('Error updating score:', error);
+            console.error('CRITICAL: Error updating score:', error);
+            console.error('Payload was:', payload);
+        } else {
+            console.log("Score synced to cloud:", points);
         }
     },
 

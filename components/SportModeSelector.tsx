@@ -39,12 +39,12 @@ export const SportModeSelector: React.FC<SportModeSelectorProps> = ({ currentMod
                             key={mode}
                             onClick={() => onSelectMode(mode)}
                             className={`w-full p-3 rounded-xl border-2 transition-all flex items-center gap-3 group ${currentMode === mode
-                                    ? 'border-white bg-white/10 scale-[1.02]'
-                                    : 'border-slate-700 hover:border-slate-500 hover:bg-slate-800/50'
+                                ? 'border-white bg-white/10 scale-[1.02]'
+                                : 'border-slate-700 hover:border-slate-500 hover:bg-slate-800/50'
                                 }`}
                         >
                             <div className={`p-2.5 rounded-lg bg-gradient-to-br ${gradient} text-white group-hover:scale-110 transition-transform`}>
-                                {React.cloneElement(icon as React.ReactElement, { size: 20 })}
+                                {React.cloneElement(icon as React.ReactElement<any>, { size: 20 })}
                             </div>
                             <div className="flex-1 text-left">
                                 <h3 className="font-bold text-white text-base md:text-lg">{t(`mode.${mode.toLowerCase()}.name`)}</h3>
