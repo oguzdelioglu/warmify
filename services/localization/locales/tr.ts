@@ -27,6 +27,7 @@ export const tr: TranslationKeys = {
     "onboarding.level.opt1": "Çaylak (Başlangıç)", "onboarding.level.opt2": "Ajan (Orta)", "onboarding.level.opt3": "Efsane (İleri)",
     "onboarding.freq.q": "Haftalık Sıklık?",
     "onboarding.freq.opt1": "1-2 Gün", "onboarding.freq.opt2": "3-4 Gün", "onboarding.freq.opt3": "Her Gün",
+    "onboarding.later": "Sonra Sor",
 
     // HOME
     "home.daily_mission": "Günlük Görev",

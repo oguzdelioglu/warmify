@@ -29,6 +29,7 @@ export type TranslationKeys = {
     "onboarding.level.opt1": string; "onboarding.level.opt2": string; "onboarding.level.opt3": string;
     "onboarding.freq.q": string;
     "onboarding.freq.opt1": string; "onboarding.freq.opt2": string; "onboarding.freq.opt3": string;
+    "onboarding.later": string;
 
     // HOME
     "home.daily_mission": string;

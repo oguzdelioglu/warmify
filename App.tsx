@@ -664,6 +664,9 @@ export default function App() {
                         >
                             {t('onboarding.permission.retry')}
                         </button>
+                        <div className="text-center">
+                            <p className="text-[10px] text-slate-500 mb-2">If blocked, check Browser Settings &gt; Site Settings</p>
+                        </div>
                         <button
                             onClick={() => { setShowPermissionError(false); setView(AppView.HOME); }}
                             className="w-full py-4 rounded-2xl bg-slate-800 text-slate-400 font-bold border border-slate-700 hover:bg-slate-700 hover:text-white transition-all"
