@@ -33,6 +33,51 @@ export const tr: TranslationKeys = {
     "onboarding.permission.manual_generic": "Tarayıcı Ayarları > Gizlilik > Kamera > İzin Ver",
     "onboarding.permission.open_settings": "Ayarları Aç",
 
+    // LIMBIC - Social Proof
+    "onboarding.social.title": "50.000+ Sporcuya Katıl",
+    "onboarding.social.subtitle": "Bu hafta formunu değiştirenler",
+    "onboarding.social.rating": "★★★★★ 12.000+ değerlendirmede 4.9",
+    "onboarding.social.countries": "120+ ülkede sporcular",
+    "onboarding.social.joining": "kişi bugün katıldı",
+
+    // LIMBIC - Competitor Comparison
+    "onboarding.compare.title": "Sporcular Neden Bizi Seçiyor",
+    "onboarding.compare.traditional": "Geleneksel Antrenman",
+    "onboarding.compare.warmify": "Warmify ile",
+    "onboarding.compare.setup_old": "30+ dakika hazırlık",
+    "onboarding.compare.setup_new": "60 saniyede hazır",
+    "onboarding.compare.feedback_old": "Form düzeltmesi yok",
+    "onboarding.compare.feedback_new": "AI anında düzeltir",
+    "onboarding.compare.boring_old": "Sıkıcı rutinler",
+    "onboarding.compare.boring_new": "Oyunlaştırılmış ve ödüllü",
+
+    // LIMBIC - Urgency
+    "onboarding.urgency.title": "Planın Hazır",
+    "onboarding.urgency.subtitle": "Kişisel antrenmanını şimdi al",
+    "onboarding.urgency.expires": "Teklif sona eriyor:",
+
+    // LIMBIC - Promise
+    "onboarding.promise.title": "Sana Sözümüz",
+    "onboarding.promise.no_card": "Kredi kartı gerekmez",
+    "onboarding.promise.cancel": "İstediğin zaman iptal et",
+    "onboarding.promise.privacy": "Verilerin SENİN cihazında kalır",
+    "onboarding.promise.cta": "Yolculuğuma Başla",
+
+    // LIMBIC - Personalized CTAs
+    "onboarding.cta.start_journey": "Yolculuğuma Başla",
+    "onboarding.cta.unlock_plan": "Planımı Aç",
+    "onboarding.cta.activate": "Antrenmanımı Aktifleştir",
+    "onboarding.cta.claim": "Antrenmanımı Al",
+
+    // LIMBIC - Personalized Questions
+    "onboarding.goal.q_personal": "SENİN ana fitness hedefin ne?",
+    "onboarding.level.q_personal": "SENİN şu anki seviyen ne?",
+    "onboarding.freq.q_personal": "Haftada kaç gün antrenman yapmak istiyorSUN?",
+
+    // LIMBIC - Welcome Personalized
+    "onboarding.welcome.title_personal": "AI Koçun Seni Bekliyor",
+    "onboarding.welcome.desc_personal": "Günde sadece 5 dakikada daha iyi hareket et, daha güçlü hisset ve bir daha asla yalnız antrenman yapma.",
+
     // HOME
     "home.daily_mission": "Günlük Görev",
     "home.start": "GÖREVİ BAŞLAT",

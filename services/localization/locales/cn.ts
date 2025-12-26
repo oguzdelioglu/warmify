@@ -142,6 +142,51 @@ export const cn: TranslationKeys = {
     "onboarding.permission.manual_generic": "浏览器设置 > 隐私 > 相机 > 允许",
     "onboarding.permission.open_settings": "打开设置",
 
+    // LIMBIC - Social Proof
+    "onboarding.social.title": "加入50,000+运动员",
+    "onboarding.social.subtitle": "本周改变健身的人们",
+    "onboarding.social.rating": "★★★★★ 12,000+评论中获得4.9分",
+    "onboarding.social.countries": "120+国家的运动员",
+    "onboarding.social.joining": "人今天加入",
+
+    // LIMBIC - Competitor Comparison
+    "onboarding.compare.title": "运动员选择我们的原因",
+    "onboarding.compare.traditional": "传统健身",
+    "onboarding.compare.warmify": "使用Warmify",
+    "onboarding.compare.setup_old": "准备需要30+分钟",
+    "onboarding.compare.setup_new": "60秒即可开始",
+    "onboarding.compare.feedback_old": "无姿势纠正",
+    "onboarding.compare.feedback_new": "AI实时纠正",
+    "onboarding.compare.boring_old": "无聊的例行公事",
+    "onboarding.compare.boring_new": "游戏化与奖励",
+
+    // LIMBIC - Urgency
+    "onboarding.urgency.title": "你的计划已准备好",
+    "onboarding.urgency.subtitle": "立即获取你的个性化训练",
+    "onboarding.urgency.expires": "优惠截止于:",
+
+    // LIMBIC - Promise
+    "onboarding.promise.title": "我们对你的承诺",
+    "onboarding.promise.no_card": "无需信用卡",
+    "onboarding.promise.cancel": "随时取消",
+    "onboarding.promise.privacy": "你的数据保留在你的设备上",
+    "onboarding.promise.cta": "开始我的旅程",
+
+    // LIMBIC - Personalized CTAs
+    "onboarding.cta.start_journey": "开始我的旅程",
+    "onboarding.cta.unlock_plan": "解锁我的计划",
+    "onboarding.cta.activate": "激活我的训练",
+    "onboarding.cta.claim": "获取我的训练",
+
+    // LIMBIC - Personalized Questions
+    "onboarding.goal.q_personal": "你的主要健身目标是什么？",
+    "onboarding.level.q_personal": "你目前的水平是？",
+    "onboarding.freq.q_personal": "你想多久训练一次？",
+
+    // LIMBIC - Welcome Personalized
+    "onboarding.welcome.title_personal": "你的AI教练在等待",
+    "onboarding.welcome.desc_personal": "每天仅需5分钟，你将移动得更好、感觉更强壮，再也不会独自锻炼。",
+
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",
 

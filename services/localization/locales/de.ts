@@ -142,6 +142,51 @@ export const de: TranslationKeys = {
     "onboarding.permission.manual_generic": "Browser-Einstellungen > Privatsphäre > Kamera > Erlauben",
     "onboarding.permission.open_settings": "Einstellungen öffnen",
 
+    // LIMBIC - Social Proof
+    "onboarding.social.title": "Schließe dich 50.000+ Athleten an",
+    "onboarding.social.subtitle": "Die DIESE WOCHE ihre Fitness transformiert haben",
+    "onboarding.social.rating": "★★★★★ 4.9 von 12.000+ Bewertungen",
+    "onboarding.social.countries": "Athleten in 120+ Ländern",
+    "onboarding.social.joining": "Personen sind heute beigetreten",
+
+    // LIMBIC - Competitor Comparison
+    "onboarding.compare.title": "Warum Athleten Uns Wählen",
+    "onboarding.compare.traditional": "Traditionelles Training",
+    "onboarding.compare.warmify": "Mit Warmify",
+    "onboarding.compare.setup_old": "30+ Min Vorbereitung",
+    "onboarding.compare.setup_new": "In 60 Sekunden bereit",
+    "onboarding.compare.feedback_old": "Keine Formkorrektur",
+    "onboarding.compare.feedback_new": "KI korrigiert in Echtzeit",
+    "onboarding.compare.boring_old": "Langweilige Routinen",
+    "onboarding.compare.boring_new": "Gamifiziert & belohnend",
+
+    // LIMBIC - Urgency
+    "onboarding.urgency.title": "Dein Plan Ist Bereit",
+    "onboarding.urgency.subtitle": "Hole dir jetzt dein personalisiertes Training",
+    "onboarding.urgency.expires": "Angebot läuft ab in:",
+
+    // LIMBIC - Promise
+    "onboarding.promise.title": "Unser Versprechen An Dich",
+    "onboarding.promise.no_card": "Keine Kreditkarte erforderlich",
+    "onboarding.promise.cancel": "Jederzeit kündbar",
+    "onboarding.promise.privacy": "Deine Daten bleiben auf DEINEM Gerät",
+    "onboarding.promise.cta": "Meine Reise Beginnen",
+
+    // LIMBIC - Personalized CTAs
+    "onboarding.cta.start_journey": "Meine Reise Beginnen",
+    "onboarding.cta.unlock_plan": "Meinen Plan Freischalten",
+    "onboarding.cta.activate": "Mein Training Aktivieren",
+    "onboarding.cta.claim": "Mein Training Holen",
+
+    // LIMBIC - Personalized Questions
+    "onboarding.goal.q_personal": "Was ist DEIN Hauptziel?",
+    "onboarding.level.q_personal": "Was ist DEIN aktuelles Level?",
+    "onboarding.freq.q_personal": "Wie oft willst DU trainieren?",
+
+    // LIMBIC - Welcome Personalized
+    "onboarding.welcome.title_personal": "Dein KI-Coach Wartet",
+    "onboarding.welcome.desc_personal": "In nur 5 Minuten am Tag wirst du dich besser bewegen, stärker fühlen und nie wieder alleine trainieren.",
+
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",
 

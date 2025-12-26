@@ -142,6 +142,51 @@ export const jp: TranslationKeys = {
     "onboarding.permission.manual_generic": "ブラウザの設定 > プライバシー > カメラ > 許可",
     "onboarding.permission.open_settings": "設定を開く",
 
+    // LIMBIC - Social Proof
+    "onboarding.social.title": "50,000人以上のアスリートに参加",
+    "onboarding.social.subtitle": "今週フィットネスを変えた人々",
+    "onboarding.social.rating": "★★★★★ 12,000件以上のレビューで4.9",
+    "onboarding.social.countries": "120カ国以上のアスリート",
+    "onboarding.social.joining": "人が今日参加しました",
+
+    // LIMBIC - Competitor Comparison
+    "onboarding.compare.title": "アスリートが選ぶ理由",
+    "onboarding.compare.traditional": "従来のトレーニング",
+    "onboarding.compare.warmify": "Warmifyなら",
+    "onboarding.compare.setup_old": "準備に30分以上",
+    "onboarding.compare.setup_new": "60秒で準備完了",
+    "onboarding.compare.feedback_old": "フォーム修正なし",
+    "onboarding.compare.feedback_new": "AIがリアルタイムで修正",
+    "onboarding.compare.boring_old": "退屈なルーティン",
+    "onboarding.compare.boring_new": "ゲーム化＆報酬あり",
+
+    // LIMBIC - Urgency
+    "onboarding.urgency.title": "あなたのプランが準備できました",
+    "onboarding.urgency.subtitle": "今すぐパーソナルワークアウトを手に入れよう",
+    "onboarding.urgency.expires": "オファー終了まで:",
+
+    // LIMBIC - Promise
+    "onboarding.promise.title": "あなたへの約束",
+    "onboarding.promise.no_card": "クレジットカード不要",
+    "onboarding.promise.cancel": "いつでもキャンセル可能",
+    "onboarding.promise.privacy": "あなたのデータはあなたのデバイスに保存",
+    "onboarding.promise.cta": "私の旅を始める",
+
+    // LIMBIC - Personalized CTAs
+    "onboarding.cta.start_journey": "私の旅を始める",
+    "onboarding.cta.unlock_plan": "私のプランを解除",
+    "onboarding.cta.activate": "私のトレーニングを有効化",
+    "onboarding.cta.claim": "私のワークアウトを取得",
+
+    // LIMBIC - Personalized Questions
+    "onboarding.goal.q_personal": "あなたのメイン目標は？",
+    "onboarding.level.q_personal": "あなたの現在のレベルは？",
+    "onboarding.freq.q_personal": "あなたはどのくらいトレーニングしたい？",
+
+    // LIMBIC - Welcome Personalized
+    "onboarding.welcome.title_personal": "あなたのAIコーチが待っています",
+    "onboarding.welcome.desc_personal": "1日たった5分で、より良く動き、より強く感じ、二度と一人でトレーニングすることはありません。",
+
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",
 

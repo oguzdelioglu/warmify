@@ -142,6 +142,51 @@ export const kr: TranslationKeys = {
     "onboarding.permission.manual_generic": "브라우저 설정 > 개인정보 > 카메라 > 허용",
     "onboarding.permission.open_settings": "설정 열기",
 
+    // LIMBIC - Social Proof
+    "onboarding.social.title": "50,000명 이상의 운동선수와 함께하세요",
+    "onboarding.social.subtitle": "이번 주에 피트니스를 바꾼 사람들",
+    "onboarding.social.rating": "★★★★★ 12,000개 이상의 리뷰에서 4.9",
+    "onboarding.social.countries": "120개국 이상의 운동선수",
+    "onboarding.social.joining": "명이 오늘 가입했습니다",
+
+    // LIMBIC - Competitor Comparison
+    "onboarding.compare.title": "운동선수들이 우리를 선택하는 이유",
+    "onboarding.compare.traditional": "전통적인 운동",
+    "onboarding.compare.warmify": "Warmify로",
+    "onboarding.compare.setup_old": "준비에 30분 이상",
+    "onboarding.compare.setup_new": "60초 만에 준비 완료",
+    "onboarding.compare.feedback_old": "자세 교정 없음",
+    "onboarding.compare.feedback_new": "AI가 실시간으로 교정",
+    "onboarding.compare.boring_old": "지루한 루틴",
+    "onboarding.compare.boring_new": "게임화 및 보상",
+
+    // LIMBIC - Urgency
+    "onboarding.urgency.title": "당신의 플랜이 준비되었습니다",
+    "onboarding.urgency.subtitle": "지금 맞춤 운동을 받으세요",
+    "onboarding.urgency.expires": "제안 만료:",
+
+    // LIMBIC - Promise
+    "onboarding.promise.title": "당신에게 하는 약속",
+    "onboarding.promise.no_card": "신용카드 필요 없음",
+    "onboarding.promise.cancel": "언제든지 취소 가능",
+    "onboarding.promise.privacy": "당신의 데이터는 당신의 기기에만 저장",
+    "onboarding.promise.cta": "내 여정 시작하기",
+
+    // LIMBIC - Personalized CTAs
+    "onboarding.cta.start_journey": "내 여정 시작하기",
+    "onboarding.cta.unlock_plan": "내 플랜 잠금 해제",
+    "onboarding.cta.activate": "내 훈련 활성화",
+    "onboarding.cta.claim": "내 운동 받기",
+
+    // LIMBIC - Personalized Questions
+    "onboarding.goal.q_personal": "당신의 주요 목표는 무엇인가요?",
+    "onboarding.level.q_personal": "당신의 현재 레벨은?",
+    "onboarding.freq.q_personal": "당신은 얼마나 자주 운동하고 싶나요?",
+
+    // LIMBIC - Welcome Personalized
+    "onboarding.welcome.title_personal": "당신의 AI 코치가 기다리고 있습니다",
+    "onboarding.welcome.desc_personal": "하루 5분만으로 더 잘 움직이고, 더 강해지며, 다시는 혼자 운동하지 않습니다.",
+
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",
 

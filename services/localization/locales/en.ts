@@ -33,6 +33,51 @@ export const en: TranslationKeys = {
     "onboarding.permission.manual_generic": "Browser Settings > Site Settings > Camera > Allow",
     "onboarding.permission.open_settings": "Open Settings",
 
+    // LIMBIC - Social Proof
+    "onboarding.social.title": "Join 50,000+ Athletes",
+    "onboarding.social.subtitle": "Who transformed their fitness THIS WEEK",
+    "onboarding.social.rating": "★★★★★ 4.9 from 12,000+ reviews",
+    "onboarding.social.countries": "Athletes in 120+ countries",
+    "onboarding.social.joining": "people joined today",
+
+    // LIMBIC - Competitor Comparison
+    "onboarding.compare.title": "Why Athletes Choose Us",
+    "onboarding.compare.traditional": "Traditional Workouts",
+    "onboarding.compare.warmify": "With Warmify",
+    "onboarding.compare.setup_old": "30+ min to get started",
+    "onboarding.compare.setup_new": "Ready in 60 seconds",
+    "onboarding.compare.feedback_old": "No form correction",
+    "onboarding.compare.feedback_new": "AI corrects you in real-time",
+    "onboarding.compare.boring_old": "Boring routines",
+    "onboarding.compare.boring_new": "Gamified & rewarding",
+
+    // LIMBIC - Urgency
+    "onboarding.urgency.title": "Your Plan is Ready",
+    "onboarding.urgency.subtitle": "Claim your personalized workout now",
+    "onboarding.urgency.expires": "Offer expires in:",
+
+    // LIMBIC - Promise
+    "onboarding.promise.title": "Our Promise to You",
+    "onboarding.promise.no_card": "No credit card required",
+    "onboarding.promise.cancel": "Cancel anytime, no commitment",
+    "onboarding.promise.privacy": "Your data stays on YOUR device",
+    "onboarding.promise.cta": "Start My Journey",
+
+    // LIMBIC - Personalized CTAs
+    "onboarding.cta.start_journey": "Start My Journey",
+    "onboarding.cta.unlock_plan": "Unlock My Plan",
+    "onboarding.cta.activate": "Activate My Training",
+    "onboarding.cta.claim": "Claim My Workout",
+
+    // LIMBIC - Personalized Questions
+    "onboarding.goal.q_personal": "What's YOUR main fitness goal?",
+    "onboarding.level.q_personal": "What's YOUR current level?",
+    "onboarding.freq.q_personal": "How often do YOU want to train?",
+
+    // LIMBIC - Welcome Personalized
+    "onboarding.welcome.title_personal": "Your AI Coach Awaits",
+    "onboarding.welcome.desc_personal": "In just 5 minutes a day, you'll move better, feel stronger, and never workout alone again.",
+
     // HOME
     "home.daily_mission": "Daily Mission",
     "home.start": "START MISSION",

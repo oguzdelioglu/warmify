@@ -35,6 +35,51 @@ export type TranslationKeys = {
     "onboarding.permission.manual_generic": string;
     "onboarding.permission.open_settings": string;
 
+    // LIMBIC ONBOARDING - Social Proof
+    "onboarding.social.title": string;
+    "onboarding.social.subtitle": string;
+    "onboarding.social.rating": string;
+    "onboarding.social.countries": string;
+    "onboarding.social.joining": string;
+
+    // LIMBIC ONBOARDING - Competitor Comparison
+    "onboarding.compare.title": string;
+    "onboarding.compare.traditional": string;
+    "onboarding.compare.warmify": string;
+    "onboarding.compare.setup_old": string;
+    "onboarding.compare.setup_new": string;
+    "onboarding.compare.feedback_old": string;
+    "onboarding.compare.feedback_new": string;
+    "onboarding.compare.boring_old": string;
+    "onboarding.compare.boring_new": string;
+
+    // LIMBIC ONBOARDING - Urgency
+    "onboarding.urgency.title": string;
+    "onboarding.urgency.subtitle": string;
+    "onboarding.urgency.expires": string;
+
+    // LIMBIC ONBOARDING - Promise/Guarantee
+    "onboarding.promise.title": string;
+    "onboarding.promise.no_card": string;
+    "onboarding.promise.cancel": string;
+    "onboarding.promise.privacy": string;
+    "onboarding.promise.cta": string;
+
+    // LIMBIC ONBOARDING - Personalized CTAs
+    "onboarding.cta.start_journey": string;
+    "onboarding.cta.unlock_plan": string;
+    "onboarding.cta.activate": string;
+    "onboarding.cta.claim": string;
+
+    // LIMBIC ONBOARDING - Personalized Questions
+    "onboarding.goal.q_personal": string;
+    "onboarding.level.q_personal": string;
+    "onboarding.freq.q_personal": string;
+
+    // LIMBIC ONBOARDING - Welcome Personalized
+    "onboarding.welcome.title_personal": string;
+    "onboarding.welcome.desc_personal": string;
+
     // HOME
     "home.daily_mission": string;
     "home.start": string;

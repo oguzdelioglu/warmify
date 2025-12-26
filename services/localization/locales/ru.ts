@@ -142,6 +142,51 @@ export const ru: TranslationKeys = {
     "onboarding.permission.manual_generic": "Настройки браузера > Приватность > Камера > Разрешить",
     "onboarding.permission.open_settings": "Открыть настройки",
 
+    // LIMBIC - Social Proof
+    "onboarding.social.title": "Присоединяйся к 50 000+ Атлетам",
+    "onboarding.social.subtitle": "Которые преобразили свою форму НА ЭТОЙ НЕДЕЛЕ",
+    "onboarding.social.rating": "★★★★★ 4.9 из 12 000+ отзывов",
+    "onboarding.social.countries": "Атлеты в 120+ странах",
+    "onboarding.social.joining": "человек присоединились сегодня",
+
+    // LIMBIC - Competitor Comparison
+    "onboarding.compare.title": "Почему Атлеты Выбирают Нас",
+    "onboarding.compare.traditional": "Традиционные Тренировки",
+    "onboarding.compare.warmify": "С Warmify",
+    "onboarding.compare.setup_old": "30+ мин на подготовку",
+    "onboarding.compare.setup_new": "Готов за 60 секунд",
+    "onboarding.compare.feedback_old": "Нет коррекции формы",
+    "onboarding.compare.feedback_new": "ИИ корректирует в реальном времени",
+    "onboarding.compare.boring_old": "Скучные рутины",
+    "onboarding.compare.boring_new": "Игровой формат с наградами",
+
+    // LIMBIC - Urgency
+    "onboarding.urgency.title": "Твой План Готов",
+    "onboarding.urgency.subtitle": "Получи персональную тренировку сейчас",
+    "onboarding.urgency.expires": "Предложение истекает через:",
+
+    // LIMBIC - Promise
+    "onboarding.promise.title": "Наше Обещание Тебе",
+    "onboarding.promise.no_card": "Кредитная карта не требуется",
+    "onboarding.promise.cancel": "Отмена в любое время",
+    "onboarding.promise.privacy": "Твои данные остаются на ТВОЁМ устройстве",
+    "onboarding.promise.cta": "Начать Мой Путь",
+
+    // LIMBIC - Personalized CTAs
+    "onboarding.cta.start_journey": "Начать Мой Путь",
+    "onboarding.cta.unlock_plan": "Разблокировать Мой План",
+    "onboarding.cta.activate": "Активировать Мою Тренировку",
+    "onboarding.cta.claim": "Получить Мою Тренировку",
+
+    // LIMBIC - Personalized Questions
+    "onboarding.goal.q_personal": "Какова ТВОЯ главная цель?",
+    "onboarding.level.q_personal": "Каков ТВОЙ текущий уровень?",
+    "onboarding.freq.q_personal": "Как часто ТЫ хочешь тренироваться?",
+
+    // LIMBIC - Welcome Personalized
+    "onboarding.welcome.title_personal": "Твой ИИ-Тренер Ждёт",
+    "onboarding.welcome.desc_personal": "Всего за 5 минут в день ты будешь двигаться лучше, чувствовать себя сильнее и никогда больше не тренироваться в одиночку.",
+
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",
 

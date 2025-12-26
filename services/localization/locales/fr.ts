@@ -142,6 +142,51 @@ export const fr: TranslationKeys = {
     "onboarding.permission.manual_generic": "Paramètres du navigateur > Confidentialité > Caméra > Autoriser",
     "onboarding.permission.open_settings": "Ouvrir les Réglages",
 
+    // LIMBIC - Social Proof
+    "onboarding.social.title": "Rejoignez 50 000+ Athlètes",
+    "onboarding.social.subtitle": "Qui ont transformé leur forme CETTE SEMAINE",
+    "onboarding.social.rating": "★★★★★ 4.9 sur 12 000+ avis",
+    "onboarding.social.countries": "Athlètes dans 120+ pays",
+    "onboarding.social.joining": "personnes nous ont rejoint aujourd'hui",
+
+    // LIMBIC - Competitor Comparison
+    "onboarding.compare.title": "Pourquoi Les Athlètes Nous Choisissent",
+    "onboarding.compare.traditional": "Entraînements Traditionnels",
+    "onboarding.compare.warmify": "Avec Warmify",
+    "onboarding.compare.setup_old": "30+ min de préparation",
+    "onboarding.compare.setup_new": "Prêt en 60 secondes",
+    "onboarding.compare.feedback_old": "Pas de correction de forme",
+    "onboarding.compare.feedback_new": "L'IA vous corrige en temps réel",
+    "onboarding.compare.boring_old": "Routines ennuyeuses",
+    "onboarding.compare.boring_new": "Gamifié et gratifiant",
+
+    // LIMBIC - Urgency
+    "onboarding.urgency.title": "Votre Plan Est Prêt",
+    "onboarding.urgency.subtitle": "Réclamez votre entraînement personnalisé",
+    "onboarding.urgency.expires": "L'offre expire dans:",
+
+    // LIMBIC - Promise
+    "onboarding.promise.title": "Notre Promesse",
+    "onboarding.promise.no_card": "Aucune carte de crédit requise",
+    "onboarding.promise.cancel": "Annulez quand vous voulez",
+    "onboarding.promise.privacy": "Vos données restent sur VOTRE appareil",
+    "onboarding.promise.cta": "Commencer Mon Parcours",
+
+    // LIMBIC - Personalized CTAs
+    "onboarding.cta.start_journey": "Commencer Mon Parcours",
+    "onboarding.cta.unlock_plan": "Débloquer Mon Plan",
+    "onboarding.cta.activate": "Activer Mon Entraînement",
+    "onboarding.cta.claim": "Réclamer Mon Entraînement",
+
+    // LIMBIC - Personalized Questions
+    "onboarding.goal.q_personal": "Quel est VOTRE objectif principal?",
+    "onboarding.level.q_personal": "Quel est VOTRE niveau actuel?",
+    "onboarding.freq.q_personal": "À quelle fréquence voulez-VOUS vous entraîner?",
+
+    // LIMBIC - Welcome Personalized
+    "onboarding.welcome.title_personal": "Votre Coach IA Vous Attend",
+    "onboarding.welcome.desc_personal": "En seulement 5 minutes par jour, bougez mieux, sentez-vous plus fort et ne vous entraînez plus jamais seul.",
+
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",
 
