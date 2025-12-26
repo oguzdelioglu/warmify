@@ -123,7 +123,7 @@ export const AdaptyService = {
         id: (paywall as any).placementId || placementId,
         name: paywall.name,
         products: products.map((p: any) => ({
-          vendorProductId: p.vendorProductId || p.productId,
+          vendorProductId: p.vendorProductId || p.productId || p.vendorId,
           localizedTitle: p.localizedTitle,
           price: p.price,
           currencySymbol: p.currencySymbol,
@@ -162,11 +162,11 @@ export const AdaptyService = {
       const products = (paywall?.products || []).filter((p: any) => !!p);
       console.log(`ADAPTY: Paywall fetched. Found ${products.length} products. RAW:`, JSON.stringify(products));
 
-      const product = products.find((p: any) => (p.vendorProductId || p.productId) === productId);
+      const product = products.find((p: any) => (p.vendorProductId || p.productId || p.vendorId) === productId);
 
       if (!product) {
         // More descriptive error
-        const avail = products.length > 0 ? products.map((p: any) => p.vendorProductId).join(', ') : 'None';
+        const avail = products.length > 0 ? products.map((p: any) => p.vendorProductId || p.vendorId).join(', ') : 'None';
         throw new Error(`Product '${productId}' not found. Available products: ${avail}. Check Adapty Placement '${placementId}'.`);
       }
 
