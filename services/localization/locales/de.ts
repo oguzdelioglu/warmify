@@ -140,6 +140,7 @@ export const de: TranslationKeys = {
     "onboarding.permission.manual_ios": "Einstellungen > Datenschutz & Sicherheit > Kamera > Warmify > Erlauben",
     "onboarding.permission.manual_android": "Einstellungen > Webseiteneinstellungen > Medien > Erlauben",
     "onboarding.permission.manual_generic": "Browser-Einstellungen > Privatsphäre > Kamera > Erlauben",
+    "onboarding.permission.open_settings": "Einstellungen öffnen",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

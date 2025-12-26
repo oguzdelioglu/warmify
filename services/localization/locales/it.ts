@@ -140,6 +140,7 @@ export const it: TranslationKeys = {
     "onboarding.permission.manual_ios": "Impostazioni > Privacy e sicurezza > Fotocamera > Warmify > Consenti",
     "onboarding.permission.manual_android": "Impostazioni > Impostazioni sito > Media > Consenti",
     "onboarding.permission.manual_generic": "Impostazioni browser > Privacy > Fotocamera > Consenti",
+    "onboarding.permission.open_settings": "Apri Impostazioni",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

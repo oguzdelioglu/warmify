@@ -140,6 +140,7 @@ export const kr: TranslationKeys = {
     "onboarding.permission.manual_ios": "설정 > 개인정보 보호 및 보안 > 카메라 > Warmify > 허용",
     "onboarding.permission.manual_android": "설정 > 사이트 설정 > 미디어 > 허용",
     "onboarding.permission.manual_generic": "브라우저 설정 > 개인정보 > 카메라 > 허용",
+    "onboarding.permission.open_settings": "설정 열기",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

@@ -140,6 +140,7 @@ export const ru: TranslationKeys = {
     "onboarding.permission.manual_ios": "Настройки > Конфиденциальность и безопасность > Камера > Warmify > Разрешить",
     "onboarding.permission.manual_android": "Настройки > Настройки сайтов > Медиа > Разрешить",
     "onboarding.permission.manual_generic": "Настройки браузера > Приватность > Камера > Разрешить",
+    "onboarding.permission.open_settings": "Открыть настройки",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

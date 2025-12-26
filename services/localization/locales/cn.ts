@@ -140,6 +140,7 @@ export const cn: TranslationKeys = {
     "onboarding.permission.manual_ios": "设置 > 隐私与安全性 > 相机 > Warmify > 允许",
     "onboarding.permission.manual_android": "设置 > 网站设置 > 媒体 > 允许",
     "onboarding.permission.manual_generic": "浏览器设置 > 隐私 > 相机 > 允许",
+    "onboarding.permission.open_settings": "打开设置",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

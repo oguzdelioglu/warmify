@@ -140,6 +140,7 @@ export const pt: TranslationKeys = {
     "onboarding.permission.manual_ios": "Definições > Privacidade e Segurança > Câmara > Warmify > Permitir",
     "onboarding.permission.manual_android": "Definições > Definições do site > Multimédia > Permitir",
     "onboarding.permission.manual_generic": "Definições do navegador > Privacidade > Câmara > Permitir",
+    "onboarding.permission.open_settings": "Abrir Definições",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

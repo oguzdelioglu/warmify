@@ -140,6 +140,7 @@ export const jp: TranslationKeys = {
     "onboarding.permission.manual_ios": "設定 > プライバシーとセキュリティ > カメラ > Warmify > 許可",
     "onboarding.permission.manual_android": "設定 > サイトの設定 > メディア > 許可",
     "onboarding.permission.manual_generic": "ブラウザの設定 > プライバシー > カメラ > 許可",
+    "onboarding.permission.open_settings": "設定を開く",
 
     "header.pro_badge": "PRO",
     "header.level_prefix": "Lvl",

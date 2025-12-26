@@ -33,6 +33,7 @@ export type TranslationKeys = {
     "onboarding.permission.manual_ios": string;
     "onboarding.permission.manual_android": string;
     "onboarding.permission.manual_generic": string;
+    "onboarding.permission.open_settings": string;
 
     // HOME
     "home.daily_mission": string;

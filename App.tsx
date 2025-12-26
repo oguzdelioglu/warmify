@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { NativeSettings, AndroidSettings, IOSSettings } from 'capacitor-native-settings';
 import ThreeScene from './components/ThreeScene';
 import { AppView, UserStats, GameState, LeaderboardEntry, UserSettings, LogMessage, ExerciseDef, WorkoutResultData, SportMode } from './types';
 
@@ -674,6 +675,15 @@ export default function App() {
                                 })())}
                             </p>
                         </div>
+                        <button
+                            onClick={() => NativeSettings.open({
+                                optionAndroid: AndroidSettings.ApplicationDetails,
+                                optionIOS: IOSSettings.App
+                            })}
+                            className="w-full py-4 mb-2 rounded-2xl bg-indigo-600 text-white font-bold shadow-lg hover:bg-indigo-500 transition-all"
+                        >
+                            {t('onboarding.permission.open_settings')}
+                        </button>
                         <button
                             onClick={() => { setShowPermissionError(false); setView(AppView.HOME); }}
                             className="w-full py-4 rounded-2xl bg-slate-800 text-slate-400 font-bold border border-slate-700 hover:bg-slate-700 hover:text-white transition-all"

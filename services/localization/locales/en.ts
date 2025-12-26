@@ -31,6 +31,7 @@ export const en: TranslationKeys = {
     "onboarding.permission.manual_ios": "Settings > Privacy & Security > Camera > Warmify > Allow",
     "onboarding.permission.manual_android": "Settings > Site Settings > Media > Blocked > Allow",
     "onboarding.permission.manual_generic": "Browser Settings > Site Settings > Camera > Allow",
+    "onboarding.permission.open_settings": "Open Settings",
 
     // HOME
     "home.daily_mission": "Daily Mission",

@@ -31,6 +31,7 @@ export const tr: TranslationKeys = {
     "onboarding.permission.manual_ios": "Ayarlar > Gizlilik ve Güvenlik > Kamera > Warmify > İzin Ver",
     "onboarding.permission.manual_android": "Ayarlar > Site Ayarları > Medya > Engellenenler > İzin Ver",
     "onboarding.permission.manual_generic": "Tarayıcı Ayarları > Gizlilik > Kamera > İzin Ver",
+    "onboarding.permission.open_settings": "Ayarları Aç",
 
     // HOME
     "home.daily_mission": "Günlük Görev",
