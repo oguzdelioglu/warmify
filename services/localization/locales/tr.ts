@@ -9,7 +9,7 @@ export const tr: TranslationKeys = {
     "onboarding.next": "İleri",
     "onboarding.permission.title": "Sensör Erişimi",
     "onboarding.permission.desc": "Hareketini analiz etmek ve koçluk yapmak için kamera ve mikrofonuna ihtiyacımız var. Veriler cihazında işlenir ve asla kaydedilmez.",
-    "onboarding.permission.grant": "Erişim Ver",
+    "onboarding.permission.grant": "Devam Et",
     "onboarding.permission.granted": "Erişim Verildi",
     "onboarding.permission.denied": "Erişim Reddedildi (Tekrar Dene)",
     "onboarding.permission.skip": "Sensörsüz Devam Et (Kısıtlı Mod)",

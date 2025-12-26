@@ -9,7 +9,7 @@ export const en: TranslationKeys = {
     "onboarding.next": "Next Step",
     "onboarding.permission.title": "Sensor Access",
     "onboarding.permission.desc": "To analyze your movement and provide coaching, we need access to your camera and microphone. Data is processed locally and never stored.",
-    "onboarding.permission.grant": "Grant Access",
+    "onboarding.permission.grant": "Continue",
     "onboarding.permission.granted": "Access Granted",
     "onboarding.permission.denied": "Access Denied (Tap to Retry)",
     "onboarding.permission.skip": "Continue without sensors (Limited Mode)",

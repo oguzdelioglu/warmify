@@ -9,7 +9,7 @@ export const cn: TranslationKeys = {
     "onboarding.next": "下一步",
     "onboarding.permission.title": "传感器访问",
     "onboarding.permission.desc": "为了分析您的动作并提供指导，我们需要访问您的摄像头和麦克风。数据仅在本地处理，绝不保存。",
-    "onboarding.permission.grant": "授予访问权限",
+    "onboarding.permission.grant": "继续",
     "onboarding.permission.granted": "访问已授予",
     "onboarding.permission.denied": "访问被拒绝（点击重试）",
     "onboarding.permission.skip": "无传感器继续（受限模式）",

@@ -172,8 +172,8 @@ const Paywall: React.FC<PaywallProps> = ({ onClose, onPurchaseSuccess }) => {
 
                     <div className="flex justify-center gap-6 md:gap-8 text-[9px] md:text-xs text-slate-500 font-bold uppercase tracking-wider mt-3 md:mt-4">
                         <button onClick={() => AdaptyService.restorePurchases().then(s => s && onPurchaseSuccess())} className="hover:text-white transition-colors">{t('paywall.restore')}</button>
-                        <button className="hover:text-white transition-colors">{t('paywall.terms')}</button>
-                        <button className="hover:text-white transition-colors">{t('paywall.privacy')}</button>
+                        <button onClick={() => window.open('https://www.odel.dev/terms?appId=warmify', '_system')} className="hover:text-white transition-colors">{t('paywall.terms')}</button>
+                        <button onClick={() => window.open('https://www.odel.dev/privacy?appId=warmify', '_system')} className="hover:text-white transition-colors">{t('paywall.privacy')}</button>
                     </div>
                 </div>
 

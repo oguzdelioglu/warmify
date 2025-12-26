@@ -9,7 +9,7 @@ export const ru: TranslationKeys = {
     "onboarding.next": "Далее",
     "onboarding.permission.title": "Доступ к датчикам",
     "onboarding.permission.desc": "Для анализа движений и тренировок нам нужен доступ к камере и микрофону. Данные обрабатываются локально и не сохраняются.",
-    "onboarding.permission.grant": "Разрешить доступ",
+    "onboarding.permission.grant": "Продолжить",
     "onboarding.permission.granted": "Доступ разрешен",
     "onboarding.permission.denied": "Доступ запрещен (Нажмите для повтора)",
     "onboarding.permission.skip": "Продолжить без датчиков (Ограниченный режим)",

@@ -9,7 +9,7 @@ export const kr: TranslationKeys = {
     "onboarding.next": "다음 단계",
     "onboarding.permission.title": "센서 접근 권한",
     "onboarding.permission.desc": "움직임을 분석하고 코칭을 제공하기 위해 카메라와 마이크 접근 권한이 필요합니다. 데이터는 로컬에서 처리되며 절대 저장되지 않습니다.",
-    "onboarding.permission.grant": "접근 허용",
+    "onboarding.permission.grant": "계속",
     "onboarding.permission.granted": "접근 허용됨",
     "onboarding.permission.denied": "접근 거부됨 (다시 시도하려면 탭하세요)",
     "onboarding.permission.skip": "센서 없이 계속하기 (제한 모드)",

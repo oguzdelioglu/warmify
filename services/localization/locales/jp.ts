@@ -9,7 +9,7 @@ export const jp: TranslationKeys = {
     "onboarding.next": "次へ",
     "onboarding.permission.title": "センサーへのアクセス",
     "onboarding.permission.desc": "動きを分析しコーチングを提供するために、カメラとマイクへのアクセスが必要です。データはローカルで処理され、保存されません。",
-    "onboarding.permission.grant": "アクセスを許可",
+    "onboarding.permission.grant": "次へ",
     "onboarding.permission.granted": "アクセス許可済み",
     "onboarding.permission.denied": "アクセス拒否 (再試行)",
     "onboarding.permission.skip": "センサーなしで続行 (制限モード)",
