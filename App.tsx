@@ -13,7 +13,7 @@ import BadgeReveal from './components/BadgeReveal';
 import DebugConsole from './components/DebugConsole';
 import RigOverlay from './components/RigOverlay';
 import LevelingSystem from './components/LevelingSystem';
-import { RateUs } from './components/RateUs';
+import { InAppReview } from '@capacitor-community/in-app-review';
 import { Timer, X } from 'lucide-react';
 import { SoundEngine } from './services/audioService';
 import { HomeView } from './components/views/HomeView';
@@ -136,7 +136,7 @@ export default function App() {
     const { t } = useLocalization();
     const [view, setView] = useState<AppView>(AppView.HOME);
     const [showSplash, setShowSplash] = useState(true);
-    const [rateUsNextView, setRateUsNextView] = useState<AppView>(AppView.HOME);
+
 
     // --- STATE ---
     const [userStats, setUserStats] = useState<UserStats>(() => {
@@ -585,36 +585,19 @@ export default function App() {
         return localStorage.getItem('warmify_has_rated') === 'true';
     });
 
-    const handleClaimResults = () => {
-        // Skip RateUs if already rated
-        if (hasRated) {
-            handleRateUsComplete();
-        } else {
-            setRateUsNextView(AppView.HOME); // This state usage might need adjustment if logic in handleRateUsComplete depends on it? 
-            // Actually handleRateUsComplete logic for Results doesn't depend on rateUsNextView for the Results path specifically (lines 430+), 
-            // but let's be safe.
-            // Wait, logic at 424 checks rateUsNextView to go to PAYWALL.
-            // If we skip, we still need to know where to go.
-            // If we are claiming results, we are NOT going to Paywall usually? 
-            // Let's assume ClaimResults -> badge or home.
-
-            setView(AppView.RATE_US);
-        }
-    };
-
-    const handleRateUsComplete = (didRate: boolean = false) => {
-        if (didRate) {
-            setHasRated(true);
-            localStorage.setItem('warmify_has_rated', 'true');
+    const handleClaimResults = async () => {
+        // Show native review prompt if not already rated
+        if (!hasRated) {
+            try {
+                await InAppReview.requestReview();
+                setHasRated(true);
+                localStorage.setItem('warmify_has_rated', 'true');
+            } catch (error) {
+                console.error('Rate Us Error:', error);
+            }
         }
 
-        // If coming from Onboarding (special case check or just trust state)
-        if (rateUsNextView === AppView.PAYWALL) {
-            setView(AppView.PAYWALL);
-            return;
-        }
-
-        // If coming from Workout Results
+        // Navigate to badge reveal or home
         if (workoutResult && workoutResult.newBadges.length > 0) {
             setView(AppView.BADGE_REVEAL);
             setNewUnlockedBadge(workoutResult.newBadges[0]);
@@ -659,8 +642,7 @@ export default function App() {
     if (view === AppView.ONBOARDING) return <Onboarding onComplete={() => {
         localStorage.setItem('warmify_onboarding_complete', 'true');
         setHasCompletedOnboarding(true);
-        setRateUsNextView(AppView.PAYWALL);
-        setView(AppView.RATE_US);
+        setView(AppView.PAYWALL);
     }} />;
     if (view === AppView.PAYWALL) return <Paywall onClose={() => setView(AppView.HOME)} onPurchaseSuccess={() => { setUserStats(prev => ({ ...prev, isPremium: true })); setView(AppView.HOME); }} />;
 
@@ -684,11 +666,9 @@ export default function App() {
 
                 <Header view={view} setView={setView} userStats={userStats} />
 
-                {view === AppView.SETTINGS && <Settings settings={settings} userStats={userStats} updateSettings={setSettings} updateUserStats={setUserStats} onBack={() => setView(AppView.HOME)} onReset={() => { localStorage.clear(); window.location.reload(); }} onRateUs={() => setView(AppView.RATE_US)} />}
+                {view === AppView.SETTINGS && <Settings settings={settings} userStats={userStats} updateSettings={setSettings} updateUserStats={setUserStats} onBack={() => setView(AppView.HOME)} onReset={() => { localStorage.clear(); window.location.reload(); }} />}
 
                 {view === AppView.LEVELING && <LevelingSystem stats={userStats} onBack={() => setView(AppView.HOME)} />}
-
-                {view === AppView.RATE_US && <RateUs onComplete={handleRateUsComplete} />}
 
                 {view === AppView.HOME && (
                     <HomeView

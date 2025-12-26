@@ -7,6 +7,7 @@ import { LeaderboardService } from '../services/leaderboardService';
 import { getAvatarForLevel } from '../utils/levelUtils';
 import { useLocalization } from '../services/localization/LocalizationContext';
 import { Language } from '../services/localization/translations';
+import { InAppReview } from '@capacitor-community/in-app-review';
 
 interface SettingsProps {
   settings: UserSettings;
@@ -15,7 +16,6 @@ interface SettingsProps {
   updateUserStats: (newStats: UserStats) => void;
   onBack: () => void;
   onReset: () => void;
-  onRateUs: () => void;
 }
 
 const ARCHETYPES: { id: CharacterArchetype; name: string }[] = [
@@ -41,7 +41,7 @@ const LANGUAGES: { code: Language; label: string; flag: string }[] = [
   { code: 'cn', label: '中文', flag: '🇨🇳' },
 ];
 
-const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings, updateUserStats, onBack, onReset, onRateUs }) => {
+const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings, updateUserStats, onBack, onReset }) => {
   const { t, language, setLanguage } = useLocalization();
   const [activeTab, setActiveTab] = useState<'TYPE' | 'SKIN'>('TYPE');
   const [editingName, setEditingName] = useState(false);
@@ -247,7 +247,14 @@ const Settings: React.FC<SettingsProps> = ({ settings, userStats, updateSettings
           <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">{t('settings.support') || 'Support'}</h3>
 
           <button
-            onClick={() => { SoundEngine.playUI('click'); onRateUs(); }}
+            onClick={async () => {
+              SoundEngine.playUI('click');
+              try {
+                await InAppReview.requestReview();
+              } catch (error) {
+                console.error('Rate Us Error:', error);
+              }
+            }}
             className="w-full flex items-center justify-between text-white hover:text-pink-400 transition-colors mb-4"
           >
             <div className="flex items-center gap-3">
