@@ -84,7 +84,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
                     <div className="flex flex-col gap-1">
                         <div className="flex items-baseline gap-2">
                             <h2 className="text-3xl lg:text-5xl font-black italic text-white leading-none tracking-tight drop-shadow-xl">{t('home.daily_mission')}</h2>
-                            <div className="px-3 py-1 bg-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-white/70 backdrop-blur-sm border border-white/5">
+                            <div className="px-2 py-0.5 bg-white/10 rounded-md text-[8px] font-bold uppercase tracking-widest text-white/50 border border-white/5">
                                 Day {userStats.streak + 1}
                             </div>
                         </div>
@@ -93,10 +93,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
                             return (
                                 <button
                                     onClick={() => setShowModeSelector(true)}
-                                    className="text-white text-sm font-bold mt-2 w-fit flex items-center gap-2 hover:scale-105 transition-all px-4 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 backdrop-blur-md active:scale-95 shadow-lg group/btn"
+                                    className="text-white text-[10px] font-bold mt-1 w-fit flex items-center gap-1 hover:scale-105 transition-all px-2 py-1 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 backdrop-blur-md active:scale-95 shadow-sm group/btn"
                                 >
-                                    <div className="relative z-10">{modeConfig.icon}</div>
-                                    <span className="relative z-10 drop-shadow-md uppercase tracking-widest text-xs">{t(`mode.${(settings.sportMode || 'FOOTBALL').toLowerCase()}.name`)}</span>
+                                    <div className="relative z-10">{React.cloneElement(modeConfig.icon as React.ReactElement<any>, { size: 12 })}</div>
+                                    <span className="relative z-10 drop-shadow-md uppercase tracking-widest text-[9px]">{t(`mode.${(settings.sportMode || 'FOOTBALL').toLowerCase()}.name`)}</span>
                                 </button>
                             );
                         })()}
@@ -104,11 +104,11 @@ export const HomeView: React.FC<HomeViewProps> = ({ userStats, settings, setView
 
                     {/* Streak Badge */}
                     <div className="flex flex-col items-end">
-                        <div className="flex items-center gap-2 text-orange-400 font-bold text-2xl bg-orange-500/10 px-4 py-2 rounded-2xl border border-orange-500/20 shadow-[0_0_15px_rgba(249,115,22,0.1)] backdrop-blur-md">
-                            <Zap size={24} fill="currentColor" className="animate-[pulse_3s_infinite]" />
+                        <div className="flex items-center gap-1 text-orange-400 font-bold text-sm bg-orange-500/5 px-2 py-1 rounded-lg border border-orange-500/10 shadow-[0_0_10px_rgba(249,115,22,0.05)] backdrop-blur-md">
+                            <Zap size={14} fill="currentColor" className="animate-[pulse_3s_infinite]" />
                             <span className="font-mono">{userStats.streak}</span>
                         </div>
-                        <span className="text-[10px] uppercase font-bold text-orange-400/60 mt-1 mr-1">Day Streak</span>
+                        <span className="text-[8px] uppercase font-bold text-orange-400/40 mt-0.5 mr-0.5">Streak</span>
                     </div>
                 </div>
 

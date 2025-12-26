@@ -14,7 +14,7 @@ import DebugConsole from './components/DebugConsole';
 import RigOverlay from './components/RigOverlay';
 import LevelingSystem from './components/LevelingSystem';
 import { InAppReview } from '@capacitor-community/in-app-review';
-import { Timer, X } from 'lucide-react';
+import { Timer, X, Shield } from 'lucide-react';
 import { SoundEngine } from './services/audioService';
 import { HomeView } from './components/views/HomeView';
 import { Header } from './components/Header';
@@ -187,27 +187,9 @@ export default function App() {
         return localStorage.getItem('warmify_onboarding_complete') === 'true';
     });
 
-    // --- PERMISSION CHECK ---
-    const [isPermissionDenied, setIsPermissionDenied] = useState(false);
+    const [showPermissionError, setShowPermissionError] = useState(false);
 
-    useEffect(() => {
-        const checkGlobalPermissions = async () => {
-            // Only check if onboarding is done (Onboarding handles its own prompts)
-            if (hasCompletedOnboarding && !showSplash) {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                    // If successful, stop tracks immediately; we just wanted to verify access
-                    stream.getTracks().forEach(t => t.stop());
-                    setIsPermissionDenied(false);
-                } catch (e) {
-                    console.error("Startup Permission Check Failed:", e);
-                    setIsPermissionDenied(true);
-                }
-            }
-        };
 
-        checkGlobalPermissions();
-    }, [hasCompletedOnboarding, showSplash]);
 
 
     // Get exercises based on current sport mode
@@ -480,8 +462,14 @@ export default function App() {
         } catch (e: any) {
             console.error("Startup Error:", e);
             addLog(`Startup failed: ${e.message}`, 'error');
-            alert(`Camera Error: ${e.message}`);
-            setView(AppView.HOME);
+
+            // Only show permission modal for relevant errors, otherwise fallback or generic log
+            if (e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError' || e.message.includes('permission')) {
+                setShowPermissionError(true);
+            } else {
+                alert(`Camera Error: ${e.message}`); // Keep alert for other hardware errors
+                setView(AppView.HOME);
+            }
         }
     };
 
@@ -632,25 +620,7 @@ export default function App() {
         return <SplashScreen onComplete={() => setShowSplash(false)} />;
     }
 
-    if (isPermissionDenied) {
-        return (
-            <div className="fixed inset-0 z-[100] bg-slate-900 flex flex-col items-center justify-center p-6 text-center">
-                <div className="mb-6 p-6 rounded-full bg-red-500/20 border-2 border-red-500 animate-pulse">
-                    <span className="text-4xl">🔒</span>
-                </div>
-                <h1 className="text-3xl font-black text-white mb-4">{t('onboarding.permission.required_title')}</h1>
-                <p className="text-slate-400 text-lg mb-8 max-w-md">
-                    {t('onboarding.permission.required_desc')}
-                </p>
-                <button
-                    onClick={() => window.location.reload()}
-                    className="px-8 py-4 rounded-full bg-white text-black font-black text-xl hover:scale-105 transition-transform"
-                >
-                    {t('onboarding.permission.retry')}
-                </button>
-            </div>
-        );
-    }
+
 
 
     if (view === AppView.ONBOARDING) return <Onboarding onComplete={() => {
@@ -675,6 +645,34 @@ export default function App() {
     return (
         <div className="relative h-screen max-h-screen text-white font-sans selection:bg-blue-500 overflow-hidden bg-slate-900 flex flex-col pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
             {view !== AppView.WORKOUT && <ThreeScene intensity={intensity} />}
+
+            {/* Custom Permission Error Modal */}
+            {showPermissionError && (
+                <div className="absolute inset-0 z-[100] bg-slate-900/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center animate-[fadeIn_0.3s_ease-out]">
+                    <div className="mb-6 p-6 rounded-full bg-red-500/10 border border-red-500/30 shadow-[0_0_30px_rgba(239,68,68,0.2)]">
+                        <Shield className="text-red-500 w-12 h-12" />
+                    </div>
+                    <h2 className="text-2xl font-black text-white mb-3">{t('onboarding.permission.required_title')}</h2>
+                    <p className="text-slate-400 text-sm mb-8 max-w-xs leading-relaxed">
+                        {t('onboarding.permission.required_desc')}
+                    </p>
+                    <div className="flex flex-col gap-3 w-full max-w-xs">
+                        {/* If it's a "denied" state, the only way to recover is usually browser settings, but we can try getUserMedia again just in case it was a fluke or "prompt" state */}
+                        <button
+                            onClick={() => { setShowPermissionError(false); initSession(); }}
+                            className="w-full py-4 rounded-2xl bg-white text-slate-900 font-bold shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
+                        >
+                            {t('onboarding.permission.retry')}
+                        </button>
+                        <button
+                            onClick={() => { setShowPermissionError(false); setView(AppView.HOME); }}
+                            className="w-full py-4 rounded-2xl bg-slate-800 text-slate-400 font-bold border border-slate-700 hover:bg-slate-700 hover:text-white transition-all"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <div className="relative z-10 w-full md:max-w-full lg:max-w-7xl mx-auto h-full flex flex-col p-4 transition-all duration-500">
 
